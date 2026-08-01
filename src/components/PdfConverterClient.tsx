@@ -278,7 +278,7 @@ export default function PdfConverterClient() {
     <div className={styles.container}>
       <header className={styles.header}>
         <span className={styles.badgeTitle}>Free & Private Utility</span>
-        <h1 className={styles.title}>PDF ➡️ JPG 변환기</h1>
+        <h1 className={styles.title}>PDF ➡️ JPG</h1>
         <p className={styles.subtitle}>
           서버 업로드 없이 100% 브라우저 내부에서 고화질 JPG 이미지로 변환합니다.
         </p>

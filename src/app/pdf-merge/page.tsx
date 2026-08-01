@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import PdfMergeClient from '@/components/PdfMergeClient';
 
 export const metadata = {
-  title: 'PDF 병합기 (PdfMerge) | PDF Util',
+  title: 'PDF + PDF | PDF Util',
   description: '서버 업로드 없이 여러 개의 PDF 파일을 하나로 통합 병합합니다.',
 };
 

@@ -241,7 +241,7 @@ export default function PdfMergeClient() {
     <div className={styles.container}>
       <header className={styles.header}>
         <span className={styles.badgeTitle}>Free & Private Utility</span>
-        <h1 className={styles.title}>PDF 병합기 (PdfMerge)</h1>
+        <h1 className={styles.title}>PDF + PDF</h1>
         <p className={styles.subtitle}>
           서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 여러 개의 PDF를 1개 파일로 합칩니다.
         </p>
