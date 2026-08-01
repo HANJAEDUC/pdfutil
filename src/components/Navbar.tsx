@@ -65,7 +65,7 @@ export default function Navbar() {
           <div className={styles.links}>
             <Link
               href="/pdf-to-jpg"
-              className={`${styles.link} ${pathname === '/pdf-to-jpg' ? styles.activeLink : ''}`}
+              className={`${styles.link} ${pathname === '/pdf-to-jpg' || pathname === '/' ? styles.activeLink : ''}`}
             >
               {t.nav.pdf2jpg}
             </Link>
