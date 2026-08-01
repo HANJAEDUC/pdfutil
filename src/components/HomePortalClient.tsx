@@ -52,7 +52,7 @@ export default function HomePortalClient() {
       </section>
 
       {/* Tools Section */}
-      <section className="mb-14">
+      <section className={styles.toolsSection}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>{t.home.toolSectionTitle}</h2>
           <p className={styles.sectionSub}>{t.home.toolSectionSub}</p>
@@ -120,7 +120,7 @@ export default function HomePortalClient() {
 
           <button onClick={copyEmail} className={styles.copyEmailBtn}>
             {copied ? (
-              <span className="flex items-center gap-1.5 text-[#36b27e]">
+              <span className={styles.copiedText}>
                 <IoCheckmarkOutline size={18} /> 복사되었습니다!
               </span>
             ) : (
