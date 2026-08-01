@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 import { IoChevronBack, IoChevronForward, IoMailOutline } from 'react-icons/io5';
-import DualClock from './DualClock';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -79,7 +78,6 @@ export default function Navbar() {
             >
               pdfextract
             </Link>
-            <DualClock />
             <a
               href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
               className={`${styles.iconLink} ${styles.desktopOnly}`}
