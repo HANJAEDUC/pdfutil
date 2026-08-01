@@ -56,7 +56,7 @@ export default function Navbar() {
               <span style={{ color: '#EA4335' }}>D</span>
               <span style={{ color: '#FBBC04' }}>F</span>
             </div>
-            <span style={{ color: '#e3e3e3', fontWeight: 600, marginLeft: '6px', letterSpacing: '-0.5px' }}>util</span>
+            <span style={{ color: '#e3e3e3', fontWeight: 600, marginLeft: '0px', letterSpacing: '-0.5px' }}>util</span>
           </Link>
 
           <div className={styles.links}>
