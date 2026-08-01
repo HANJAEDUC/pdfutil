@@ -113,7 +113,6 @@ export default function HomePortalClient() {
 
         <div className={styles.heroText}>
           <span className={styles.heroBadge}>{t.home.heroBadge}</span>
-          <h1 className={styles.heroTitle}>{t.home.heroTitle}</h1>
           <p className={styles.heroSubtitle}>{t.home.heroSubtitle}</p>
 
           <div className={styles.privacyTag}>
@@ -123,13 +122,8 @@ export default function HomePortalClient() {
         </div>
       </section>
 
-      {/* Tools Section */}
+      {/* 4-Unit Tools Grid Section */}
       <section className={styles.toolsSection}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>{t.home.toolSectionTitle}</h2>
-          <p className={styles.sectionSub}>{t.home.toolSectionSub}</p>
-        </div>
-
         <div className={styles.toolsGrid}>
           {/* Tool 1: PDF ➡️ JPG */}
           <Link href="/pdf-to-jpg" className={styles.toolCard}>
