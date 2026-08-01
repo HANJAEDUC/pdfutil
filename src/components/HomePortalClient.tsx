@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './HomePortalClient.module.css';
 import { useLanguage } from '@/lib/LanguageContext';
 import {
@@ -14,9 +15,40 @@ import {
   IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
 
+const slides = [
+  {
+    id: 0,
+    title: 'PDF ➡️ JPG',
+    imgSrc: '/hero-converter.png',
+    link: '/pdf-to-jpg',
+  },
+  {
+    id: 1,
+    title: 'PDF + PDF',
+    imgSrc: '/hero-merge.png',
+    link: '/pdf-merge',
+  },
+  {
+    id: 2,
+    title: 'PDF-PDF',
+    imgSrc: '/hero-extract.png',
+    link: '/pdf-extract',
+  },
+];
+
 export default function HomePortalClient() {
   const { t } = useLanguage();
+  const router = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [copied, setCopied] = useState(false);
+
+  // Dynamic automatic slideshow timer (rotates every 3.5s)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText('hanjaeduc@gmail.com');
@@ -26,17 +58,50 @@ export default function HomePortalClient() {
 
   return (
     <div className={styles.container}>
-      {/* Centered Clean Hero Section */}
+      {/* Dynamic Animated Hero Carousel Section */}
       <section className={styles.heroSection}>
-        <div className={styles.heroImgWrapper}>
-          <Image
-            src="/pdf_util_hero.png"
-            alt="PDF Utility Hero Icon"
-            width={420}
-            height={420}
-            priority
-            className={styles.heroImg}
-          />
+        <div
+          className={styles.carouselContainer}
+          onClick={() => router.push(slides[currentSlide].link)}
+          title={`${slides[currentSlide].title} 바로가기`}
+        >
+          {slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={styles.slideItem}
+              style={{
+                opacity: currentSlide === index ? 1 : 0,
+                pointerEvents: currentSlide === index ? 'auto' : 'none',
+                transform: currentSlide === index ? 'scale(1)' : 'scale(0.96)',
+              }}
+            >
+              <Image
+                src={slide.imgSrc}
+                alt={slide.title}
+                width={440}
+                height={440}
+                priority={index === 0}
+                className={styles.slideImage}
+              />
+            </div>
+          ))}
+
+          <div className={styles.slideOverlay}>
+            <span className={styles.slideTag}>{slides[currentSlide].title}</span>
+            <div className={styles.dotsContainer}>
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentSlide(index);
+                  }}
+                  className={`${styles.dot} ${currentSlide === index ? styles.activeDot : ''}`}
+                  aria-label={`Slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={styles.heroText}>
