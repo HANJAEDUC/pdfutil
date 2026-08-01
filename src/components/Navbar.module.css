@@ -1,0 +1,143 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 70px;
+  z-index: 1000;
+  background: rgba(30, 31, 32, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scrollContainer {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 60px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo span:nth-child(1) { color: #4285F4; }
+.logo span:nth-child(2) { color: #EA4335; }
+.logo span:nth-child(3) { color: #FBBC04; }
+.logo span:nth-child(4) { color: #4285F4; }
+.logo span:nth-child(5) { color: #34A853; }
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  color: #c4c7c5;
+  font-weight: 500;
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.link:hover {
+  color: #a8c7fa;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.activeLink {
+  color: #a8c7fa;
+  font-weight: 700;
+  background: rgba(168, 199, 250, 0.12);
+}
+
+.iconLink {
+  color: #c4c7c5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.iconLink:hover {
+  color: #a8c7fa;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mobileOnly, .mobileFixedMail {
+  display: none;
+}
+
+.navArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(30, 31, 32, 0.85);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.leftArrow { left: 12px; }
+.rightArrow { right: 12px; }
+
+@media (max-width: 768px) {
+  .desktopOnly { display: none; }
+  .inner { padding: 0 80px 0 24px; gap: 16px; }
+  .mobileFixedMail {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2000;
+    background: rgba(30, 31, 32, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
