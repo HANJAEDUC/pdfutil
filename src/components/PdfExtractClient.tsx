@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, ChangeEvent, DragEvent } from 'react';
+import styles from './PdfExtractClient.module.css';
 import {
   IoCloudUploadOutline,
   IoDownloadOutline,
@@ -14,7 +15,7 @@ import {
 import { PDFDocument } from 'pdf-lib';
 
 interface PagePreview {
-  pageIndex: number; // 1-based index
+  pageIndex: number;
   dataUrl: string;
 }
 
@@ -90,7 +91,7 @@ export default function PdfExtractClient() {
 
       for (let i = 1; i <= numPages; i++) {
         const page = await pdfDoc.getPage(i);
-        const viewport = page.getViewport({ scale: 0.6 }); // Lightweight thumbnail
+        const viewport = page.getViewport({ scale: 0.6 });
 
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -108,7 +109,6 @@ export default function PdfExtractClient() {
       }
 
       setPages(previews);
-      // Select all by default
       setSelectedPages(previews.map((p) => p.pageIndex));
     } catch (error: any) {
       console.error('Error processing PDF for extraction:', error);
@@ -194,7 +194,6 @@ export default function PdfExtractClient() {
       const srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
       const newPdf = await PDFDocument.create();
 
-      // Convert 1-based pageIndex to 0-based index for pdf-lib
       const indicesToCopy = selectedPages.map((p) => p - 1);
       const copiedPages = await newPdf.copyPages(srcDoc, indicesToCopy);
 
@@ -216,21 +215,17 @@ export default function PdfExtractClient() {
   };
 
   return (
-    <div className="max-w-[1000px] mx-auto px-5 py-10">
-      <header className="text-center mb-10">
-        <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-[#4285f4] text-xs font-bold uppercase tracking-wider mb-3">
-          Free & Private Utility
-        </span>
-        <h1 className="text-4xl font-bold text-[#e3e3e3] mb-3 tracking-tight">
-          PDF 페이지 추출기 (PdfExtract)
-        </h1>
-        <p className="text-[#9aa0a6] text-base max-w-xl mx-auto leading-relaxed">
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <span className={styles.badgeTitle}>Free & Private Utility</span>
+        <h1 className={styles.title}>PDF 페이지 추출기 (PdfExtract)</h1>
+        <p className={styles.subtitle}>
           서버 업로드 없이 100% 브라우저 내부에서 특정 페이지를 선택하여 독립된 PDF로 추출합니다.
         </p>
       </header>
 
       {/* Privacy Banner */}
-      <div className="bg-[#36b27e]/10 border border-[#36b27e]/20 rounded-xl p-3 px-5 flex items-center justify-center gap-2.5 text-[#36b27e] text-sm font-medium mb-8 max-w-2xl mx-auto">
+      <div className={styles.privacyBanner}>
         <IoShieldCheckmarkOutline size={20} />
         <span>개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 추출됩니다.</span>
       </div>
@@ -238,43 +233,35 @@ export default function PdfExtractClient() {
       {/* Dropzone */}
       {!file && (
         <div
-          className={`border-2 border-dashed ${
-            isDragOver ? 'border-[#4285f4] bg-[#4285f4]/10' : 'border-[#4285f4]/40 bg-[#1e1f20]'
-          } rounded-2xl p-12 text-center cursor-pointer hover:border-[#4285f4] hover:bg-[#4285f4]/5 transition-all max-w-2xl mx-auto shadow-lg`}
+          className={`${styles.dropzone} ${isDragOver ? styles.dropzoneActive : ''}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
-          <IoCloudUploadOutline size={54} className="text-[#4285f4] mx-auto mb-4" />
-          <div className="text-xl font-semibold text-[#e3e3e3] mb-2">
-            추출할 PDF 파일을 이곳에 드래그하거나 클릭하여 선택하세요
-          </div>
-          <div className="text-[#9aa0a6] text-sm mb-6">
-            최대 파일 크기 제한 없이 안전하게 미리보고 추출합니다.
-          </div>
-          <button className="bg-[#4285f4] hover:bg-[#3367d6] text-white px-6 py-3 rounded-full font-medium transition-colors">
-            PDF 파일 선택
-          </button>
+          <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
+          <div className={styles.dropText}>추출할 PDF 파일을 이곳에 드래그하거나 클릭하여 선택하세요</div>
+          <div className={styles.subText}>최대 파일 크기 제한 없이 안전하게 미리보고 추출합니다.</div>
+          <button className={styles.selectBtn}>PDF 파일 선택</button>
           <input
             type="file"
             accept=".pdf,application/pdf"
             ref={fileInputRef}
             onChange={handleFileChange}
-            className="hidden"
+            className={styles.hiddenInput}
           />
         </div>
       )}
 
       {/* Loading Progress */}
       {loading && (
-        <div className="bg-[#1e1f20] border border-white/10 rounded-2xl p-8 max-w-md mx-auto text-center space-y-4">
-          <div className="text-[#e3e3e3] font-semibold text-base">
+        <div className={styles.progressContainer}>
+          <div style={{ fontSize: '16px', fontWeight: 600 }}>
             PDF 페이지 로딩 중... ({progress.current} / {progress.total} 페이지)
           </div>
-          <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden">
+          <div className={styles.progressBar}>
             <div
-              className="bg-[#4285f4] h-full transition-all duration-300"
+              className={styles.progressFill}
               style={{
                 width: progress.total > 0 ? `${(progress.current / progress.total) * 100}%` : '0%',
               }}
@@ -285,63 +272,52 @@ export default function PdfExtractClient() {
 
       {/* Control Bar & Options */}
       {file && !loading && (
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-[#1e1f20] border border-white/10 rounded-xl p-4 mb-6">
-            <div className="flex items-center gap-2 text-sm font-semibold text-[#e3e3e3]">
-              <IoDocumentTextOutline size={22} className="text-[#4285f4]" />
+        <div>
+          <div className={styles.optionsBar}>
+            <div className={styles.fileInfo}>
+              <IoDocumentTextOutline size={22} color="#4285f4" />
               <span>{file.name} (총 {pages.length}페이지 중 {selectedPages.length}페이지 선택됨)</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={selectAll}
-                className="bg-white/10 hover:bg-white/15 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-              >
+            <div className={styles.actionsRight}>
+              <button onClick={selectAll} className={styles.toolBtn}>
                 전체 선택
               </button>
-              <button
-                onClick={deselectAll}
-                className="bg-white/10 hover:bg-white/15 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-              >
+              <button onClick={deselectAll} className={styles.toolBtn}>
                 전체 해제
               </button>
-              <button
-                onClick={handleReset}
-                className="flex items-center gap-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ml-2"
-              >
+              <button onClick={handleReset} className={styles.resetBtn}>
                 <IoRefreshOutline size={14} />
                 새 파일
               </button>
             </div>
           </div>
 
-          {/* Action Header */}
+          {/* Action Area */}
           {!extractedPdfUrl ? (
-            <div className="mb-8">
-              <button
-                onClick={extractSelectedPages}
-                disabled={isExtracting || selectedPages.length === 0}
-                className="w-full bg-[#4285f4] hover:bg-[#3367d6] disabled:bg-white/10 disabled:text-white/40 text-white font-semibold py-4 rounded-xl shadow-lg transition-all text-base flex items-center justify-center gap-2"
-              >
-                {isExtracting ? (
-                  <span>PDF 페이지 추출 중...</span>
-                ) : (
-                  <>
-                    <IoCutOutline size={20} />
-                    <span>선택한 {selectedPages.length}개 페이지 추출하여 새 PDF로 저장</span>
-                  </>
-                )}
-              </button>
-            </div>
+            <button
+              onClick={extractSelectedPages}
+              disabled={isExtracting || selectedPages.length === 0}
+              className={styles.extractMainBtn}
+            >
+              {isExtracting ? (
+                <span>PDF 페이지 추출 중...</span>
+              ) : (
+                <>
+                  <IoCutOutline size={20} />
+                  <span>선택한 {selectedPages.length}개 페이지 추출하여 새 PDF로 저장</span>
+                </>
+              )}
+            </button>
           ) : (
-            <div className="bg-[#36b27e]/10 border border-[#36b27e]/30 rounded-2xl p-6 text-center space-y-4 mb-8">
-              <div className="text-[#36b27e] font-semibold text-lg">
+            <div className={styles.successBox}>
+              <div className={styles.successText}>
                 ✅ 선택한 {selectedPages.length}개 페이지 추출이 완료되었습니다!
               </div>
               <a
                 href={extractedPdfUrl}
                 download={extractedFileName}
-                className="inline-flex items-center gap-2 bg-[#36b27e] hover:bg-[#2e9c6e] text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-lg text-base"
+                className={styles.downloadBtn}
               >
                 <IoDownloadOutline size={22} />
                 추출된 PDF 다운로드
@@ -350,34 +326,29 @@ export default function PdfExtractClient() {
           )}
 
           {/* Page Preview Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className={styles.grid}>
             {pages.map((p) => {
               const isSelected = selectedPages.includes(p.pageIndex);
               return (
                 <div
                   key={p.pageIndex}
                   onClick={() => togglePageSelection(p.pageIndex)}
-                  className={`relative rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
-                    isSelected
-                      ? 'border-[#4285f4] bg-[#4285f4]/10 shadow-lg scale-[1.02]'
-                      : 'border-white/10 bg-[#1e1f20] opacity-60 hover:opacity-100'
-                  }`}
+                  className={`${styles.pageThumbCard} ${isSelected ? styles.selectedCard : ''}`}
+                  style={{ opacity: isSelected ? 1 : 0.55 }}
                 >
-                  <div className="p-2 bg-white/5 flex items-center justify-between border-b border-white/5">
-                    <span className="text-xs font-semibold text-[#e3e3e3]">
-                      {p.pageIndex} 페이지
-                    </span>
+                  <div className={styles.thumbHeader}>
+                    <span className={styles.pageLabel}>{p.pageIndex} 페이지</span>
                     {isSelected ? (
-                      <IoCheckmarkCircle size={20} className="text-[#4285f4]" />
+                      <IoCheckmarkCircle size={20} color="#4285f4" />
                     ) : (
-                      <IoEllipseOutline size={20} className="text-[#9aa0a6]" />
+                      <IoEllipseOutline size={20} color="#9aa0a6" />
                     )}
                   </div>
-                  <div className="p-2 flex items-center justify-center bg-[#121212] min-h-[160px]">
+                  <div className={styles.thumbImgWrapper}>
                     <img
                       src={p.dataUrl}
                       alt={`Page ${p.pageIndex}`}
-                      className="max-h-[160px] object-contain shadow-sm rounded"
+                      className={styles.thumbImg}
                     />
                   </div>
                 </div>

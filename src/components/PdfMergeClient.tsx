@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, ChangeEvent, DragEvent } from 'react';
+import styles from './PdfMergeClient.module.css';
 import {
   IoCloudUploadOutline,
   IoDownloadOutline,
@@ -160,69 +161,57 @@ export default function PdfMergeClient() {
   };
 
   return (
-    <div className="max-w-[1000px] mx-auto px-5 py-10">
-      <header className="text-center mb-10">
-        <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-[#4285f4] text-xs font-bold uppercase tracking-wider mb-3">
-          Free & Private Utility
-        </span>
-        <h1 className="text-4xl font-bold text-[#e3e3e3] mb-3 tracking-tight">
-          PDF 병합기 (PdfMerge)
-        </h1>
-        <p className="text-[#9aa0a6] text-base max-w-xl mx-auto leading-relaxed">
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <span className={styles.badgeTitle}>Free & Private Utility</span>
+        <h1 className={styles.title}>PDF 병합기 (PdfMerge)</h1>
+        <p className={styles.subtitle}>
           서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 여러 개의 PDF를 1개 파일로 합칩니다.
         </p>
       </header>
 
       {/* Privacy Banner */}
-      <div className="bg-[#36b27e]/10 border border-[#36b27e]/20 rounded-xl p-3 px-5 flex items-center justify-center gap-2.5 text-[#36b27e] text-sm font-medium mb-8 max-w-2xl mx-auto">
+      <div className={styles.privacyBanner}>
         <IoShieldCheckmarkOutline size={20} />
         <span>개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 병합됩니다.</span>
       </div>
 
-      {/* Empty Dropzone */}
+      {/* Dropzone */}
       {files.length === 0 && (
         <div
-          className={`border-2 border-dashed ${
-            isDragOver ? 'border-[#4285f4] bg-[#4285f4]/10' : 'border-[#4285f4]/40 bg-[#1e1f20]'
-          } rounded-2xl p-12 text-center cursor-pointer hover:border-[#4285f4] hover:bg-[#4285f4]/5 transition-all max-w-2xl mx-auto shadow-lg`}
+          className={`${styles.dropzone} ${isDragOver ? styles.dropzoneActive : ''}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
-          <IoCloudUploadOutline size={54} className="text-[#4285f4] mx-auto mb-4" />
-          <div className="text-xl font-semibold text-[#e3e3e3] mb-2">
-            병합할 PDF 파일들을 이곳에 드래그하거나 클릭하세요
-          </div>
-          <div className="text-[#9aa0a6] text-sm mb-6">
-            여러 개의 PDF를 선택하여 순서를 자유롭게 조정하고 하나로 합칩니다.
-          </div>
-          <button className="bg-[#4285f4] hover:bg-[#3367d6] text-white px-6 py-3 rounded-full font-medium transition-colors">
-            PDF 파일들 선택
-          </button>
+          <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
+          <div className={styles.dropText}>병합할 PDF 파일들을 이곳에 드래그하거나 클릭하세요</div>
+          <div className={styles.subText}>여러 개의 PDF를 선택하여 순서를 자유롭게 조정하고 하나로 합칩니다.</div>
+          <button className={styles.selectBtn}>PDF 파일들 선택</button>
           <input
             type="file"
             accept=".pdf,application/pdf"
             multiple
             ref={fileInputRef}
             onChange={handleFileChange}
-            className="hidden"
+            className={styles.hiddenInput}
           />
         </div>
       )}
 
       {/* File List & Controls */}
       {files.length > 0 && (
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-between bg-[#1e1f20] border border-white/10 rounded-xl p-4 mb-4">
-            <div className="flex items-center gap-2 text-sm font-semibold text-[#e3e3e3]">
-              <IoDocumentTextOutline size={22} className="text-[#4285f4]" />
+        <div className={styles.listContainer}>
+          <div className={styles.optionsBar}>
+            <div className={styles.fileSummary}>
+              <IoDocumentTextOutline size={22} color="#4285f4" />
               <span>총 {files.length}개 파일 선택됨</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className={styles.actionsRight}>
               <button
                 onClick={() => addFileInputRef.current?.click()}
-                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/15 text-white px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                className={styles.addBtn}
               >
                 <IoAddOutline size={18} />
                 파일 추가
@@ -233,12 +222,9 @@ export default function PdfMergeClient() {
                 multiple
                 ref={addFileInputRef}
                 onChange={handleFileChange}
-                className="hidden"
+                className={styles.hiddenInput}
               />
-              <button
-                onClick={handleReset}
-                className="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors"
-              >
+              <button onClick={handleReset} className={styles.resetBtn}>
                 <IoRefreshOutline size={16} />
                 초기화
               </button>
@@ -246,32 +232,25 @@ export default function PdfMergeClient() {
           </div>
 
           {/* Files List */}
-          <div className="space-y-3 mb-6">
+          <div className={styles.fileList}>
             {files.map((item, index) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between bg-[#1e1f20] border border-white/10 hover:border-white/20 rounded-xl p-4 transition-all"
-              >
-                <div className="flex items-center gap-3.5 flex-1 min-w-0 pr-4">
-                  <span className="w-7 h-7 flex items-center justify-center rounded-full bg-[#4285f4]/20 text-[#4285f4] text-xs font-bold shrink-0">
-                    {index + 1}
-                  </span>
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium text-[#e3e3e3] truncate">
-                      {item.file.name}
-                    </div>
-                    <div className="text-xs text-[#9aa0a6] mt-0.5">
+              <div key={item.id} className={styles.fileItem}>
+                <div className={styles.itemLeft}>
+                  <span className={styles.badgeIndex}>{index + 1}</span>
+                  <div className={styles.itemDetails}>
+                    <div className={styles.fileName}>{item.file.name}</div>
+                    <div className={styles.fileSubText}>
                       {formatSize(item.file.size)}
                       {item.pageCount !== undefined && ` • ${item.pageCount}페이지`}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
+                <div className={styles.itemControls}>
                   <button
                     onClick={() => moveUp(index)}
                     disabled={index === 0}
-                    className="p-2 text-[#9aa0a6] hover:text-white disabled:opacity-30 disabled:hover:text-[#9aa0a6] transition-colors"
+                    className={styles.ctrlBtn}
                     title="위로 이동"
                   >
                     <IoArrowUpOutline size={18} />
@@ -279,14 +258,14 @@ export default function PdfMergeClient() {
                   <button
                     onClick={() => moveDown(index)}
                     disabled={index === files.length - 1}
-                    className="p-2 text-[#9aa0a6] hover:text-white disabled:opacity-30 disabled:hover:text-[#9aa0a6] transition-colors"
+                    className={styles.ctrlBtn}
                     title="아래로 이동"
                   >
                     <IoArrowDownOutline size={18} />
                   </button>
                   <button
                     onClick={() => removeFile(item.id)}
-                    className="p-2 text-red-400 hover:text-red-300 transition-colors ml-1"
+                    className={`${styles.ctrlBtn} ${styles.deleteBtn}`}
                     title="삭제"
                   >
                     <IoTrashOutline size={18} />
@@ -298,31 +277,27 @@ export default function PdfMergeClient() {
 
           {/* Merge Action Area */}
           {!mergedPdfUrl ? (
-            <div className="text-center pt-2">
-              <button
-                onClick={mergePdfs}
-                disabled={isMerging || files.length < 2}
-                className="w-full bg-[#4285f4] hover:bg-[#3367d6] disabled:bg-white/10 disabled:text-white/40 text-white font-semibold py-4 rounded-xl shadow-lg transition-all text-base flex items-center justify-center gap-2"
-              >
-                {isMerging ? (
-                  <span>PDF 병합 중...</span>
-                ) : (
-                  <>
-                    <IoDocumentTextOutline size={20} />
-                    <span>{files.length}개 PDF 하나로 병합하기</span>
-                  </>
-                )}
-              </button>
-            </div>
+            <button
+              onClick={mergePdfs}
+              disabled={isMerging || files.length < 2}
+              className={styles.mergeMainBtn}
+            >
+              {isMerging ? (
+                <span>PDF 병합 중...</span>
+              ) : (
+                <>
+                  <IoDocumentTextOutline size={20} />
+                  <span>{files.length}개 PDF 하나로 병합하기</span>
+                </>
+              )}
+            </button>
           ) : (
-            <div className="bg-[#36b27e]/10 border border-[#36b27e]/30 rounded-2xl p-6 text-center space-y-4">
-              <div className="text-[#36b27e] font-semibold text-lg">
-                ✅ PDF 병합이 완료되었습니다!
-              </div>
+            <div className={styles.successBox}>
+              <div className={styles.successText}>✅ PDF 병합이 완료되었습니다!</div>
               <a
                 href={mergedPdfUrl}
                 download={mergedFileName}
-                className="inline-flex items-center gap-2 bg-[#36b27e] hover:bg-[#2e9c6e] text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-lg text-base"
+                className={styles.downloadBtn}
               >
                 <IoDownloadOutline size={22} />
                 병합된 PDF 다운로드
