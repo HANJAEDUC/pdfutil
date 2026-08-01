@@ -10,6 +10,8 @@ import {
   IoRefreshOutline,
   IoGridOutline,
   IoLayersOutline,
+  IoCloseOutline,
+  IoSearchOutline,
 } from 'react-icons/io5';
 import JSZip from 'jszip';
 
@@ -30,6 +32,7 @@ export default function PdfConverterClient() {
   const [outputMode, setOutputMode] = useState<'separate' | 'merged'>('separate');
   const [mergedDataUrl, setMergedDataUrl] = useState<string | null>(null);
   const [isMerging, setIsMerging] = useState(false);
+  const [previewPage, setPreviewPage] = useState<{ dataUrl: string; pageIndex: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Helper to load PDF.js via CDN dynamically (bypasses Node.js 'canvas' module issues)
@@ -100,6 +103,7 @@ export default function PdfConverterClient() {
     setLoading(true);
     setPages([]);
     setMergedDataUrl(null);
+    setPreviewPage(null);
     setProgress({ current: 0, total: 0 });
 
     try {
@@ -263,6 +267,7 @@ export default function PdfConverterClient() {
     setFile(null);
     setPages([]);
     setMergedDataUrl(null);
+    setPreviewPage(null);
     setOutputMode('separate');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -399,8 +404,16 @@ export default function PdfConverterClient() {
         <div className={styles.grid}>
           {pages.map((p) => (
             <div key={p.pageIndex} className={styles.pageCard}>
-              <div className={styles.imgWrapper}>
+              <div
+                className={styles.imgWrapper}
+                onClick={() => setPreviewPage({ dataUrl: p.dataUrl, pageIndex: p.pageIndex })}
+                title="클릭하여 원본 크기로 크게 보기"
+              >
                 <img src={p.dataUrl} alt={`Page ${p.pageIndex}`} className={styles.pageImg} />
+                <div className={styles.zoomHoverOverlay}>
+                  <IoSearchOutline size={26} />
+                  <span>크게 보기</span>
+                </div>
               </div>
               <div className={styles.pageFooter}>
                 <span className={styles.pageNumber}>{p.pageIndex} 페이지</span>
@@ -437,13 +450,62 @@ export default function PdfConverterClient() {
                   1개의 통합 JPG 다운로드
                 </button>
               </div>
-              <div className={styles.mergedImgWrapper}>
+              <div
+                className={styles.mergedImgWrapper}
+                onClick={() => setPreviewPage({ dataUrl: mergedDataUrl, pageIndex: 0 })}
+                title="클릭하여 원본 크기로 크게 보기"
+              >
                 <img src={mergedDataUrl} alt="Merged PDF pages" className={styles.mergedImg} />
               </div>
             </>
           ) : (
             <div className={styles.mergingStatus}>통합 이미지를 생성할 수 없습니다.</div>
           )}
+        </div>
+      )}
+
+      {/* Image Preview Lightbox Modal */}
+      {previewPage && (
+        <div className={styles.modalOverlay} onClick={() => setPreviewPage(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitle}>
+                {previewPage.pageIndex === 0
+                  ? '1개 통합 JPG 이미지 크게 보기'
+                  : `${file?.name ? file.name + ' — ' : ''}${previewPage.pageIndex} 페이지 크게 보기`}
+              </div>
+              <div className={styles.modalActions}>
+                <button
+                  className={styles.modalDlBtn}
+                  onClick={() => {
+                    if (previewPage.pageIndex === 0) {
+                      downloadMergedImage();
+                    } else {
+                      const targetPage = pages.find((p) => p.pageIndex === previewPage.pageIndex);
+                      if (targetPage) downloadSinglePage(targetPage);
+                    }
+                  }}
+                >
+                  <IoDownloadOutline size={18} />
+                  다운로드
+                </button>
+                <button
+                  className={styles.modalCloseBtn}
+                  onClick={() => setPreviewPage(null)}
+                  aria-label="닫기"
+                >
+                  <IoCloseOutline size={24} />
+                </button>
+              </div>
+            </div>
+            <div className={styles.modalBody}>
+              <img
+                src={previewPage.dataUrl}
+                alt="Expanded Preview"
+                className={styles.modalImg}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>
