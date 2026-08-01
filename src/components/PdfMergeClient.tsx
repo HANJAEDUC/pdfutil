@@ -2,6 +2,7 @@
 
 import { useState, useRef, ChangeEvent, DragEvent } from 'react';
 import styles from './PdfMergeClient.module.css';
+import { useLanguage } from '@/lib/LanguageContext';
 import {
   IoCloudUploadOutline,
   IoDownloadOutline,
@@ -30,6 +31,7 @@ interface MergedPagePreview {
 }
 
 export default function PdfMergeClient() {
+  const { t } = useLanguage();
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isMerging, setIsMerging] = useState(false);
@@ -41,7 +43,6 @@ export default function PdfMergeClient() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addFileInputRef = useRef<HTMLInputElement>(null);
 
-  // Helper to load PDF.js via CDN dynamically
   const getPdfJsLib = (): Promise<any> => {
     return new Promise((resolve, reject) => {
       if (typeof window !== 'undefined' && (window as any).pdfjsLib) {
@@ -57,10 +58,10 @@ export default function PdfMergeClient() {
           pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
           resolve(pdfjsLib);
         } else {
-          reject(new Error('PDF.js 라이브러리 초기화 실패'));
+          reject(new Error('PDF.js library failed to initialize'));
         }
       };
-      script.onerror = () => reject(new Error('CDN에서 PDF.js 스크립트를 불러오는데 실패했습니다.'));
+      script.onerror = () => reject(new Error('Failed to load PDF.js script from CDN'));
       document.head.appendChild(script);
     });
   };
@@ -81,7 +82,7 @@ export default function PdfMergeClient() {
     );
 
     if (pdfFiles.length === 0) {
-      alert('PDF 파일만 업로드할 수 있습니다.');
+      alert('Please upload PDF files only.');
       return;
     }
 
@@ -197,7 +198,7 @@ export default function PdfMergeClient() {
 
   const mergePdfs = async () => {
     if (files.length < 2) {
-      alert('PDF를 병합하려면 최소 2개 이상의 파일을 추가해 주세요.');
+      alert('Please add at least 2 PDF files to merge.');
       return;
     }
 
@@ -221,11 +222,10 @@ export default function PdfMergeClient() {
       setMergedFileName(`${firstBase}_merged.pdf`);
       setMergedPdfUrl(url);
 
-      // Render previews for merged PDF
       await renderPreviewsForMergedPdf(mergedPdfBytes);
     } catch (err: any) {
-      console.error('PDF 병합 실패:', err);
-      alert(`PDF 병합 중 오류가 발생했습니다: ${err?.message || '파일을 확인해 주세요.'}`);
+      console.error('Failed to merge PDFs:', err);
+      alert(`Error merging PDFs: ${err?.message || 'Please check your files.'}`);
     } finally {
       setIsMerging(false);
     }
@@ -240,17 +240,15 @@ export default function PdfMergeClient() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <span className={styles.badgeTitle}>Free & Private Utility</span>
-        <h1 className={styles.title}>PDF + PDF</h1>
-        <p className={styles.subtitle}>
-          서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 여러 개의 PDF를 1개 파일로 합칩니다.
-        </p>
+        <span className={styles.badgeTitle}>{t.badge}</span>
+        <h1 className={styles.title}>{t.pdfmerge.title}</h1>
+        <p className={styles.subtitle}>{t.pdfmerge.subtitle}</p>
       </header>
 
       {/* Privacy Banner */}
       <div className={styles.privacyBanner}>
         <IoShieldCheckmarkOutline size={20} />
-        <span>개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 병합됩니다.</span>
+        <span>{t.privacy.banner}</span>
       </div>
 
       {/* Empty Dropzone */}
@@ -263,9 +261,9 @@ export default function PdfMergeClient() {
           onClick={() => fileInputRef.current?.click()}
         >
           <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
-          <div className={styles.dropText}>병합할 PDF 파일들을 이곳에 드래그하거나 클릭하세요</div>
-          <div className={styles.subText}>여러 개의 PDF를 선택하여 순서를 자유롭게 조정하고 하나로 합칩니다.</div>
-          <button className={styles.selectBtn}>PDF 파일들 선택</button>
+          <div className={styles.dropText}>{t.pdfmerge.dropText}</div>
+          <div className={styles.subText}>{t.pdfmerge.subText}</div>
+          <button className={styles.selectBtn}>{t.pdfmerge.selectBtn}</button>
           <input
             type="file"
             accept=".pdf,application/pdf"
@@ -288,15 +286,15 @@ export default function PdfMergeClient() {
           {isDragOver && (
             <div className={styles.dragOverlay}>
               <IoCloudUploadOutline size={48} />
-              <span>추가할 PDF 파일들을 이곳에 놓으세요!</span>
+              <span>{t.pdfmerge.dragOverlayText}</span>
             </div>
           )}
 
           <div className={styles.optionsBar}>
             <div className={styles.fileSummary}>
               <IoDocumentTextOutline size={22} color="#4285f4" />
-              <span>총 {files.length}개 파일 선택됨</span>
-              <span className={styles.dragTip}>(추가 드래그 & 드롭 가능)</span>
+              <span>{t.pdfmerge.summary.replace('{count}', String(files.length))}</span>
+              <span className={styles.dragTip}>{t.pdfmerge.dragTip}</span>
             </div>
             <div className={styles.actionsRight}>
               <button
@@ -304,7 +302,7 @@ export default function PdfMergeClient() {
                 className={styles.addBtn}
               >
                 <IoAddOutline size={18} />
-                파일 추가
+                {t.pdfmerge.addFiles}
               </button>
               <input
                 type="file"
@@ -316,7 +314,7 @@ export default function PdfMergeClient() {
               />
               <button onClick={handleReset} className={styles.resetBtn}>
                 <IoRefreshOutline size={16} />
-                초기화
+                {t.pdfmerge.reset}
               </button>
             </div>
           </div>
@@ -331,7 +329,7 @@ export default function PdfMergeClient() {
                     <div className={styles.fileName}>{item.file.name}</div>
                     <div className={styles.fileSubText}>
                       {formatSize(item.file.size)}
-                      {item.pageCount !== undefined && ` • ${item.pageCount}페이지`}
+                      {item.pageCount !== undefined && ` • ${item.pageCount} ${t.pdf2jpg.pageLabel}`}
                     </div>
                   </div>
                 </div>
@@ -341,7 +339,7 @@ export default function PdfMergeClient() {
                     onClick={() => moveUp(index)}
                     disabled={index === 0}
                     className={styles.ctrlBtn}
-                    title="위로 이동"
+                    title={t.pdfmerge.moveUp}
                   >
                     <IoArrowUpOutline size={18} />
                   </button>
@@ -349,14 +347,14 @@ export default function PdfMergeClient() {
                     onClick={() => moveDown(index)}
                     disabled={index === files.length - 1}
                     className={styles.ctrlBtn}
-                    title="아래로 이동"
+                    title={t.pdfmerge.moveDown}
                   >
                     <IoArrowDownOutline size={18} />
                   </button>
                   <button
                     onClick={() => removeFile(item.id)}
                     className={`${styles.ctrlBtn} ${styles.deleteBtn}`}
-                    title="삭제"
+                    title={t.pdfmerge.delete}
                   >
                     <IoTrashOutline size={18} />
                   </button>
@@ -371,7 +369,7 @@ export default function PdfMergeClient() {
             onClick={() => addFileInputRef.current?.click()}
           >
             <IoAddOutline size={20} />
-            <span>여기에 다른 PDF 파일을 추가로 드래그 앤 드롭 하거나 클릭하여 선택하세요</span>
+            <span>{t.pdfmerge.miniDrop}</span>
           </div>
 
           {/* Merge Action Area */}
@@ -382,25 +380,25 @@ export default function PdfMergeClient() {
               className={styles.mergeMainBtn}
             >
               {isMerging ? (
-                <span>PDF 병합 중...</span>
+                <span>{t.pdfmerge.merging}</span>
               ) : (
                 <>
                   <IoDocumentTextOutline size={20} />
-                  <span>{files.length}개 PDF 하나로 병합하기</span>
+                  <span>{t.pdfmerge.mergeBtn.replace('{count}', String(files.length))}</span>
                 </>
               )}
             </button>
           ) : (
             <>
               <div className={styles.successBox}>
-                <div className={styles.successText}>✅ PDF 병합이 완료되었습니다!</div>
+                <div className={styles.successText}>{t.pdfmerge.successText}</div>
                 <a
                   href={mergedPdfUrl}
                   download={mergedFileName}
                   className={styles.downloadBtn}
                 >
                   <IoDownloadOutline size={22} />
-                  병합된 PDF 다운로드
+                  {t.pdfmerge.downloadBtn}
                 </a>
               </div>
 
@@ -410,9 +408,9 @@ export default function PdfMergeClient() {
                   <div className={styles.previewHeader}>
                     <div className={styles.previewTitle}>
                       <IoEyeOutline size={22} color="#36b27e" />
-                      <span>병합 결과 미리보기 (총 {mergedPreviews.length}페이지)</span>
+                      <span>{t.pdfmerge.previewTitle.replace('{count}', String(mergedPreviews.length))}</span>
                     </div>
-                    <span className={styles.previewSub}>이미지를 클릭하면 크게 볼 수 있습니다.</span>
+                    <span className={styles.previewSub}>{t.pdfmerge.previewSub}</span>
                   </div>
 
                   <div className={styles.previewGrid}>
@@ -421,16 +419,16 @@ export default function PdfMergeClient() {
                         key={p.pageIndex}
                         className={styles.previewCard}
                         onClick={() => setPreviewModalPage(p)}
-                        title="클릭하여 원본 크기로 크게 보기"
+                        title={t.pdf2jpg.zoomIn}
                       >
                         <div className={styles.previewCardHeader}>
-                          <span>{p.pageIndex} 페이지</span>
+                          <span>{p.pageIndex} {t.pdf2jpg.pageLabel}</span>
                         </div>
                         <div className={styles.previewImgWrapper}>
                           <img src={p.dataUrl} alt={`Page ${p.pageIndex}`} className={styles.previewImg} />
                           <div className={styles.zoomOverlay}>
                             <IoSearchOutline size={24} />
-                            <span>크게 보기</span>
+                            <span>{t.pdf2jpg.zoomIn}</span>
                           </div>
                         </div>
                       </div>
@@ -449,7 +447,7 @@ export default function PdfMergeClient() {
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
               <div className={styles.modalTitle}>
-                병합된 PDF — {previewModalPage.pageIndex} 페이지 크게 보기
+                {t.pdfmerge.modalTitle.replace('{page}', String(previewModalPage.pageIndex))}
               </div>
               <div className={styles.modalActions}>
                 {mergedPdfUrl && (
@@ -459,13 +457,13 @@ export default function PdfMergeClient() {
                     className={styles.modalDlBtn}
                   >
                     <IoDownloadOutline size={18} />
-                    PDF 다운로드
+                    {t.pdf2jpg.modalDownload}
                   </a>
                 )}
                 <button
                   className={styles.modalCloseBtn}
                   onClick={() => setPreviewModalPage(null)}
-                  aria-label="닫기"
+                  aria-label={t.pdf2jpg.close}
                 >
                   <IoCloseOutline size={24} />
                 </button>

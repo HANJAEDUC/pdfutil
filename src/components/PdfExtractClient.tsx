@@ -2,6 +2,7 @@
 
 import { useState, useRef, ChangeEvent, DragEvent } from 'react';
 import styles from './PdfExtractClient.module.css';
+import { useLanguage } from '@/lib/LanguageContext';
 import {
   IoCloudUploadOutline,
   IoDownloadOutline,
@@ -20,6 +21,7 @@ interface PagePreview {
 }
 
 export default function PdfExtractClient() {
+  const { t } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,7 +33,6 @@ export default function PdfExtractClient() {
   const [extractedFileName, setExtractedFileName] = useState<string>('extracted.pdf');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Helper to load PDF.js via CDN dynamically
   const getPdfJsLib = (): Promise<any> => {
     return new Promise((resolve, reject) => {
       if (typeof window !== 'undefined' && (window as any).pdfjsLib) {
@@ -47,10 +48,10 @@ export default function PdfExtractClient() {
           pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
           resolve(pdfjsLib);
         } else {
-          reject(new Error('PDF.js 라이브러리 초기화 실패'));
+          reject(new Error('PDF.js library failed to initialize'));
         }
       };
-      script.onerror = () => reject(new Error('CDN에서 PDF.js 스크립트를 불러오는데 실패했습니다.'));
+      script.onerror = () => reject(new Error('Failed to load PDF.js script from CDN'));
       document.head.appendChild(script);
     });
   };
@@ -73,8 +74,8 @@ export default function PdfExtractClient() {
       loadingTask.onPassword = (updatePassword: (pw: string) => void, reason: number) => {
         const userPw = prompt(
           reason === 1
-            ? '🔒 이 PDF 파일은 암호로 보호되어 있습니다. 비밀번호를 입력해 주세요:'
-            : '❌ 비밀번호가 올바르지 않습니다. 다시 입력해 주세요:'
+            ? '🔒 Password required:'
+            : '❌ Incorrect password. Please try again:'
         );
         if (userPw !== null) {
           updatePassword(userPw);
@@ -113,7 +114,7 @@ export default function PdfExtractClient() {
     } catch (error: any) {
       console.error('Error processing PDF for extraction:', error);
       if (error?.name !== 'PasswordException') {
-        alert(`PDF 로딩 중 오류가 발생했습니다: ${error?.message || '다른 PDF 파일로 시도해 주세요.'}`);
+        alert(`Error loading PDF: ${error?.message || 'Please try another file.'}`);
       }
     } finally {
       setLoading(false);
@@ -127,7 +128,7 @@ export default function PdfExtractClient() {
         setFile(selectedFile);
         processPdf(selectedFile);
       } else {
-        alert('PDF 파일만 업로드할 수 있습니다.');
+        alert('Please upload PDF files only.');
       }
     }
   };
@@ -151,7 +152,7 @@ export default function PdfExtractClient() {
         setFile(droppedFile);
         processPdf(droppedFile);
       } else {
-        alert('PDF 파일만 업로드할 수 있습니다.');
+        alert('Please upload PDF files only.');
       }
     }
   };
@@ -184,7 +185,7 @@ export default function PdfExtractClient() {
   const extractSelectedPages = async () => {
     if (!file) return;
     if (selectedPages.length === 0) {
-      alert('추출할 페이지를 최소 1개 이상 선택해 주세요.');
+      alert('Please select at least 1 page to extract.');
       return;
     }
 
@@ -207,8 +208,8 @@ export default function PdfExtractClient() {
       setExtractedFileName(`${baseName}_extracted.pdf`);
       setExtractedPdfUrl(url);
     } catch (err: any) {
-      console.error('PDF 페이지 추출 실패:', err);
-      alert(`PDF 페이지 추출 중 오류가 발생했습니다: ${err?.message || '확인 후 다시 시도해 주세요.'}`);
+      console.error('PDF extraction failed:', err);
+      alert(`Error extracting pages: ${err?.message || 'Please try again.'}`);
     } finally {
       setIsExtracting(false);
     }
@@ -217,17 +218,15 @@ export default function PdfExtractClient() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <span className={styles.badgeTitle}>Free & Private Utility</span>
-        <h1 className={styles.title}>PDF-PDF</h1>
-        <p className={styles.subtitle}>
-          서버 업로드 없이 100% 브라우저 내부에서 특정 페이지를 선택하여 독립된 PDF로 추출합니다.
-        </p>
+        <span className={styles.badgeTitle}>{t.badge}</span>
+        <h1 className={styles.title}>{t.pdfextract.title}</h1>
+        <p className={styles.subtitle}>{t.pdfextract.subtitle}</p>
       </header>
 
       {/* Privacy Banner */}
       <div className={styles.privacyBanner}>
         <IoShieldCheckmarkOutline size={20} />
-        <span>개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 추출됩니다.</span>
+        <span>{t.privacy.banner}</span>
       </div>
 
       {/* Dropzone */}
@@ -240,9 +239,9 @@ export default function PdfExtractClient() {
           onClick={() => fileInputRef.current?.click()}
         >
           <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
-          <div className={styles.dropText}>추출할 PDF 파일을 이곳에 드래그하거나 클릭하여 선택하세요</div>
-          <div className={styles.subText}>최대 파일 크기 제한 없이 안전하게 미리보고 추출합니다.</div>
-          <button className={styles.selectBtn}>PDF 파일 선택</button>
+          <div className={styles.dropText}>{t.pdfextract.dropText}</div>
+          <div className={styles.subText}>{t.pdfextract.subText}</div>
+          <button className={styles.selectBtn}>{t.pdfextract.selectBtn}</button>
           <input
             type="file"
             accept=".pdf,application/pdf"
@@ -257,7 +256,7 @@ export default function PdfExtractClient() {
       {loading && (
         <div className={styles.progressContainer}>
           <div style={{ fontSize: '16px', fontWeight: 600 }}>
-            PDF 페이지 로딩 중... ({progress.current} / {progress.total} 페이지)
+            {t.pdfextract.loadingProgress.replace('{current}', String(progress.current)).replace('{total}', String(progress.total))}
           </div>
           <div className={styles.progressBar}>
             <div
@@ -276,19 +275,24 @@ export default function PdfExtractClient() {
           <div className={styles.optionsBar}>
             <div className={styles.fileInfo}>
               <IoDocumentTextOutline size={22} color="#4285f4" />
-              <span>{file.name} (총 {pages.length}페이지 중 {selectedPages.length}페이지 선택됨)</span>
+              <span>
+                {t.pdfextract.summary
+                  .replace('{filename}', file.name)
+                  .replace('{total}', String(pages.length))
+                  .replace('{selected}', String(selectedPages.length))}
+              </span>
             </div>
 
             <div className={styles.actionsRight}>
               <button onClick={selectAll} className={styles.toolBtn}>
-                전체 선택
+                {t.pdfextract.selectAll}
               </button>
               <button onClick={deselectAll} className={styles.toolBtn}>
-                전체 해제
+                {t.pdfextract.deselectAll}
               </button>
               <button onClick={handleReset} className={styles.resetBtn}>
                 <IoRefreshOutline size={14} />
-                새 파일
+                {t.pdfextract.newFile}
               </button>
             </div>
           </div>
@@ -301,18 +305,18 @@ export default function PdfExtractClient() {
               className={styles.extractMainBtn}
             >
               {isExtracting ? (
-                <span>PDF 페이지 추출 중...</span>
+                <span>{t.pdfextract.extracting}</span>
               ) : (
                 <>
                   <IoCutOutline size={20} />
-                  <span>선택한 {selectedPages.length}개 페이지 추출하여 새 PDF로 저장</span>
+                  <span>{t.pdfextract.extractBtn.replace('{count}', String(selectedPages.length))}</span>
                 </>
               )}
             </button>
           ) : (
             <div className={styles.successBox}>
               <div className={styles.successText}>
-                ✅ 선택한 {selectedPages.length}개 페이지 추출이 완료되었습니다!
+                {t.pdfextract.successText.replace('{count}', String(selectedPages.length))}
               </div>
               <a
                 href={extractedPdfUrl}
@@ -320,7 +324,7 @@ export default function PdfExtractClient() {
                 className={styles.downloadBtn}
               >
                 <IoDownloadOutline size={22} />
-                추출된 PDF 다운로드
+                {t.pdfextract.downloadBtn}
               </a>
             </div>
           )}
@@ -337,7 +341,7 @@ export default function PdfExtractClient() {
                   style={{ opacity: isSelected ? 1 : 0.55 }}
                 >
                   <div className={styles.thumbHeader}>
-                    <span className={styles.pageLabel}>{p.pageIndex} 페이지</span>
+                    <span className={styles.pageLabel}>{p.pageIndex} {t.pdfextract.pageLabel}</span>
                     {isSelected ? (
                       <IoCheckmarkCircle size={20} color="#4285f4" />
                     ) : (

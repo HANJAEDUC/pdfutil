@@ -3,11 +3,14 @@
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLanguage } from '@/lib/LanguageContext';
+import { Language } from '@/lib/translations';
 import styles from './Navbar.module.css';
 import { IoChevronBack, IoChevronForward, IoMailOutline } from 'react-icons/io5';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { lang, setLang, t } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -64,28 +67,39 @@ export default function Navbar() {
               href="/pdf-to-jpg"
               className={`${styles.link} ${pathname === '/pdf-to-jpg' || pathname === '/' ? styles.activeLink : ''}`}
             >
-              pdf2jpg
+              {t.nav.pdf2jpg}
             </Link>
             <Link
               href="/pdf-merge"
               className={`${styles.link} ${pathname === '/pdf-merge' ? styles.activeLink : ''}`}
             >
-              pdfmerge
+              {t.nav.pdfmerge}
             </Link>
             <Link
               href="/pdf-extract"
               className={`${styles.link} ${pathname === '/pdf-extract' ? styles.activeLink : ''}`}
             >
-              pdfextract
+              {t.nav.pdfextract}
             </Link>
             <a
               href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
               className={`${styles.iconLink} ${styles.desktopOnly}`}
               aria-label="Send Feedback"
               data-email="hanjaeduc@gmail.com"
+              title={t.nav.feedback}
             >
               <IoMailOutline size={22} />
             </a>
+            <select
+              className={styles.langSelect}
+              value={lang}
+              onChange={(e) => setLang(e.target.value as Language)}
+              aria-label="Select Language"
+            >
+              <option value="ko">🇰🇷 한국어</option>
+              <option value="en">🇺🇸 English</option>
+              <option value="de">🇩🇪 Deutsch</option>
+            </select>
           </div>
         </div>
       </div>

@@ -99,6 +99,30 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+.langSelect {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e3e3e3;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.langSelect:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #4285f4;
+}
+
+.langSelect option {
+  background: #1e1f20;
+  color: #e3e3e3;
+}
+
 .mobileOnly, .mobileFixedMail {
   display: none;
 }
