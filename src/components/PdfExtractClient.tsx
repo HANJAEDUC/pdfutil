@@ -218,7 +218,7 @@ export default function PdfExtractClient() {
     <div className={styles.container}>
       <header className={styles.header}>
         <span className={styles.badgeTitle}>Free & Private Utility</span>
-        <h1 className={styles.title}>PDF 페이지 추출기 (PdfExtract)</h1>
+        <h1 className={styles.title}>PDF-PDF</h1>
         <p className={styles.subtitle}>
           서버 업로드 없이 100% 브라우저 내부에서 특정 페이지를 선택하여 독립된 PDF로 추출합니다.
         </p>
