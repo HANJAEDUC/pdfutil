@@ -72,16 +72,19 @@ export default function PdfMergeClient() {
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragOver(true);
   };
 
   const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragOver(false);
   };
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragOver(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleFilesAdded(e.dataTransfer.files);
@@ -176,7 +179,7 @@ export default function PdfMergeClient() {
         <span>개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 병합됩니다.</span>
       </div>
 
-      {/* Dropzone */}
+      {/* Empty Dropzone */}
       {files.length === 0 && (
         <div
           className={`${styles.dropzone} ${isDragOver ? styles.dropzoneActive : ''}`}
@@ -200,13 +203,26 @@ export default function PdfMergeClient() {
         </div>
       )}
 
-      {/* File List & Controls */}
+      {/* File List & Controls with Drag & Drop Overlay Support */}
       {files.length > 0 && (
-        <div className={styles.listContainer}>
+        <div
+          className={styles.listContainer}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          {isDragOver && (
+            <div className={styles.dragOverlay}>
+              <IoCloudUploadOutline size={48} />
+              <span>추가할 PDF 파일들을 이곳에 놓으세요!</span>
+            </div>
+          )}
+
           <div className={styles.optionsBar}>
             <div className={styles.fileSummary}>
               <IoDocumentTextOutline size={22} color="#4285f4" />
               <span>총 {files.length}개 파일 선택됨</span>
+              <span className={styles.dragTip}>(추가 드래그 & 드롭 가능)</span>
             </div>
             <div className={styles.actionsRight}>
               <button
@@ -273,6 +289,15 @@ export default function PdfMergeClient() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mini Drag & Drop Add Target */}
+          <div
+            className={styles.miniDropzone}
+            onClick={() => addFileInputRef.current?.click()}
+          >
+            <IoAddOutline size={20} />
+            <span>여기에 다른 PDF 파일을 추가로 드래그 앤 드롭 하거나 클릭하여 선택하세요</span>
           </div>
 
           {/* Merge Action Area */}
