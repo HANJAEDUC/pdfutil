@@ -9,12 +9,13 @@ import {
   IoShieldCheckmarkOutline,
   IoDocumentTextOutline,
   IoRefreshOutline,
-  IoKeyOutline,
   IoEyeOutline,
   IoEyeOffOutline,
   IoLockClosedOutline,
+  IoCheckmarkCircleOutline,
+  IoAlertCircleOutline,
 } from 'react-icons/io5';
-import { PDFDocument } from 'pdf-lib';
+import { encryptPDF } from '@pdfsmaller/pdf-encrypt';
 
 export default function PdfPasswdClient() {
   const { t } = useLanguage();
@@ -23,7 +24,6 @@ export default function PdfPasswdClient() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [isProtecting, setIsProtecting] = useState(false);
   const [protectedPdfUrl, setProtectedPdfUrl] = useState<string | null>(null);
   const [protectedFileName, setProtectedFileName] = useState<string>('protected.pdf');
@@ -36,7 +36,6 @@ export default function PdfPasswdClient() {
         setFile(selectedFile);
         setPassword('');
         setConfirmPassword('');
-        setErrorMsg('');
         setProtectedPdfUrl(null);
       } else {
         alert('Please upload PDF files only.');
@@ -63,7 +62,6 @@ export default function PdfPasswdClient() {
         setFile(droppedFile);
         setPassword('');
         setConfirmPassword('');
-        setErrorMsg('');
         setProtectedPdfUrl(null);
       } else {
         alert('Please upload PDF files only.');
@@ -75,37 +73,26 @@ export default function PdfPasswdClient() {
     setFile(null);
     setPassword('');
     setConfirmPassword('');
-    setErrorMsg('');
     setProtectedPdfUrl(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
+  const isPasswordEntered = password.trim().length > 0;
+  const isConfirmEntered = confirmPassword.trim().length > 0;
+  const isMatch = isPasswordEntered && isConfirmEntered && password === confirmPassword;
+  const isFormValid = isMatch;
+
   const protectPdf = async () => {
-    if (!file) return;
+    if (!file || !isFormValid) return;
 
-    if (!password.trim()) {
-      setErrorMsg(t.pdfpasswd.emptyPassword);
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setErrorMsg(t.pdfpasswd.passwordMismatch);
-      return;
-    }
-
-    setErrorMsg('');
     setIsProtecting(true);
 
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
 
-      // Encrypt PDF using pdf-lib Standard Security
-      const encryptedPdfBytes = await pdfDoc.save({
-        userPassword: password,
-        ownerPassword: password,
-      } as any);
-      const blob = new Blob([encryptedPdfBytes as any], { type: 'application/pdf' });
+      // Client-side WebCrypto PDF password encryption using AES/Standard Security
+      const encryptedBytes = await encryptPDF(new Uint8Array(arrayBuffer), password);
+      const blob = new Blob([encryptedBytes as any], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
 
       const baseName = file.name.replace(/\.pdf$/i, '');
@@ -113,7 +100,7 @@ export default function PdfPasswdClient() {
       setProtectedPdfUrl(url);
     } catch (err: any) {
       console.error('Failed to encrypt PDF:', err);
-      alert(`Error setting password for PDF: ${err?.message || 'Please try another file.'}`);
+      alert(`PDF 암호화 오류: ${err?.message || '파일을 확인해 주세요.'}`);
     } finally {
       setIsProtecting(false);
     }
@@ -181,10 +168,7 @@ export default function PdfPasswdClient() {
                     type={showPassword ? 'text' : 'password'}
                     className={styles.input}
                     value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      setErrorMsg('');
-                    }}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder={t.pdfpasswd.passwordPlaceholder}
                   />
                   <button
@@ -205,19 +189,30 @@ export default function PdfPasswdClient() {
                     type={showPassword ? 'text' : 'password'}
                     className={styles.input}
                     value={confirmPassword}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                      setErrorMsg('');
-                    }}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder={t.pdfpasswd.confirmPasswordPlaceholder}
                   />
                 </div>
-                {errorMsg && <div className={styles.errorText}>{errorMsg}</div>}
+
+                {/* Password Validation Indicator */}
+                {isConfirmEntered && (
+                  <div style={{ marginTop: '8px', fontSize: '13px' }}>
+                    {isMatch ? (
+                      <span style={{ color: '#36b27e', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <IoCheckmarkCircleOutline size={16} /> 비밀번호가 일치합니다.
+                      </span>
+                    ) : (
+                      <span style={{ color: '#ea4335', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <IoAlertCircleOutline size={16} /> {t.pdfpasswd.passwordMismatch}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <button
                 type="submit"
-                disabled={isProtecting || !password.trim() || !confirmPassword.trim()}
+                disabled={isProtecting || !isFormValid}
                 className={styles.protectMainBtn}
               >
                 {isProtecting ? (
