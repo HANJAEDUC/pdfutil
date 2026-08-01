@@ -2,11 +2,13 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 import { IoChevronBack, IoChevronForward, IoMailOutline } from 'react-icons/io5';
 import DualClock from './DualClock';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -51,23 +53,32 @@ export default function Navbar() {
         <div className={styles.inner}>
           <Link href="/" className={styles.logo}>
             <div style={{ display: 'flex', alignItems: 'center', letterSpacing: '-0.5px' }}>
-              <span style={{ color: '#4285F4' }}>D</span>
-              <span style={{ color: '#EA4335' }}>a</span>
-              <span style={{ color: '#FBBC04' }}>i</span>
-              <span style={{ color: '#4285F4' }}>l</span>
-              <span style={{ color: '#34A853' }}>y</span>
+              <span style={{ color: '#4285F4' }}>P</span>
+              <span style={{ color: '#EA4335' }}>D</span>
+              <span style={{ color: '#FBBC04' }}>F</span>
             </div>
-            <span style={{ color: '#e3e3e3', fontWeight: 400, marginLeft: '0px', letterSpacing: '-0.5px' }}>words</span>
+            <span style={{ color: '#e3e3e3', fontWeight: 600, marginLeft: '6px', letterSpacing: '-0.5px' }}>util</span>
           </Link>
 
           <div className={styles.links}>
-            <Link href="/words" className={styles.link}>GermanWords</Link>
-            <Link href="/japanese" className={styles.link}>JapaneseWords</Link>
-            <Link href="/prices" className={styles.link}>GermanPrices</Link>
-            <Link href="/german-signs" className={styles.link}>GermanSigns</Link>
-            <Link href="/english-sentence" className={styles.link}>EnglishSentence</Link>
-            <Link href="/" className={`${styles.link} ${styles.activeLink}`}>PdfToJpg</Link>
-            <Link href="/private" className={styles.link}>PRIVATE</Link>
+            <Link
+              href="/pdf-to-jpg"
+              className={`${styles.link} ${pathname === '/pdf-to-jpg' || pathname === '/' ? styles.activeLink : ''}`}
+            >
+              pdf2jpg
+            </Link>
+            <Link
+              href="/pdf-merge"
+              className={`${styles.link} ${pathname === '/pdf-merge' ? styles.activeLink : ''}`}
+            >
+              pdfmerge
+            </Link>
+            <Link
+              href="/pdf-extract"
+              className={`${styles.link} ${pathname === '/pdf-extract' ? styles.activeLink : ''}`}
+            >
+              pdfextract
+            </Link>
             <DualClock />
             <a
               href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
