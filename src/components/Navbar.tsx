@@ -81,6 +81,12 @@ export default function Navbar() {
             >
               {t.nav.pdfextract}
             </Link>
+            <Link
+              href="/pdf-passwd"
+              className={`${styles.link} ${pathname === '/pdf-passwd' ? styles.activeLink : ''}`}
+            >
+              {t.nav.pdfpasswd}
+            </Link>
             <a
               href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
               className={`${styles.iconLink} ${styles.desktopOnly}`}

@@ -10,6 +10,7 @@ import {
   IoImagesOutline,
   IoLayersOutline,
   IoCutOutline,
+  IoLockClosedOutline,
   IoMailOutline,
   IoCheckmarkOutline,
   IoShieldCheckmarkOutline,
@@ -33,6 +34,12 @@ const slides = [
     title: 'PDF-PDF',
     imgSrc: '/hero-extract.png',
     link: '/pdf-extract',
+  },
+  {
+    id: 3,
+    title: 'PDF 🔑 PDF',
+    imgSrc: '/hero-passwd.png',
+    link: '/pdf-passwd',
   },
 ];
 
@@ -163,6 +170,20 @@ export default function HomePortalClient() {
             </div>
             <div className={styles.cardBtn}>
               <span>{t.home.tools.pdfextract.btn}</span>
+            </div>
+          </Link>
+
+          {/* Tool 4: PDF 🔑 PDF */}
+          <Link href="/pdf-passwd" className={styles.toolCard}>
+            <div>
+              <div className={styles.cardIcon}>
+                <IoLockClosedOutline />
+              </div>
+              <h3 className={styles.cardTitle}>{t.home.tools.pdfpasswd.title}</h3>
+              <p className={styles.cardDesc}>{t.home.tools.pdfpasswd.desc}</p>
+            </div>
+            <div className={styles.cardBtn}>
+              <span>{t.home.tools.pdfpasswd.btn}</span>
             </div>
           </Link>
         </div>
