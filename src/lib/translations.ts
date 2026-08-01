@@ -12,6 +12,36 @@ export const translations = {
       banner: '개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 변환/병합/추출됩니다.',
     },
     badge: 'Free & Private Utility',
+    home: {
+      heroBadge: '100% 브라우저 기반 무제한 무료 PDF 플랫폼',
+      heroTitle: '스마트하고 빠른 PDF 유틸리티 모음',
+      heroSubtitle: '서버 업로드 없이 100% 내 컴퓨터 브라우저 내부에서 안전하고 빠르게 PDF 작업을 완료하세요.',
+      toolSectionTitle: '제공 중인 PDF 유틸리티 도구',
+      toolSectionSub: '원하시는 기능을 선택하여 바로 작업을 시작해 보세요.',
+      tools: {
+        pdf2jpg: {
+          title: 'PDF ➡️ JPG',
+          desc: 'PDF 문서를 고화질 JPG 이미지로 변환합니다. 개별 페이지 다운로드, 전체 ZIP 압축 및 N개 페이지 세로 1장 통합 JPG 합치기를 지원합니다.',
+          btn: 'PDF 변환하러 가기 ➔',
+        },
+        pdfmerge: {
+          title: 'PDF + PDF',
+          desc: '여러 개의 PDF 파일들을 드래그 앤 드롭으로 순서를 자유롭게 배치하여 하나로 통합 병합합니다.',
+          btn: 'PDF 병합하러 가기 ➔',
+        },
+        pdfextract: {
+          title: 'PDF-PDF',
+          desc: 'PDF 문서 전체 썸네일을 미리보고 원하는 페이지만 선택하여 새로운 독립 PDF로 추출합니다.',
+          btn: '페이지 추출하러 가기 ➔',
+        },
+      },
+      feedbackBox: {
+        title: '💌 더욱 편리한 사용을 위해 소중한 피드백을 남겨주세요!',
+        desc: 'PDF Util을 사용하시면서 개선되었으면 하는 점이나 새롭게 필요한 기능(예: PDF 압축, PNG 변환, 암호 해제 등)이 있다면 언제든지 의견을 들려주세요. 사용자분의 제안을 적극 반영하겠습니다.',
+        emailBtn: '✉️ 피드백 이메일 보내기 (hanjaeduc@gmail.com)',
+        copyEmailBtn: '이메일 주소 복사',
+      },
+    },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
       subtitle: '서버 업로드 없이 100% 브라우저 내부에서 고화질 JPG 이미지로 변환합니다.',
@@ -94,6 +124,36 @@ export const translations = {
       banner: '100% Private: All files are processed inside your browser with zero server uploads.',
     },
     badge: 'Free & Private Utility',
+    home: {
+      heroBadge: '100% Browser-Based Free PDF Suite',
+      heroTitle: 'Smart & Fast PDF Utilities',
+      heroSubtitle: 'Perform all your PDF tasks 100% locally inside your browser with complete privacy.',
+      toolSectionTitle: 'Available PDF Tools',
+      toolSectionSub: 'Select a tool to get started instantly.',
+      tools: {
+        pdf2jpg: {
+          title: 'PDF ➡️ JPG',
+          desc: 'Convert PDF files to high-quality JPG images. Supports single download, ZIP download, and single merged long image.',
+          btn: 'Open PDF Converter ➔',
+        },
+        pdfmerge: {
+          title: 'PDF + PDF',
+          desc: 'Combine multiple PDF files into one. Drag & drop files to reorder freely before merging.',
+          btn: 'Open PDF Merger ➔',
+        },
+        pdfextract: {
+          title: 'PDF-PDF',
+          desc: 'Preview all page thumbnails and extract selected pages into a new independent PDF document.',
+          btn: 'Open Page Extractor ➔',
+        },
+      },
+      feedbackBox: {
+        title: '💌 We value your feedback & feature suggestions!',
+        desc: 'Have a suggestion or need new features (e.g. PDF compression, PNG conversion, password unlock)? Let us know! Your feedback helps us make these tools even better.',
+        emailBtn: '✉️ Send Feedback Email (hanjaeduc@gmail.com)',
+        copyEmailBtn: 'Copy Email Address',
+      },
+    },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
       subtitle: 'Convert PDF to high-resolution JPG images 100% inside your browser with no server uploads.',
@@ -176,6 +236,36 @@ export const translations = {
       banner: '100% Datenschutz: Alle Dateien werden im Browser verarbeitet – ohne Server-Uploads.',
     },
     badge: 'Free & Private Utility',
+    home: {
+      heroBadge: '100% Browserbasierte Kostenlose PDF Plattform',
+      heroTitle: 'Smart & Schnelle PDF Tools',
+      heroSubtitle: 'Erledigen Sie alle Ihre PDF-Aufgaben 100% lokal in Ihrem Browser bei vollständiger Privatsphäre.',
+      toolSectionTitle: 'Verfügbare PDF Werkzeuge',
+      toolSectionSub: 'Wählen Sie ein Werkzeug aus, um sofort zu beginnen.',
+      tools: {
+        pdf2jpg: {
+          title: 'PDF ➡️ JPG',
+          desc: 'Konvertieren Sie PDF-Dateien in hochwertige JPG-Bilder. Unterstützt Einzeldownload, ZIP-Download und 1 langes Kombibild.',
+          btn: 'PDF Konverter Öffnen ➔',
+        },
+        pdfmerge: {
+          title: 'PDF + PDF',
+          desc: 'Fügen Sie mehrere PDF-Dateien zu einer zusammen. Dateien per Drag & Drop frei anordnen.',
+          btn: 'PDF Zusammenfügen ➔',
+        },
+        pdfextract: {
+          title: 'PDF-PDF',
+          desc: 'Seiten vorschauen und ausgewählte Seiten in ein neues PDF-Dokument extrahieren.',
+          btn: 'Seiten Extrahieren ➔',
+        },
+      },
+      feedbackBox: {
+        title: '💌 Wir freuen uns über Ihr Feedback & Ihre Vorschläge!',
+        desc: 'Haben Sie Vorschläge oder benötigen Sie neue Funktionen (z.B. PDF-Komprimierung, PNG-Umwandlung)? Teilen Sie es uns mit!',
+        emailBtn: '✉️ Feedback-E-Mail senden (hanjaeduc@gmail.com)',
+        copyEmailBtn: 'E-Mail-Adresse kopieren',
+      },
+    },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
       subtitle: 'Konvertieren Sie PDF-Dateien ohne Server-Uploads 100% im Browser in hochwertige JPG-Bilder.',
