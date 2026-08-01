@@ -10,10 +10,10 @@ export const metadata = {
 
 export default function PdfMergePage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#121212]">
+    <div className="min-h-screen flex flex-col bg-[var(--md-sys-color-background)]">
       <Navbar />
 
-      <main className="flex-1 pt-[70px]">
+      <main className="flex-1 pt-[80px]">
         <PdfMergeClient />
       </main>
 
