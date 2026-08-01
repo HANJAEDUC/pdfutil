@@ -11,8 +11,6 @@ import {
   IoLayersOutline,
   IoCutOutline,
   IoLockClosedOutline,
-  IoMailOutline,
-  IoCheckmarkOutline,
   IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
 
@@ -47,7 +45,6 @@ export default function HomePortalClient() {
   const { t } = useLanguage();
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [copied, setCopied] = useState(false);
 
   // Dynamic automatic slideshow timer (rotates every 3.5s)
   useEffect(() => {
@@ -56,12 +53,6 @@ export default function HomePortalClient() {
     }, 3500);
     return () => clearInterval(timer);
   }, []);
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText('hanjaeduc@gmail.com');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
-  };
 
   return (
     <div className={styles.container}>
@@ -180,33 +171,6 @@ export default function HomePortalClient() {
               <span>{t.home.tools.pdfpasswd.btn}</span>
             </div>
           </Link>
-        </div>
-      </section>
-
-      {/* User Feedback & Suggestions Section */}
-      <section className={styles.feedbackBox}>
-        <div className={styles.feedbackIcon}>💌</div>
-        <h3 className={styles.feedbackTitle}>{t.home.feedbackBox.title}</h3>
-        <p className={styles.feedbackDesc}>{t.home.feedbackBox.desc}</p>
-
-        <div className={styles.feedbackActions}>
-          <a
-            href="mailto:hanjaeduc@gmail.com?subject=PDF Util Feedback & Suggestions"
-            className={styles.mailActionBtn}
-          >
-            <IoMailOutline size={20} />
-            <span>{t.home.feedbackBox.emailBtn}</span>
-          </a>
-
-          <button onClick={copyEmail} className={styles.copyEmailBtn}>
-            {copied ? (
-              <span className={styles.copiedText}>
-                <IoCheckmarkOutline size={18} /> 복사되었습니다!
-              </span>
-            ) : (
-              <span>{t.home.feedbackBox.copyEmailBtn}</span>
-            )}
-          </button>
         </div>
       </section>
     </div>
