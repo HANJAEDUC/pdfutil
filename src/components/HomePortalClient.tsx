@@ -12,6 +12,8 @@ import {
   IoCutOutline,
   IoLockClosedOutline,
   IoShieldCheckmarkOutline,
+  IoCheckmarkCircleOutline,
+  IoFlashOutline,
 } from 'react-icons/io5';
 
 const slides = [
@@ -102,12 +104,20 @@ export default function HomePortalClient() {
           </div>
         </div>
 
+        {/* 3 Point Cards Aligned with Left Edge of Carousel Container */}
         <div className={styles.heroText}>
-          <span className={styles.heroBadge}>{t.home.heroBadge}</span>
-          <p className={styles.heroSubtitle}>{t.home.heroSubtitle}</p>
+          <div className={styles.pointCardBlue}>
+            <IoCheckmarkCircleOutline size={18} color="#8ab4f8" />
+            <span>{t.home.heroBadge}</span>
+          </div>
+
+          <div className={styles.pointCardGray}>
+            <IoFlashOutline size={18} color="#e3e3e3" />
+            <span>{t.home.heroSubtitle}</span>
+          </div>
 
           <div className={styles.privacyTag}>
-            <IoShieldCheckmarkOutline size={18} />
+            <IoShieldCheckmarkOutline size={18} color="#36b27e" />
             <span>{t.privacy.banner}</span>
           </div>
         </div>
