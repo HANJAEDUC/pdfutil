@@ -89,12 +89,13 @@ export default function Navbar() {
             </Link>
             <a
               href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
-              className={`${styles.iconLink} ${styles.desktopOnly}`}
+              className={`${styles.feedbackBtn} ${styles.desktopOnly}`}
               aria-label="Send Feedback"
               data-email="hanjaeduc@gmail.com"
               title={t.nav.feedback}
             >
-              <IoMailOutline size={22} />
+              <IoMailOutline size={18} />
+              <span>{t.nav.feedback}: hanjaeduc@gmail.com</span>
             </a>
             <select
               className={styles.langSelect}
