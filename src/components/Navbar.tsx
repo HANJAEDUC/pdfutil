@@ -70,6 +70,12 @@ export default function Navbar() {
               {t.nav.pdf2jpg}
             </Link>
             <Link
+              href="/pdf-to-word"
+              className={`${styles.link} ${pathname === '/pdf-to-word' ? styles.activeLink : ''}`}
+            >
+              {(t.nav as any).pdf2word || 'pdf2word'}
+            </Link>
+            <Link
               href="/pdf-merge"
               className={`${styles.link} ${pathname === '/pdf-merge' ? styles.activeLink : ''}`}
             >

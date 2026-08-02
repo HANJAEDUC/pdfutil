@@ -14,6 +14,7 @@ import {
   IoShieldCheckmarkOutline,
   IoCheckmarkCircleOutline,
   IoFlashOutline,
+  IoDocumentTextOutline,
 } from 'react-icons/io5';
 
 const slides = [
@@ -137,6 +138,20 @@ export default function HomePortalClient() {
             </div>
             <div className={styles.cardBtn}>
               <span>{t.home.tools.pdf2jpg.btn}</span>
+            </div>
+          </Link>
+
+          {/* Tool 2: PDF ➡️ Word */}
+          <Link href="/pdf-to-word" className={styles.toolCard}>
+            <div>
+              <div className={styles.cardIcon}>
+                <IoDocumentTextOutline />
+              </div>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdf2word?.title || 'PDF ➡️ Word'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdf2word?.desc || 'PDF 문서를 편집 가능한 Word(.docx) 문서로 변환합니다.'}</p>
+            </div>
+            <div className={styles.cardBtn}>
+              <span>{(t.home.tools as any).pdf2word?.btn || 'Word 변환하러 가기 ➔'}</span>
             </div>
           </Link>
 

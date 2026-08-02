@@ -4,6 +4,7 @@ export const translations = {
   ko: {
     nav: {
       pdf2jpg: 'pdf2jpg',
+      pdf2word: 'pdf2word',
       pdfmerge: 'pdfmerge',
       pdfextract: 'pdfextract',
       pdfpasswd: 'pdfpasswd',
@@ -24,6 +25,11 @@ export const translations = {
           title: 'PDF ➡️ JPG',
           desc: 'PDF 문서를 고화질 JPG 이미지로 변환합니다. 개별 페이지 다운로드, 전체 ZIP 압축 및 N개 페이지 세로 1장 통합 JPG 합치기를 지원합니다.',
           btn: 'PDF 변환하러 가기 ➔',
+        },
+        pdf2word: {
+          title: 'PDF ➡️ Word',
+          desc: 'PDF 문서 내 텍스트와 구조를 분석하여 편집 가능한 Microsoft Word(.docx) 문서로 변환합니다.',
+          btn: 'Word 변환하러 가기 ➔',
         },
         pdfmerge: {
           title: 'PDF + PDF',
@@ -47,6 +53,17 @@ export const translations = {
         emailBtn: '✉️ 피드백 이메일 보내기 (hanjaeduc@gmail.com)',
         copyEmailBtn: '이메일 주소 복사',
       },
+    },
+    pdf2word: {
+      title: 'PDF ➡️ Word (DOCX)',
+      subtitle: '서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 PDF를 Word(.docx) 문서로 변환합니다.',
+      dropText: 'Word로 변환할 PDF 파일을 이곳에 드래그하거나 클릭하세요',
+      subText: '최대 파일 크기 제한 없이 안전하게 내 컴퓨터에서 바로 변환됩니다.',
+      selectBtn: 'PDF 파일 선택',
+      convertingProgress: 'PDF 텍스트 구조 분석 및 Word 파일 생성 중... ({current} / {total} 페이지)',
+      successText: '✅ Word(.docx) 문서 변환이 완료되었습니다!',
+      downloadBtn: 'Word(.docx) 파일 다운로드',
+      newFile: '새 파일',
     },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
@@ -140,6 +157,7 @@ export const translations = {
   en: {
     nav: {
       pdf2jpg: 'pdf2jpg',
+      pdf2word: 'pdf2word',
       pdfmerge: 'pdfmerge',
       pdfextract: 'pdfextract',
       pdfpasswd: 'pdfpasswd',
@@ -160,6 +178,11 @@ export const translations = {
           title: 'PDF ➡️ JPG',
           desc: 'Convert PDF files to high-quality JPG images. Supports single download, ZIP download, and single merged long image.',
           btn: 'Open PDF Converter ➔',
+        },
+        pdf2word: {
+          title: 'PDF ➡️ Word',
+          desc: 'Convert PDF files to editable Microsoft Word (.docx) documents locally in your browser.',
+          btn: 'Open Word Converter ➔',
         },
         pdfmerge: {
           title: 'PDF + PDF',
@@ -272,10 +295,22 @@ export const translations = {
       emptyPassword: 'Please enter a password.',
       newFile: 'New File',
     },
+    pdf2word: {
+      title: 'PDF ➡️ Word (DOCX)',
+      subtitle: 'Convert PDF to editable Word (.docx) documents 100% inside your browser with no server uploads.',
+      dropText: 'Drag & drop PDF file to convert to Word here, or click to select',
+      subText: 'Free to use with no file size limits.',
+      selectBtn: 'Select PDF File',
+      convertingProgress: 'Analyzing text & generating Word file... ({current} / {total} Pages)',
+      successText: '✅ Word (.docx) Conversion Complete!',
+      downloadBtn: 'Download Word (.docx) File',
+      newFile: 'New File',
+    },
   },
   de: {
     nav: {
       pdf2jpg: 'pdf2jpg',
+      pdf2word: 'pdf2word',
       pdfmerge: 'pdfmerge',
       pdfextract: 'pdfextract',
       pdfpasswd: 'pdfpasswd',
@@ -296,6 +331,11 @@ export const translations = {
           title: 'PDF ➡️ JPG',
           desc: 'Konvertieren Sie PDF-Dateien in hochwertige JPG-Bilder. Unterstützt Einzeldownload, ZIP-Download und 1 langes Kombibild.',
           btn: 'PDF Konverter Öffnen ➔',
+        },
+        pdf2word: {
+          title: 'PDF ➡️ Word',
+          desc: 'Konvertieren Sie PDF-Dateien in bearbeitbare Microsoft Word (.docx) Dokumente.',
+          btn: 'Word-Konverter Öffnen ➔',
         },
         pdfmerge: {
           title: 'PDF + PDF',
@@ -406,6 +446,17 @@ export const translations = {
       downloadBtn: 'Verschlüsseltes PDF Herunterladen',
       passwordMismatch: 'Passwörter stimmen nicht überein. Bitte überprüfen.',
       emptyPassword: 'Bitte geben Sie ein Passwort ein.',
+      newFile: 'Neue Datei',
+    },
+    pdf2word: {
+      title: 'PDF ➡️ Word (DOCX)',
+      subtitle: 'Konvertieren Sie PDF in bearbeitbare Word (.docx) Dokumente 100% im Browser ohne Server-Uploads.',
+      dropText: 'PDF-Datei zum Konvertieren hierher ziehen 또는 클릭하세요',
+      subText: 'Kostenlos ohne Dateigrößenbeschränkung nutzbar.',
+      selectBtn: 'PDF-Datei Auswählen',
+      convertingProgress: 'PDF wird in Word konvertiert... ({current} / {total} Seiten)',
+      successText: '✅ Word (.docx) Konvertierung abgeschlossen!',
+      downloadBtn: 'Word (.docx) Datei Herunterladen',
       newFile: 'Neue Datei',
     },
   },
