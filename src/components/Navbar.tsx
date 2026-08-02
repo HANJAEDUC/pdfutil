@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/LanguageContext';
 import { Language } from '@/lib/translations';
@@ -55,14 +54,7 @@ export default function Navbar() {
       <div className={styles.scrollContainer} ref={scrollRef} onScroll={checkScroll}>
         <div className={styles.inner}>
           <Link href="/" className={styles.logo}>
-            <Image
-              src="/logo.png"
-              alt="myPDF logo"
-              width={30}
-              height={30}
-              style={{ borderRadius: '8px', objectFit: 'contain', marginRight: '8px' }}
-            />
-            <span style={{ color: '#e3e3e3', fontWeight: 600, letterSpacing: '-0.5px' }}>my</span>
+            <span style={{ color: '#e3e3e3', fontWeight: 600, letterSpacing: '-0.5px', marginRight: '1px' }}>my</span>
             <div style={{ display: 'flex', alignItems: 'center', letterSpacing: '-0.5px' }}>
               <span style={{ color: '#4285F4' }}>P</span>
               <span style={{ color: '#EA4335' }}>D</span>
@@ -73,7 +65,7 @@ export default function Navbar() {
           <div className={styles.links}>
             <Link
               href="/pdf-to-jpg"
-              className={`${styles.link} ${pathname === '/pdf-to-jpg' || pathname === '/' ? styles.activeLink : ''}`}
+              className={`${styles.link} ${pathname === '/pdf-to-jpg' ? styles.activeLink : ''}`}
             >
               {t.nav.pdf2jpg}
             </Link>
