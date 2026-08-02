@@ -87,16 +87,19 @@ export default function Navbar() {
             >
               {t.nav.pdfpasswd}
             </Link>
-            <a
-              href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
-              className={`${styles.feedbackBtn} ${styles.desktopOnly}`}
-              aria-label="Send Feedback"
-              data-email="hanjaeduc@gmail.com"
-              title={t.nav.feedback}
-            >
-              <IoMailOutline size={18} />
-              <span>{t.nav.feedback}: hanjaeduc@gmail.com</span>
-            </a>
+            <div className={`${styles.feedbackWrapper} ${styles.desktopOnly}`}>
+              <a
+                href="mailto:hanjaeduc@gmail.com?subject=Suggestions for Improvement"
+                className={styles.iconLink}
+                aria-label="Send Feedback"
+                data-email="hanjaeduc@gmail.com"
+              >
+                <IoMailOutline size={22} />
+              </a>
+              <div className={styles.feedbackTooltip}>
+                ✉️ hanjaeduc@gmail.com
+              </div>
+            </div>
             <select
               className={styles.langSelect}
               value={lang}
