@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/LanguageContext';
 import { Language } from '@/lib/translations';
@@ -54,12 +55,20 @@ export default function Navbar() {
       <div className={styles.scrollContainer} ref={scrollRef} onScroll={checkScroll}>
         <div className={styles.inner}>
           <Link href="/" className={styles.logo}>
-            <div style={{ display: 'flex', alignItems: 'center', letterSpacing: '-0.5px' }}>
-              <span style={{ color: '#4285F4' }}>P</span>
-              <span style={{ color: '#EA4335' }}>D</span>
-              <span style={{ color: '#FBBC04' }}>F</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Image
+                src="/logo.png"
+                alt="mypdf logo"
+                width={32}
+                height={32}
+                style={{ borderRadius: '8px', objectFit: 'contain' }}
+              />
+              <div style={{ display: 'flex', alignItems: 'center', letterSpacing: '-0.5px' }}>
+                <span style={{ color: '#4285F4', fontWeight: 700 }}>my</span>
+                <span style={{ color: '#EA4335', fontWeight: 700 }}>pdf</span>
+                <span style={{ color: '#FBBC04', fontSize: '13px', fontWeight: 600, marginLeft: '2px', opacity: 0.9 }}>.co.kr</span>
+              </div>
             </div>
-            <span style={{ color: '#e3e3e3', fontWeight: 600, marginLeft: '0px', letterSpacing: '-0.5px' }}>util</span>
           </Link>
 
           <div className={styles.links}>

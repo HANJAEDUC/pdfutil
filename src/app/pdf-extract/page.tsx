@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import PdfExtractClient from '@/components/PdfExtractClient';
 
 export const metadata = {
-  title: 'PDF-PDF | PDF Util',
+  title: 'PDF-PDF 추출 | mypdf (mypdf.co.kr)',
   description: '서버 업로드 없이 PDF 파일에서 원하는 페이지만 선택하여 새로운 PDF로 추출합니다.',
 };
 
