@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "mypdf — 스마트하고 빠른 무료 브라우저 PDF 플랫폼 (mypdf.co.kr)",
-  description: "서버 업로드 없이 100% 브라우저 내부에서 안전하게 PDF 변환, 병합, 추출 및 암호화를 수행하는 무제한 무료 유틸리티",
+  title: "myPDF — 100% Free for Everyone (mypdf.co.kr)",
+  description: "서버 업로드 없이 100% 브라우저 내부에서 안전하게 PDF 변환, 병합, 추출 및 암호화를 수행하는 모두에게 무료 PDF 플랫폼",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",

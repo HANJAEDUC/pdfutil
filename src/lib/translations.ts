@@ -14,9 +14,9 @@ export const translations = {
     },
     badge: 'Free & Private Utility',
     home: {
-      heroBadge: '100% 브라우저 기반 무제한 무료 PDF 플랫폼',
-      heroTitle: '스마트하고 빠른 PDF 유틸리티 모음',
-      heroSubtitle: '서버 업로드 없이 100% 내 컴퓨터 브라우저 내부에서 안전하고 빠르게 PDF 작업을 완료하세요.',
+      heroBadge: '100% Free for Everyone — 무제한 무료 PDF 플랫폼',
+      heroTitle: 'myPDF — 100% Free for Everyone',
+      heroSubtitle: '모두에게 100% 무료! 서버 업로드 없이 내 컴퓨터 브라우저 내부에서 안전하고 빠르게 PDF 작업을 완료하세요.',
       toolSectionTitle: '제공 중인 PDF 유틸리티 도구',
       toolSectionSub: '원하시는 기능을 선택하여 바로 작업을 시작해 보세요.',
       tools: {
@@ -150,9 +150,9 @@ export const translations = {
     },
     badge: 'Free & Private Utility',
     home: {
-      heroBadge: '100% Browser-Based Free PDF Suite',
-      heroTitle: 'Smart & Fast PDF Utilities',
-      heroSubtitle: 'Perform all your PDF tasks 100% locally inside your browser with complete privacy.',
+      heroBadge: '100% Free for Everyone — Browser-Based Free PDF Suite',
+      heroTitle: 'myPDF — 100% Free for Everyone',
+      heroSubtitle: '100% Free for Everyone! Perform all your PDF tasks 100% locally inside your browser with complete privacy.',
       toolSectionTitle: 'Available PDF Tools',
       toolSectionSub: 'Select a tool to get started instantly.',
       tools: {
