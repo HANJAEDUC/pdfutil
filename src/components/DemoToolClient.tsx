@@ -19,7 +19,7 @@ const TOOL_DETAILS_I18N: { [key: string]: { [lang: string]: { title: string; des
   pdfxxx: {
     ko: { title: 'pdfxxx (페이지 분할)', desc: '하나의 PDF 문서를 여러 개로 분할합니다.' },
     en: { title: 'pdfxxx (Split PDF)', desc: 'Split a PDF document into multiple separate files.' },
-    de: { title: 'pdfxxx (PDF Teilen)', desc: 'Teilen Sie ein PDF-Dokument in mehrere Dateien.' },
+    de: { title: 'pdfxxx (PDF Teilen)', desc: 'Teilen Sie ein PDF-Dokument in mehere Dateien.' },
   },
   pdfxxxx: {
     ko: { title: 'pdfxxxx (페이지 삭제)', desc: 'PDF 문서에서 불필요한 페이지를 삭제합니다.' },
@@ -72,8 +72,9 @@ export default function DemoToolClient({ toolKey, defaultTitle, defaultDescripti
 
   return (
     <div className={styles.container}>
-      {/* 1. Header Section (Exact match to pdf-to-jpg screenshot) */}
+      {/* 1. Header Section (100% Identical to pdf-to-jpg with badgeTitle) */}
       <header className={styles.header}>
+        <span className={styles.badgeTitle}>{t.badge}</span>
         <h1 className={styles.title}>
           {currentInfo.title}
         </h1>
@@ -82,13 +83,13 @@ export default function DemoToolClient({ toolKey, defaultTitle, defaultDescripti
         </p>
       </header>
 
-      {/* 2. Privacy Guarantee Banner (Exact match to pdf-to-jpg screenshot) */}
+      {/* 2. Privacy Guarantee Banner (100% Identical to pdf-to-jpg) */}
       <div className={styles.privacyBanner}>
         <IoShieldCheckmarkOutline size={18} />
         <span>{t.privacy.banner}</span>
       </div>
 
-      {/* 3. Main Dropzone Box (Exact 100% match to pdf-to-jpg screenshot) */}
+      {/* 3. Main Dropzone Box (100% Identical to pdf-to-jpg) */}
       <div
         className={styles.dropzone}
         onClick={handleActionNotice}
