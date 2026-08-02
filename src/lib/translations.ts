@@ -65,6 +65,41 @@ export const translations = {
           desc: '중요한 PDF 문서에 비밀번호(암호)를 설정하여 무단 열람을 방지하고 안전하게 암호화합니다.',
           btn: 'PDF 암호 설정하러 가기 ➔',
         },
+        pdfxxx: {
+          title: 'pdfxxx',
+          desc: 'PDF 문서를 원하는 범위나 페이지 단위로 자유롭게 분할합니다.',
+          btn: '페이지 분할하러 가기 ➔',
+        },
+        pdfxxxx: {
+          title: 'pdfxxxx',
+          desc: 'PDF 문서에서 불필요한 페이지나 구성을 선택하여 삭제합니다.',
+          btn: '페이지 삭제하러 가기 ➔',
+        },
+        pdfxxxxx: {
+          title: 'pdfxxxxx',
+          desc: 'PDF 각 페이지의 방향을 90도/180도 회전시켜 재정렬합니다.',
+          btn: '페이지 회전하러 가기 ➔',
+        },
+        pdfxxxxxx: {
+          title: 'pdfxxxxxx',
+          desc: '고화질 PDF 파일 용량을 이메일 전송용으로 경량화 압축합니다.',
+          btn: '용량 압축하러 가기 ➔',
+        },
+        pdfxxxxxxx: {
+          title: 'pdfxxxxxxx',
+          desc: 'PDF 문서 배경에 워터마크 텍스트나 로고를 지정해 삽입합니다.',
+          btn: '워터마크 설정하러 가기 ➔',
+        },
+        pdfxxxxxxxx: {
+          title: 'pdfxxxxxxxx',
+          desc: 'PDF 파일 내부의 텍스트와 본문 문장만을 빠르게 추출합니다.',
+          btn: '텍스트 추출하러 가기 ➔',
+        },
+        pdfxxxxxxxxx: {
+          title: 'pdfxxxxxxxxx',
+          desc: '스캔된 이미지형 PDF에서 문자를 정밀하게 OCR 글자 인식합니다.',
+          btn: 'OCR 인식하러 가기 ➔',
+        },
       },
       feedbackBox: {
         title: '💌 더욱 편리한 사용을 위해 소중한 피드백을 남겨주세요!',
@@ -237,6 +272,41 @@ export const translations = {
           desc: 'Protect sensitive PDF documents with password encryption to prevent unauthorized access.',
           btn: 'Open PDF Password Protect ➔',
         },
+        pdfxxx: {
+          title: 'pdfxxx',
+          desc: 'Split a PDF document into separate files by page range or single pages.',
+          btn: 'Go to Split PDF ➔',
+        },
+        pdfxxxx: {
+          title: 'pdfxxxx',
+          desc: 'Delete unwanted or unnecessary pages from your PDF document.',
+          btn: 'Go to Delete Pages ➔',
+        },
+        pdfxxxxx: {
+          title: 'pdfxxxxx',
+          desc: 'Rotate PDF pages by 90 degrees or 180 degrees to reorient them.',
+          btn: 'Go to Rotate PDF ➔',
+        },
+        pdfxxxxxx: {
+          title: 'pdfxxxxxx',
+          desc: 'Compress and optimize high-resolution PDF files for easy email sharing.',
+          btn: 'Go to Compress PDF ➔',
+        },
+        pdfxxxxxxx: {
+          title: 'pdfxxxxxxx',
+          desc: 'Add custom text or image watermarks to your PDF background.',
+          btn: 'Go to Watermark PDF ➔',
+        },
+        pdfxxxxxxxx: {
+          title: 'pdfxxxxxxxx',
+          desc: 'Quickly extract text content and sentences from your PDF files.',
+          btn: 'Go to Extract Text ➔',
+        },
+        pdfxxxxxxxxx: {
+          title: 'pdfxxxxxxxxx',
+          desc: 'Recognize and extract text from scanned PDF images using OCR.',
+          btn: 'Go to OCR Recognition ➔',
+        },
       },
       feedbackBox: {
         title: '💌 We value your feedback & feature suggestions!',
@@ -408,6 +478,41 @@ export const translations = {
           title: 'PDF 🔑 PDF',
           desc: 'Schützen Sie vertrauliche PDF-Dokumente mit Passwortverschlüsselung.',
           btn: 'PDF Passwortschutz Öffnen ➔',
+        },
+        pdfxxx: {
+          title: 'pdfxxx',
+          desc: 'Teilen Sie ein PDF-Dokument in einzelne Seiten oder Seitenbereiche.',
+          btn: 'Zu PDF Teilen ➔',
+        },
+        pdfxxxx: {
+          title: 'pdfxxxx',
+          desc: 'Löschen Sie unerwünschte Seiten aus Ihrem PDF-Dokument.',
+          btn: 'Zu Seiten Löschen ➔',
+        },
+        pdfxxxxx: {
+          title: 'pdfxxxxx',
+          desc: 'Drehen Sie PDF-Seiten um 90 oder 180 Grad.',
+          btn: 'Zu PDF Drehen ➔',
+        },
+        pdfxxxxxx: {
+          title: 'pdfxxxxxx',
+          desc: 'Komprimieren Sie PDF-Dateien für den schnellen E-Mail-Versand.',
+          btn: 'Zu PDF Komprimieren ➔',
+        },
+        pdfxxxxxxx: {
+          title: 'pdfxxxxxxx',
+          desc: 'Fügen Sie benutzerdefinierte Wasserzeichen zu Ihrem PDF hinzu.',
+          btn: 'Zu Wasserzeichen ➔',
+        },
+        pdfxxxxxxxx: {
+          title: 'pdfxxxxxxxx',
+          desc: 'Extrahieren Sie ReintExt und Sätze aus Ihrer PDF-Datei.',
+          btn: 'Zu Text Extrahieren ➔',
+        },
+        pdfxxxxxxxxx: {
+          title: 'pdfxxxxxxxxx',
+          desc: 'Erkennen Sie Text aus gescannten PDF-Dateien mittels OCR.',
+          btn: 'Zu OCR Erkennung ➔',
         },
       },
       feedbackBox: {

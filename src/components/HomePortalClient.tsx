@@ -189,10 +189,10 @@ export default function HomePortalClient() {
                 <IoGitBranchOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxx</h3>
-              <p className={styles.cardDesc}>PDF 문서를 원하는 범위나 페이지 단위로 자유롭게 분할합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxx?.desc || 'PDF 문서를 원하는 범위나 페이지 단위로 자유롭게 분할합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>페이지 분할하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxx?.btn || '페이지 분할하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -203,10 +203,10 @@ export default function HomePortalClient() {
                 <IoTrashOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxx</h3>
-              <p className={styles.cardDesc}>PDF 문서에서 불필요한 페이지나 구성을 선택하여 삭제합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxx?.desc || 'PDF 문서에서 불필요한 페이지나 구성을 선택하여 삭제합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>페이지 삭제하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxx?.btn || '페이지 삭제하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -217,10 +217,10 @@ export default function HomePortalClient() {
                 <IoRefreshOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxxx</h3>
-              <p className={styles.cardDesc}>PDF 각 페이지의 방향을 90도/180도 회전시켜 재정렬합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxx?.desc || 'PDF 각 페이지의 방향을 90도/180도 회전시켜 재정렬합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>페이지 회전하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxxx?.btn || '페이지 회전하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -231,10 +231,10 @@ export default function HomePortalClient() {
                 <IoArchiveOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxxxx</h3>
-              <p className={styles.cardDesc}>고화질 PDF 파일 용량을 이메일 전송용으로 경량화 압축합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxx?.desc || '고화질 PDF 파일 용량을 이메일 전송용으로 경량화 압축합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>용량 압축하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxxxx?.btn || '용량 압축하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -245,10 +245,10 @@ export default function HomePortalClient() {
                 <IoWaterOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxxxxx</h3>
-              <p className={styles.cardDesc}>PDF 문서 배경에 워터마크 텍스트나 로고를 지정해 삽입합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxx?.desc || 'PDF 문서 배경에 워터마크 텍스트나 로고를 지정해 삽입합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>워터마크 설정하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxxxxx?.btn || '워터마크 설정하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -259,10 +259,10 @@ export default function HomePortalClient() {
                 <IoTextOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxxxxxx</h3>
-              <p className={styles.cardDesc}>PDF 파일 내부의 텍스트와 본문 문장만을 빠르게 추출합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxxx?.desc || 'PDF 파일 내부의 텍스트와 본문 문장만을 빠르게 추출합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>텍스트 추출하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxxxxxx?.btn || '텍스트 추출하러 가기 ➔'}</span>
             </div>
           </Link>
 
@@ -273,10 +273,10 @@ export default function HomePortalClient() {
                 <IoScanOutline />
               </div>
               <h3 className={styles.cardTitle}>pdfxxxxxxxxx</h3>
-              <p className={styles.cardDesc}>스캔된 이미지형 PDF에서 문자를 정밀하게 OCR 글자 인식합니다.</p>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxxxx?.desc || '스캔된 이미지형 PDF에서 문자를 정밀하게 OCR 글자 인식합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>OCR 인식하러 가기 ➔</span>
+              <span>{(t.home.tools as any).pdfxxxxxxxxx?.btn || 'OCR 인식하러 가기 ➔'}</span>
             </div>
           </Link>
         </div>
