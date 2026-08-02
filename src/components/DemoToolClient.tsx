@@ -72,7 +72,7 @@ export default function DemoToolClient({ toolKey, defaultTitle, defaultDescripti
 
   return (
     <div className={styles.container}>
-      {/* 1. Header Section (100% Identical to pdf-to-jpg with badgeTitle) */}
+      {/* 1. Header Section (100% Identical to pdf-to-jpg) */}
       <header className={styles.header}>
         <span className={styles.badgeTitle}>{t.badge}</span>
         <h1 className={styles.title}>
@@ -89,12 +89,12 @@ export default function DemoToolClient({ toolKey, defaultTitle, defaultDescripti
         <span>{t.privacy.banner}</span>
       </div>
 
-      {/* 3. Main Dropzone Box (100% Identical to pdf-to-jpg) */}
+      {/* 3. Main Dropzone Box (100% Identical to pdf-to-jpg including uploadIcon size 54) */}
       <div
         className={styles.dropzone}
         onClick={handleActionNotice}
       >
-        <IoCloudUploadOutline className={styles.dropIcon} />
+        <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
 
         <h2 className={styles.dropText}>
           {lang === 'ko'
