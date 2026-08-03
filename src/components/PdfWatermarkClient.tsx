@@ -125,12 +125,14 @@ export default function PdfWatermarkClient() {
       }
     } else if (position === 'topRight') {
       ctx.textAlign = 'right';
-      ctx.translate(w - 40, 50);
+      ctx.textBaseline = 'top';
+      ctx.translate(w - 30, 30);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.fillText(watermarkText, 0, 0);
     } else if (position === 'bottomRight') {
       ctx.textAlign = 'right';
-      ctx.translate(w - 40, h - 50);
+      ctx.textBaseline = 'bottom';
+      ctx.translate(w - 30, h - 30);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.fillText(watermarkText, 0, 0);
     }
@@ -241,9 +243,16 @@ export default function PdfWatermarkClient() {
           }
         } else if (position === 'topRight') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
+          const rad = (rotation * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+
+          const originX = width - 30 - textWidth * Math.max(0.1, cos);
+          const originY = Math.min(height - 40, Math.max(30, height - 40 - textWidth * sin));
+
           p.drawText(watermarkText, {
-            x: width - textWidth - 30,
-            y: height - 50,
+            x: originX,
+            y: originY,
             size: fontSize,
             font,
             color: colorRgb,
@@ -252,9 +261,16 @@ export default function PdfWatermarkClient() {
           });
         } else if (position === 'bottomRight') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
+          const rad = (rotation * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+
+          const originX = width - 30 - textWidth * Math.max(0.1, cos);
+          const originY = Math.max(25, Math.min(height - 40, 40 - textWidth * sin));
+
           p.drawText(watermarkText, {
-            x: width - textWidth - 30,
-            y: 40,
+            x: originX,
+            y: originY,
             size: fontSize,
             font,
             color: colorRgb,
