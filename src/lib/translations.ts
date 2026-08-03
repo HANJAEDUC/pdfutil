@@ -306,7 +306,7 @@ export const translations = {
           btn: 'Go to Delete Pages ➔',
         },
         pdfxxxxx: {
-          title: 'pdfxxxxx',
+          title: 'PDF 🔄 PDF',
           desc: 'Rotate PDF pages by 90 degrees or 180 degrees to reorient them.',
           btn: 'Go to Rotate PDF ➔',
         },
@@ -534,7 +534,7 @@ export const translations = {
           btn: 'Zu Seiten Löschen ➔',
         },
         pdfxxxxx: {
-          title: 'pdfxxxxx',
+          title: 'PDF 🔄 PDF',
           desc: 'Drehen Sie PDF-Seiten um 90 oder 180 Grad.',
           btn: 'Zu PDF Drehen ➔',
         },
