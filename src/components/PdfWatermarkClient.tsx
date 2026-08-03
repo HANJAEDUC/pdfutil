@@ -58,6 +58,7 @@ export default function PdfWatermarkClient() {
 
   // Action States
   const [applying, setApplying] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -352,6 +353,9 @@ export default function PdfWatermarkClient() {
       const baseName = file.name.replace(/\.pdf$/i, '');
       link.download = `${baseName}_watermarked.pdf`;
       link.click();
+
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 3500);
     } catch (err) {
       console.error(err);
       alert(lang === 'ko' ? '워터마크 처리 중 오류가 발생했습니다.' : 'Failed to apply watermark.');
@@ -649,6 +653,11 @@ export default function PdfWatermarkClient() {
             >
               {applying ? (
                 <span>{textDict.saving || '적용 중...'}</span>
+              ) : downloaded ? (
+                <>
+                  <IoCheckmarkCircleOutline size={20} />
+                  <span>{textDict.successText || '✅ PDF 워터마크 적용 완료!'}</span>
+                </>
               ) : (
                 <>
                   <IoWaterOutline size={20} />
@@ -657,24 +666,6 @@ export default function PdfWatermarkClient() {
               )}
             </button>
           </div>
-
-          {/* Success Download Card */}
-          {downloadUrl && (
-            <div className={styles.successCard}>
-              <div className={styles.successTitle}>
-                <IoCheckmarkCircleOutline size={24} />
-                <span>{textDict.successText || '✅ PDF 워터마크 삽입이 완료되었습니다!'}</span>
-              </div>
-              <a
-                href={downloadUrl}
-                download={`${file.name.replace(/\.pdf$/i, '')}_watermarked.pdf`}
-                className={styles.downloadBtn}
-              >
-                <IoDownloadOutline size={18} />
-                <span>{textDict.downloadBtn || '워터마크 적용된 PDF 다운로드'}</span>
-              </a>
-            </div>
-          )}
         </div>
       )}
     </div>
