@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import styles from './PdfExtractClient.module.css';
+import styles from './PdfWatermarkClient.module.css';
 import { useLanguage } from '@/lib/LanguageContext';
 import { PDFDocument, StandardFonts, rgb, degrees } from 'pdf-lib';
 import {
@@ -386,28 +386,26 @@ export default function PdfWatermarkClient() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 my-6">
-            {/* Control Panel */}
-            <div className="lg:col-span-6 space-y-5 bg-white/[0.03] p-6 rounded-2xl border border-white/10 shadow-xl">
+          <div className={styles.mainGrid}>
+            {/* Control Panel Card */}
+            <div className={styles.panelCard}>
               {/* Text Input */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
-                  {textDict.textLabel}
-                </label>
+                <div className={styles.sectionLabel}>{textDict.textLabel}</div>
                 <input
                   type="text"
                   value={watermarkText}
                   onChange={(e) => setWatermarkText(e.target.value)}
                   placeholder={textDict.textPlaceholder}
-                  className="w-full px-4 py-3 bg-black/40 border border-white/20 rounded-xl text-white font-semibold focus:outline-none focus:border-blue-500 transition-all text-sm"
+                  className={styles.textInput}
                 />
                 {/* Preset Chips */}
-                <div className="flex flex-wrap gap-1.5 mt-3">
+                <div className={styles.presetWrapper}>
                   {PRESET_TAGS.map((tag) => (
                     <button
                       key={tag}
                       onClick={() => setWatermarkText(tag)}
-                      className="px-2.5 py-1 bg-white/10 hover:bg-blue-500/20 text-gray-300 hover:text-blue-300 rounded-lg text-xs font-medium transition-all border border-white/10"
+                      className={styles.chipBtn}
                     >
                       {tag}
                     </button>
@@ -416,60 +414,47 @@ export default function PdfWatermarkClient() {
               </div>
 
               {/* Font Size & Opacity */}
-              <div className="grid grid-cols-2 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 mb-1">
-                    {textDict.fontSizeLabel}: <span className="text-blue-400 font-extrabold">{fontSize}px</span>
-                  </label>
+                  <div className={styles.sectionLabel}>
+                    <span>{textDict.fontSizeLabel}</span>
+                    <span className={styles.highlightVal}>{fontSize}px</span>
+                  </div>
                   <input
                     type="range"
                     min="18"
                     max="96"
                     value={fontSize}
                     onChange={(e) => setFontSize(Number(e.target.value))}
-                    className="w-full accent-blue-500 cursor-pointer"
+                    className={styles.rangeSlider}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 mb-1">
-                    {textDict.opacityLabel}: <span className="text-blue-400 font-extrabold">{opacity}%</span>
-                  </label>
+                  <div className={styles.sectionLabel}>
+                    <span>{textDict.opacityLabel}</span>
+                    <span className={styles.highlightVal}>{opacity}%</span>
+                  </div>
                   <input
                     type="range"
                     min="10"
                     max="100"
                     value={opacity}
                     onChange={(e) => setOpacity(Number(e.target.value))}
-                    className="w-full accent-blue-500 cursor-pointer"
+                    className={styles.rangeSlider}
                   />
                 </div>
               </div>
 
               {/* Rotation Angle */}
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="text-xs font-bold text-gray-300">
-                    {textDict.rotationLabel}: <span className="text-blue-400 font-extrabold">{rotation}°</span>
-                  </label>
-                  <div className="space-x-1">
-                    <button
-                      onClick={() => setRotation(-45)}
-                      className="px-2 py-0.5 bg-white/10 hover:bg-white/20 text-[11px] text-gray-300 rounded"
-                    >
-                      -45°
-                    </button>
-                    <button
-                      onClick={() => setRotation(0)}
-                      className="px-2 py-0.5 bg-white/10 hover:bg-white/20 text-[11px] text-gray-300 rounded"
-                    >
-                      0°
-                    </button>
-                    <button
-                      onClick={() => setRotation(45)}
-                      className="px-2 py-0.5 bg-white/10 hover:bg-white/20 text-[11px] text-gray-300 rounded"
-                    >
-                      45°
-                    </button>
+                <div className={styles.sectionLabel}>
+                  <span>
+                    {textDict.rotationLabel}: <span className={styles.highlightVal}>{rotation}°</span>
+                  </span>
+                  <div className={styles.presetAngles}>
+                    <button onClick={() => setRotation(-45)} className={styles.angleBtn}>-45°</button>
+                    <button onClick={() => setRotation(0)} className={styles.angleBtn}>0°</button>
+                    <button onClick={() => setRotation(45)} className={styles.angleBtn}>45°</button>
                   </div>
                 </div>
                 <input
@@ -478,23 +463,22 @@ export default function PdfWatermarkClient() {
                   max="90"
                   value={rotation}
                   onChange={(e) => setRotation(Number(e.target.value))}
-                  className="w-full accent-blue-500 cursor-pointer"
+                  className={styles.rangeSlider}
                 />
               </div>
 
               {/* Color Selection */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-2">
-                  {textDict.colorLabel}: <span className="text-gray-400 font-normal">{selectedColor.name}</span>
-                </label>
-                <div className="flex gap-2">
+                <div className={styles.sectionLabel}>
+                  <span>{textDict.colorLabel}</span>
+                  <span style={{ fontWeight: 500, color: '#a1a3a1' }}>{selectedColor.name}</span>
+                </div>
+                <div className={styles.colorGrid}>
                   {COLOR_OPTIONS.map((c) => (
                     <button
                       key={c.name}
                       onClick={() => setSelectedColor(c)}
-                      className={`w-9 h-9 rounded-xl border-2 transition-all flex items-center justify-center ${
-                        selectedColor.name === c.name ? 'border-white scale-110 shadow-lg' : 'border-transparent opacity-70 hover:opacity-100'
-                      }`}
+                      className={`${styles.colorCircle} ${selectedColor.name === c.name ? styles.colorCircleSelected : ''}`}
                       style={{ backgroundColor: c.hex }}
                       title={c.name}
                     />
@@ -504,47 +488,29 @@ export default function PdfWatermarkClient() {
 
               {/* Layout Position */}
               <div>
-                <label className="block text-xs font-bold text-gray-300 mb-2">
-                  {textDict.positionLabel}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className={styles.sectionLabel}>{textDict.positionLabel}</div>
+                <div className={styles.posGrid}>
                   <button
                     onClick={() => setPosition('center')}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border ${
-                      position === 'center'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
-                        : 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10'
-                    }`}
+                    className={`${styles.posBtn} ${position === 'center' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posCenter}
                   </button>
                   <button
                     onClick={() => setPosition('tile')}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border ${
-                      position === 'tile'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
-                        : 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10'
-                    }`}
+                    className={`${styles.posBtn} ${position === 'tile' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posTile}
                   </button>
                   <button
                     onClick={() => setPosition('topRight')}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border ${
-                      position === 'topRight'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
-                        : 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10'
-                    }`}
+                    className={`${styles.posBtn} ${position === 'topRight' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posTopRight}
                   </button>
                   <button
                     onClick={() => setPosition('bottomRight')}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border ${
-                      position === 'bottomRight'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
-                        : 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10'
-                    }`}
+                    className={`${styles.posBtn} ${position === 'bottomRight' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posBottomRight}
                   </button>
@@ -552,30 +518,30 @@ export default function PdfWatermarkClient() {
               </div>
             </div>
 
-            {/* Live Preview Canvas */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center bg-black/30 p-6 rounded-2xl border border-white/10 shadow-xl">
-              <div className="text-xs font-bold text-gray-300 mb-3 flex items-center gap-1.5">
+            {/* Preview Card */}
+            <div className={styles.previewCard}>
+              <div className={styles.previewHeader}>
                 {textDict.previewTitle}
               </div>
 
-              <div className="relative border border-white/20 rounded-xl overflow-hidden shadow-2xl bg-white max-w-full">
-                <canvas ref={previewCanvasRef} className="max-h-[460px] w-auto object-contain" />
+              <div className={styles.canvasBox}>
+                <canvas ref={previewCanvasRef} className={styles.canvasImg} />
               </div>
             </div>
           </div>
 
           {/* Action Button Section */}
-          <div className="my-8 text-center">
+          <div className={styles.actionWrapper}>
             <button
               onClick={handleApplyWatermark}
               disabled={applying || !watermarkText.trim()}
-              className="px-9 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold text-base rounded-2xl transition-all shadow-xl inline-flex items-center gap-3 cursor-pointer disabled:opacity-50"
+              className={styles.applyBtn}
             >
               {applying ? (
                 <span>{textDict.saving || '적용 중...'}</span>
               ) : (
                 <>
-                  <IoWaterOutline className="text-xl" />
+                  <IoWaterOutline size={20} />
                   <span>{textDict.saveBtn || '💧 워터마크 적용하고 다운로드 ➔'}</span>
                 </>
               )}
@@ -584,15 +550,15 @@ export default function PdfWatermarkClient() {
 
           {/* Success Download Card */}
           {downloadUrl && (
-            <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center my-6 shadow-xl">
-              <div className="text-emerald-400 font-bold text-lg mb-2 flex items-center justify-center gap-2">
+            <div className={styles.successCard}>
+              <div className={styles.successTitle}>
                 <IoCheckmarkCircleOutline size={24} />
                 <span>{textDict.successText || '✅ PDF 워터마크 삽입이 완료되었습니다!'}</span>
               </div>
               <a
                 href={downloadUrl}
                 download={`${file.name.replace(/\.pdf$/i, '')}_watermarked.pdf`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold rounded-xl text-sm transition-all shadow-lg mt-2"
+                className={styles.downloadBtn}
               >
                 <IoDownloadOutline size={18} />
                 <span>{textDict.downloadBtn || '워터마크 적용된 PDF 다운로드'}</span>
