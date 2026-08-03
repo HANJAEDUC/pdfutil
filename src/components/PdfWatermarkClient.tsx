@@ -238,7 +238,11 @@ export default function PdfWatermarkClient() {
 
       const colorRgb = rgb(selectedColor.rgb.r, selectedColor.rgb.g, selectedColor.rgb.b);
       const alpha = opacity / 100;
-      const angleDegrees = degrees(rotation);
+      const pdfRotation = -rotation;
+      const angleDegrees = degrees(pdfRotation);
+      const pdfRad = (pdfRotation * Math.PI) / 180;
+      const cos = Math.cos(pdfRad);
+      const sin = Math.sin(pdfRad);
 
       pages.forEach((p) => {
         const { width, height } = p.getSize();
@@ -246,9 +250,6 @@ export default function PdfWatermarkClient() {
         if (position === 'center') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
           const textHeight = fontSize * 0.35;
-          const rad = (rotation * Math.PI) / 180;
-          const cos = Math.cos(rad);
-          const sin = Math.sin(rad);
 
           const hw = textWidth / 2;
           const hh = textHeight;
@@ -286,10 +287,6 @@ export default function PdfWatermarkClient() {
           }
         } else if (position === 'topRight') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
-          const rad = (rotation * Math.PI) / 180;
-          const cos = Math.cos(rad);
-          const sin = Math.sin(rad);
-
           const originX = width - 30 - textWidth * Math.max(0.1, cos);
           const originY = Math.min(height - 40, Math.max(30, height - 40 - textWidth * sin));
 
@@ -304,10 +301,6 @@ export default function PdfWatermarkClient() {
           });
         } else if (position === 'bottomRight') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
-          const rad = (rotation * Math.PI) / 180;
-          const cos = Math.cos(rad);
-          const sin = Math.sin(rad);
-
           const originX = width - 30 - textWidth * Math.max(0.1, cos);
           const originY = Math.max(25, Math.min(height - 40, 40 - textWidth * sin));
 
@@ -323,9 +316,6 @@ export default function PdfWatermarkClient() {
         } else if (position === 'custom') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
           const textHeight = fontSize * 0.35;
-          const rad = (rotation * Math.PI) / 180;
-          const cos = Math.cos(rad);
-          const sin = Math.sin(rad);
 
           const targetX = (width * customRatio.x) / 100;
           const targetY = height - (height * customRatio.y) / 100;
