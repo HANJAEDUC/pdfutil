@@ -238,17 +238,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 10: pdfxxxxxxx */}
-          <Link href="/pdfxxxxxxx" className={styles.toolCard}>
+          {/* Card 10: PDF 💧 PDF (pdfwatermark) */}
+          <Link href="/pdf-watermark" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
                 <IoWaterOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxx?.desc || 'PDF 문서 배경에 워터마크 텍스트나 로고를 지정해 삽입합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfxxxxxxx?.title || 'PDF 💧 PDF'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxx?.desc || 'PDF 문서 배경 또는 위에 커스텀 텍스트 워터마크(문구, 크기, 투명도, 회전)를 자유롭게 삽입합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxxxxx?.btn || '워터마크 설정하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfxxxxxxx?.btn || 'PDF 워터마크 추가하러 가기 ➔'}</span>
             </div>
           </Link>
 

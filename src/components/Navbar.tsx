@@ -94,7 +94,7 @@ export default function Navbar() {
 
     // Column 3: Security & Utils
     { key: 'pdfxxxxxx', name: getToolDisplayName('pdfxxxxxx', 'pdfxxxxxx'), href: '/pdfxxxxxx', categoryKey: 'catSecurity' },
-    { key: 'pdfxxxxxxx', name: getToolDisplayName('pdfxxxxxxx', 'pdfxxxxxxx'), href: '/pdfxxxxxxx', categoryKey: 'catSecurity' },
+    { key: 'pdfwatermark', name: getToolDisplayName('pdfwatermark', 'pdfwatermark'), href: '/pdf-watermark', categoryKey: 'catSecurity' },
     { key: 'pdfxxxxxxxx', name: getToolDisplayName('pdfxxxxxxxx', 'pdfxxxxxxxx'), href: '/pdfxxxxxxxx', categoryKey: 'catSecurity' },
     { key: 'pdfxxxxxxxxx', name: getToolDisplayName('pdfxxxxxxxxx', 'pdfxxxxxxxxx'), href: '/pdfxxxxxxxxx', categoryKey: 'catSecurity' },
   ];
