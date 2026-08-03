@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdf-merge',
     '/pdf-extract',
     '/pdf-passwd',
+    '/pdf-rotate',
     '/pdfxxx',
     '/pdfxxxx',
     '/pdfxxxxx',

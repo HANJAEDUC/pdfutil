@@ -210,17 +210,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 8: pdfxxxxx */}
-          <Link href="/pdfxxxxx" className={styles.toolCard}>
+          {/* Card 8: PDF 🔄 PDF (pdfrotate) */}
+          <Link href="/pdf-rotate" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
                 <IoRefreshOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxx?.desc || 'PDF 각 페이지의 방향을 90도/180도 회전시켜 재정렬합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfxxxxx?.title || 'PDF 🔄 PDF'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxx?.desc || 'PDF 각 페이지의 방향을 90도/180도 회전시켜 올바른 방향으로 바로잡고 새로 저장합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxxx?.btn || '페이지 회전하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfxxxxx?.btn || 'PDF 회전하러 가기 ➔'}</span>
             </div>
           </Link>
 
