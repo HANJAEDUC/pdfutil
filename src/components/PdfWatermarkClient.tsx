@@ -11,9 +11,10 @@ import {
   IoDownloadOutline,
   IoCheckmarkCircleOutline,
   IoWaterOutline,
+  IoMoveOutline,
 } from 'react-icons/io5';
 
-type WatermarkPosition = 'center' | 'tile' | 'topRight' | 'bottomRight';
+type WatermarkPosition = 'center' | 'tile' | 'topRight' | 'bottomRight' | 'custom';
 
 interface ColorOption {
   name: string;
@@ -46,6 +47,10 @@ export default function PdfWatermarkClient() {
   const [rotation, setRotation] = useState(-45); // -90 to 90
   const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]);
   const [position, setPosition] = useState<WatermarkPosition>('center');
+
+  // Custom Position Ratio (Percentage 0% ~ 100% of Width / Height)
+  const [customRatio, setCustomRatio] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+  const [isCanvasDragging, setIsCanvasDragging] = useState(false);
 
   // Preview Canvas
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -135,14 +140,52 @@ export default function PdfWatermarkClient() {
       ctx.translate(w - 30, h - 30);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.fillText(watermarkText, 0, 0);
+    } else if (position === 'custom') {
+      ctx.translate((w * customRatio.x) / 100, (h * customRatio.y) / 100);
+      ctx.rotate((rotation * Math.PI) / 180);
+      ctx.fillText(watermarkText, 0, 0);
     }
 
     ctx.restore();
-  }, [watermarkText, fontSize, opacity, rotation, selectedColor, position]);
+  }, [watermarkText, fontSize, opacity, rotation, selectedColor, position, customRatio]);
 
   useEffect(() => {
     renderPreview();
   }, [renderPreview]);
+
+  // Pointer & Drag Handlers for Preview Canvas
+  const updatePointerPosition = (clientX: number, clientY: number) => {
+    const canvas = previewCanvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+
+    const rawX = clientX - rect.left;
+    const rawY = clientY - rect.top;
+
+    const ratioX = Math.min(96, Math.max(4, (rawX / rect.width) * 100));
+    const ratioY = Math.min(96, Math.max(4, (rawY / rect.height) * 100));
+
+    setCustomRatio({ x: ratioX, y: ratioY });
+    setPosition('custom');
+  };
+
+  const handlePointerDown = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    setIsCanvasDragging(true);
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    updatePointerPosition(clientX, clientY);
+  };
+
+  const handlePointerMove = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isCanvasDragging) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    updatePointerPosition(clientX, clientY);
+  };
+
+  const handlePointerUp = () => {
+    setIsCanvasDragging(false);
+  };
 
   const processPdfFile = async (selectedFile: File) => {
     if (selectedFile.type !== 'application/pdf' && !selectedFile.name.endsWith('.pdf')) {
@@ -277,6 +320,34 @@ export default function PdfWatermarkClient() {
             opacity: alpha,
             rotate: angleDegrees,
           });
+        } else if (position === 'custom') {
+          const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
+          const textHeight = fontSize * 0.35;
+          const rad = (rotation * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+
+          const targetX = (width * customRatio.x) / 100;
+          const targetY = height - (height * customRatio.y) / 100;
+
+          const hw = textWidth / 2;
+          const hh = textHeight;
+
+          const rotatedDx = hw * cos - hh * sin;
+          const rotatedDy = hw * sin + hh * cos;
+
+          const originX = targetX - rotatedDx;
+          const originY = targetY - rotatedDy;
+
+          p.drawText(watermarkText, {
+            x: originX,
+            y: originY,
+            size: fontSize,
+            font,
+            color: colorRgb,
+            opacity: alpha,
+            rotate: angleDegrees,
+          });
         }
       });
 
@@ -323,6 +394,8 @@ export default function PdfWatermarkClient() {
     posTile: '전체 타일 반복 (격자)',
     posTopRight: '우측 상단',
     posBottomRight: '우측 하단',
+    posCustom: '🎯 자유 이동 (드래그)',
+    dragTipText: '💡 미리보기 이미지를 마우스로 클릭하거나 드래그하면 원하는 위치로 자유롭게 이동합니다.',
     previewTitle: '👁️ 워터마크 1페이지 실시간 미리보기',
     saveBtn: '💧 워터마크 적용하고 다운로드 ➔',
     saving: 'PDF 워터마크 적용 중...',
@@ -507,7 +580,10 @@ export default function PdfWatermarkClient() {
                 <div className={styles.sectionLabel}>{textDict.positionLabel}</div>
                 <div className={styles.posGrid}>
                   <button
-                    onClick={() => setPosition('center')}
+                    onClick={() => {
+                      setPosition('center');
+                      setCustomRatio({ x: 50, y: 50 });
+                    }}
                     className={`${styles.posBtn} ${position === 'center' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posCenter}
@@ -519,16 +595,29 @@ export default function PdfWatermarkClient() {
                     {textDict.posTile}
                   </button>
                   <button
-                    onClick={() => setPosition('topRight')}
+                    onClick={() => {
+                      setPosition('topRight');
+                      setCustomRatio({ x: 88, y: 12 });
+                    }}
                     className={`${styles.posBtn} ${position === 'topRight' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posTopRight}
                   </button>
                   <button
-                    onClick={() => setPosition('bottomRight')}
+                    onClick={() => {
+                      setPosition('bottomRight');
+                      setCustomRatio({ x: 88, y: 88 });
+                    }}
                     className={`${styles.posBtn} ${position === 'bottomRight' ? styles.posBtnActive : ''}`}
                   >
                     {textDict.posBottomRight}
+                  </button>
+                  <button
+                    onClick={() => setPosition('custom')}
+                    className={`${styles.posBtn} ${position === 'custom' ? styles.posBtnActive : ''}`}
+                    style={{ gridColumn: 'span 2' }}
+                  >
+                    {textDict.posCustom || '🎯 자유 이동 (드래그)'}
                   </button>
                 </div>
               </div>
@@ -541,7 +630,22 @@ export default function PdfWatermarkClient() {
               </div>
 
               <div className={styles.canvasBox}>
-                <canvas ref={previewCanvasRef} className={styles.canvasImg} />
+                <canvas
+                  ref={previewCanvasRef}
+                  className={styles.canvasImg}
+                  onMouseDown={handlePointerDown}
+                  onMouseMove={handlePointerMove}
+                  onMouseUp={handlePointerUp}
+                  onMouseLeave={handlePointerUp}
+                  onTouchStart={handlePointerDown}
+                  onTouchMove={handlePointerMove}
+                  onTouchEnd={handlePointerUp}
+                />
+              </div>
+
+              <div className={styles.dragTip}>
+                <IoMoveOutline size={16} />
+                <span>{textDict.dragTipText}</span>
               </div>
             </div>
           </div>

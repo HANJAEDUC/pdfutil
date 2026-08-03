@@ -400,12 +400,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .canvasImg {
   max-height: 480px;
   width: auto;
   display: block;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.dragTip {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #8ab4f8;
+  background: rgba(66, 133, 244, 0.1);
+  border: 1px solid rgba(66, 133, 244, 0.25);
+  padding: 6px 14px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
 }
 
 /* Primary Action Bar */
