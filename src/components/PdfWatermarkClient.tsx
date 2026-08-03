@@ -200,9 +200,23 @@ export default function PdfWatermarkClient() {
 
         if (position === 'center') {
           const textWidth = font.widthOfTextAtSize(watermarkText, fontSize);
+          const textHeight = fontSize * 0.35;
+          const rad = (rotation * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+
+          const hw = textWidth / 2;
+          const hh = textHeight;
+
+          const rotatedDx = hw * cos - hh * sin;
+          const rotatedDy = hw * sin + hh * cos;
+
+          const originX = width / 2 - rotatedDx;
+          const originY = height / 2 - rotatedDy;
+
           p.drawText(watermarkText, {
-            x: width / 2 - textWidth / 2,
-            y: height / 2,
+            x: originX,
+            y: originY,
             size: fontSize,
             font,
             color: colorRgb,
