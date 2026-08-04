@@ -8,7 +8,7 @@ export const metadata = {
   description: '서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 알고 있는 PDF 문서의 암호를 완전 해제하여 저장합니다.',
 };
 
-export default function PdfXxxxxxPage() {
+export default function PdfUnlockPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--md-sys-color-background)]">
       <Navbar />

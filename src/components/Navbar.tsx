@@ -93,7 +93,7 @@ export default function Navbar() {
     { key: 'pdfrotate', name: getToolDisplayName('pdfrotate', 'pdfrotate'), href: '/pdf-rotate', categoryKey: 'catOrganize' },
 
     // Column 3: Security & Utils
-    { key: 'pdfxxxxxx', name: getToolDisplayName('pdfxxxxxx', 'pdfxxxxxx'), href: '/pdfxxxxxx', categoryKey: 'catSecurity' },
+    { key: 'pdfunlock', name: getToolDisplayName('pdfunlock', 'pdfunlock'), href: '/pdf-unlock', categoryKey: 'catSecurity' },
     { key: 'pdfwatermark', name: getToolDisplayName('pdfwatermark', 'pdfwatermark'), href: '/pdf-watermark', categoryKey: 'catSecurity' },
     { key: 'pdfxxxxxxxx', name: getToolDisplayName('pdfxxxxxxxx', 'pdfxxxxxxxx'), href: '/pdfxxxxxxxx', categoryKey: 'catSecurity' },
     { key: 'pdfxxxxxxxxx', name: getToolDisplayName('pdfxxxxxxxxx', 'pdfxxxxxxxxx'), href: '/pdfxxxxxxxxx', categoryKey: 'catSecurity' },

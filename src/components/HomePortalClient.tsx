@@ -6,11 +6,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './HomePortalClient.module.css';
 import { useLanguage } from '@/lib/LanguageContext';
+import UnlockKeyIcon from './UnlockKeyIcon';
 import {
   IoImagesOutline,
   IoLayersOutline,
   IoCutOutline,
   IoLockClosedOutline,
+  IoLockOpenOutline,
+  IoLockOpen,
+  IoKeyOutline,
   IoShieldCheckmarkOutline,
   IoCheckmarkCircleOutline,
   IoFlashOutline,
@@ -224,17 +228,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 9: pdfxxxxxx */}
-          <Link href="/pdfxxxxxx" className={styles.toolCard}>
+          {/* Card 9: PDF 🔓 PDF (pdfunlock) */}
+          <Link href="/pdf-unlock" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoArchiveOutline />
+                <UnlockKeyIcon size={24} />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxx?.desc || '고화질 PDF 파일 용량을 이메일 전송용으로 경량화 압축합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfunlock?.title || 'PDF 🔓 PDF'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfunlock?.desc || '알고 있는 PDF 암호를 입력하여 100% 브라우저 내부에서 안전하게 암호를 해제합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxxxx?.btn || '용량 압축하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfunlock?.btn || 'PDF 암호 해제하러 가기 ➔'}</span>
             </div>
           </Link>
 
