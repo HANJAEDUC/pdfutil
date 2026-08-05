@@ -31,13 +31,14 @@ import {
 const slides = [
   { id: 0, titleKey: 'pdf2jpg', fallbackTitle: 'PDF ➡️ JPG', imgSrc: '/hero-converter.png', link: '/pdf-to-jpg' },
   { id: 1, titleKey: 'pdf2word', fallbackTitle: 'PDF ➡️ Word', imgSrc: '/hero-word.png', link: '/pdf-to-word' },
-  { id: 2, titleKey: 'pdfmerge', fallbackTitle: 'PDF + PDF', imgSrc: '/hero-merge.png', link: '/pdf-merge' },
-  { id: 3, titleKey: 'pdfextract', fallbackTitle: 'PDF-PDF', imgSrc: '/hero-extract.png', link: '/pdf-extract' },
-  { id: 4, titleKey: 'pdfpasswd', fallbackTitle: 'PDF 🔑 PDF', imgSrc: '/hero-passwd.png', link: '/pdf-passwd' },
-  { id: 5, titleKey: 'pdfxxx', fallbackTitle: 'PDF + LOGO', imgSrc: '/hero-logo.png', link: '/pdfxxx' },
-  { id: 6, titleKey: 'pdfrotate', fallbackTitle: 'PDF 🔄 PDF', imgSrc: '/hero-rotate.png', link: '/pdf-rotate' },
-  { id: 7, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
-  { id: 8, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
+  { id: 2, titleKey: 'pdfpng', fallbackTitle: 'PDF ➡️ PNG', imgSrc: '/hero-converter.png', link: '/pdf-to-png' },
+  { id: 3, titleKey: 'pdfmerge', fallbackTitle: 'PDF + PDF', imgSrc: '/hero-merge.png', link: '/pdf-merge' },
+  { id: 4, titleKey: 'pdfextract', fallbackTitle: 'PDF-PDF', imgSrc: '/hero-extract.png', link: '/pdf-extract' },
+  { id: 5, titleKey: 'pdfpasswd', fallbackTitle: 'PDF 🔑 PDF', imgSrc: '/hero-passwd.png', link: '/pdf-passwd' },
+  { id: 6, titleKey: 'pdfxxx', fallbackTitle: 'PDF + LOGO', imgSrc: '/hero-logo.png', link: '/pdfxxx' },
+  { id: 7, titleKey: 'pdfrotate', fallbackTitle: 'PDF 🔄 PDF', imgSrc: '/hero-rotate.png', link: '/pdf-rotate' },
+  { id: 8, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
+  { id: 9, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
 ];
 
 export default function HomePortalClient() {
@@ -209,17 +210,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 7: pdfxxxx */}
-          <Link href="/pdfxxxx" className={styles.toolCard}>
+          {/* Card 7: PDF->PNG (/pdf-to-png) */}
+          <Link href="/pdf-to-png" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoTrashOutline />
+                <IoImagesOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxx?.desc || 'PDF 문서에서 불필요한 페이지나 구성을 선택하여 삭제합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfpng?.title || (t.home.tools as any).pdfxxxx?.title || 'PDF ➡️ PNG'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfpng?.desc || (t.home.tools as any).pdfxxxx?.desc || 'PDF 문서를 100% 무손실 고화질 PNG 이미지로 변환합니다. 개별 PNG 다운로드, ZIP 압축 및 세로 1장 통합 PNG를 지원합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxx?.btn || '페이지 삭제하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfpng?.btn || (t.home.tools as any).pdfxxxx?.btn || 'PNG 변환하러 가기 ➔'}</span>
             </div>
           </Link>
 

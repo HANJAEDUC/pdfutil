@@ -22,9 +22,9 @@ const TOOL_DETAILS_I18N: { [key: string]: { [lang: string]: { title: string; des
     de: { title: 'pdfxxx (Logo / PNG & JPG Einfügen)', desc: 'Fügen Sie Ihr Firmenlogo oder PNG/JPG-Bild in Ihr PDF-Dokument ein.' },
   },
   pdfxxxx: {
-    ko: { title: 'pdfxxxx (페이지 삭제)', desc: 'PDF 문서에서 불필요한 페이지를 삭제합니다.' },
-    en: { title: 'pdfxxxx (Delete Pages)', desc: 'Delete unwanted pages from a PDF document.' },
-    de: { title: 'pdfxxxx (Seiten Löschen)', desc: 'Löschen Sie unerwünschte Seiten aus einem PDF.' },
+    ko: { title: 'pdfxxxx (PDF ➡️ PNG 이미지 변환)', desc: 'PDF 문서를 100% 무손실 고화질 PNG 이미지로 변환합니다.' },
+    en: { title: 'pdfxxxx (PDF to PNG Image Converter)', desc: 'Convert PDF files to high-quality lossless PNG images.' },
+    de: { title: 'pdfxxxx (PDF in PNG Bild-Konverter)', desc: 'Konvertieren Sie PDF-Dateien in hochwertige verlustfreie PNG-Bilder.' },
   },
   pdfxxxxx: {
     ko: { title: 'pdfxxxxx (페이지 회전)', desc: 'PDF 각 페이지 방향을 90도 회전시킵니다.' },

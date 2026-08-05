@@ -89,7 +89,7 @@ export default function Navbar() {
 
     // Column 2: Organize
     { key: 'pdfxxx', name: getToolDisplayName('pdfxxx', 'pdfxxx'), href: '/pdfxxx', categoryKey: 'catOrganize' },
-    { key: 'pdfxxxx', name: getToolDisplayName('pdfxxxx', 'pdfxxxx'), href: '/pdfxxxx', categoryKey: 'catOrganize' },
+    { key: 'pdfpng', name: getToolDisplayName('pdfpng', getToolDisplayName('pdfxxxx', 'PDF ➡️ PNG')), href: '/pdf-to-png', categoryKey: 'catPrimary' },
     { key: 'pdfrotate', name: getToolDisplayName('pdfrotate', 'pdfrotate'), href: '/pdf-rotate', categoryKey: 'catOrganize' },
 
     // Column 3: Security & Utils

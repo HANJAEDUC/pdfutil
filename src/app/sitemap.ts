@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdf-rotate',
     '/pdf-watermark',
     '/pdf-unlock',
+    '/pdf-to-png',
     '/pdfxxx',
     '/pdfxxxx',
     '/pdfxxxxx',
