@@ -29,10 +29,15 @@ import {
 } from 'react-icons/io5';
 
 const slides = [
-  { id: 0, title: 'PDF ➡️ JPG', imgSrc: '/hero-converter.png', link: '/pdf-to-jpg' },
-  { id: 1, title: 'PDF + PDF', imgSrc: '/hero-merge.png', link: '/pdf-merge' },
-  { id: 2, title: 'PDF-PDF', imgSrc: '/hero-extract.png', link: '/pdf-extract' },
-  { id: 3, title: 'PDF 🔑 PDF', imgSrc: '/hero-passwd.png', link: '/pdf-passwd' },
+  { id: 0, titleKey: 'pdf2jpg', fallbackTitle: 'PDF ➡️ JPG', imgSrc: '/hero-converter.png', link: '/pdf-to-jpg' },
+  { id: 1, titleKey: 'pdf2word', fallbackTitle: 'PDF ➡️ Word', imgSrc: '/hero-word.png', link: '/pdf-to-word' },
+  { id: 2, titleKey: 'pdfmerge', fallbackTitle: 'PDF + PDF', imgSrc: '/hero-merge.png', link: '/pdf-merge' },
+  { id: 3, titleKey: 'pdfextract', fallbackTitle: 'PDF-PDF', imgSrc: '/hero-extract.png', link: '/pdf-extract' },
+  { id: 4, titleKey: 'pdfpasswd', fallbackTitle: 'PDF 🔑 PDF', imgSrc: '/hero-passwd.png', link: '/pdf-passwd' },
+  { id: 5, titleKey: 'pdfxxx', fallbackTitle: 'PDF + LOGO', imgSrc: '/hero-logo.png', link: '/pdfxxx' },
+  { id: 6, titleKey: 'pdfrotate', fallbackTitle: 'PDF 🔄 PDF', imgSrc: '/hero-rotate.png', link: '/pdf-rotate' },
+  { id: 7, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
+  { id: 8, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
 ];
 
 export default function HomePortalClient() {
@@ -47,6 +52,10 @@ export default function HomePortalClient() {
     return () => clearInterval(timer);
   }, []);
 
+  const getSlideTitle = (slide: (typeof slides)[0]) => {
+    return (t.home.tools as any)[slide.titleKey]?.title || slide.fallbackTitle;
+  };
+
   return (
     <div className={styles.container}>
       {/* 1. Dynamic Hero Carousel & Stack Section */}
@@ -54,7 +63,7 @@ export default function HomePortalClient() {
         <div
           className={styles.carouselContainer}
           onClick={() => router.push(slides[currentSlide].link)}
-          title={`${slides[currentSlide].title} 바로가기`}
+          title={`${getSlideTitle(slides[currentSlide])} 바로가기`}
         >
           {slides.map((slide, index) => (
             <div
@@ -68,7 +77,7 @@ export default function HomePortalClient() {
             >
               <Image
                 src={slide.imgSrc}
-                alt={slide.title}
+                alt={getSlideTitle(slide)}
                 width={440}
                 height={440}
                 priority={index === 0}
@@ -78,7 +87,7 @@ export default function HomePortalClient() {
           ))}
 
           <div className={styles.slideOverlay}>
-            <span className={styles.slideTag}>{slides[currentSlide].title}</span>
+            <span className={styles.slideTag}>{getSlideTitle(slides[currentSlide])}</span>
             <div className={styles.dotsContainer}>
               {slides.map((_, index) => (
                 <button
