@@ -20,10 +20,10 @@ export const translations = {
     toolNames: {
       pdf2jpg: 'pdf2jpg (PDF ➡️ JPG)',
       pdf2word: 'pdf2word (PDF ➡️ Word)',
-      pdfmerge: 'pdfmerge (PDF + PDF 병합)',
-      pdfextract: 'pdfextract (페이지 추출)',
+      pdfmerge: 'pdfmerge (PDF ➕ PDF 병합)',
+      pdfextract: 'pdfextract (PDF ✂️ 페이지 추출)',
       pdfpasswd: 'pdfpasswd (PDF 🔑 암호)',
-      pdfxxx: 'pdfxxx (PDF + LOGO)',
+      pdfxxx: 'pdfxxx (PDF 🏷️ LOGO)',
       pdfxxxx: 'pdfxxxx (PDF ➡️ PNG)',
       pdfrotate: 'pdfrotate (PDF 🔄 PDF 회전)',
       pdfxxxxx: 'pdfrotate (PDF 🔄 PDF 회전)',
@@ -56,12 +56,12 @@ export const translations = {
           btn: 'Word 변환하러 가기 ➔',
         },
         pdfmerge: {
-          title: 'PDF + PDF',
+          title: 'PDF ➕ PDF',
           desc: '여러 개의 PDF 파일들을 드래그 앤 드롭으로 순서를 자유롭게 배치하여 하나로 통합 병합합니다.',
           btn: 'PDF 병합하러 가기 ➔',
         },
         pdfextract: {
-          title: 'PDF-PDF',
+          title: 'PDF ✂️ PDF',
           desc: 'PDF 문서 전체 썸네일을 미리보고 원하는 페이지만 선택하여 새로운 독립 PDF로 추출합니다.',
           btn: '페이지 추출하러 가기 ➔',
         },
@@ -71,9 +71,9 @@ export const translations = {
           btn: 'PDF 암호 설정하러 가기 ➔',
         },
         pdfxxx: {
-          title: 'PDF + LOGO',
+          title: 'PDF 🏷️ LOGO',
           desc: 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.',
-          btn: 'PDF + LOGO 바로가기 ➔',
+          btn: 'PDF 🏷️ LOGO 바로가기 ➔',
         },
         pdfxxxx: {
           title: 'PDF ➡️ PNG',
@@ -155,7 +155,7 @@ export const translations = {
       close: '닫기',
     },
     pdfmerge: {
-      title: 'PDF + PDF',
+      title: 'PDF ➕ PDF',
       subtitle: '서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 여러 개의 PDF를 1개 파일로 합칩니다.',
       dropText: '병합할 PDF 파일들을 이곳에 드래그하거나 클릭하세요',
       subText: '여러 개의 PDF를 선택하여 순서를 자유롭게 조정하고 하나로 합칩니다.',
@@ -178,7 +178,7 @@ export const translations = {
       modalTitle: '병합된 PDF — {page} 페이지 크게 보기',
     },
     pdfextract: {
-      title: 'PDF-PDF',
+      title: 'PDF ✂️ PDF',
       subtitle: '서버 업로드 없이 100% 브라우저 내부에서 특정 페이지를 선택하여 독립된 PDF로 추출합니다.',
       dropText: '추출할 PDF 파일을 이곳에 드래그하거나 클릭하여 선택하세요',
       subText: '최대 파일 크기 제한 없이 안전하게 미리보고 추출합니다.',
@@ -341,10 +341,10 @@ export const translations = {
     toolNames: {
       pdf2jpg: 'pdf2jpg (PDF to JPG)',
       pdf2word: 'pdf2word (PDF to Word)',
-      pdfmerge: 'pdfmerge (Merge PDF)',
-      pdfextract: 'pdfextract (Extract Pages)',
+      pdfmerge: 'pdfmerge (PDF ➕ PDF Merge)',
+      pdfextract: 'pdfextract (PDF ✂️ Extract Pages)',
       pdfpasswd: 'pdfpasswd (PDF Password)',
-      pdfxxx: 'pdfxxx (PDF + LOGO)',
+      pdfxxx: 'pdfxxx (PDF 🏷️ LOGO)',
       pdfxxxx: 'pdfxxxx (PDF ➡️ PNG)',
       pdfrotate: 'pdfrotate (Rotate PDF)',
       pdfxxxxx: 'pdfrotate (Rotate PDF)',
@@ -377,12 +377,12 @@ export const translations = {
           btn: 'Open Word Converter ➔',
         },
         pdfmerge: {
-          title: 'PDF + PDF',
+          title: 'PDF ➕ PDF',
           desc: 'Combine multiple PDF files into one. Drag & drop files to reorder freely before merging.',
           btn: 'Open PDF Merger ➔',
         },
         pdfextract: {
-          title: 'PDF-PDF',
+          title: 'PDF ✂️ PDF',
           desc: 'Preview all page thumbnails and extract selected pages into a new independent PDF document.',
           btn: 'Open Page Extractor ➔',
         },
@@ -392,9 +392,9 @@ export const translations = {
           btn: 'Open PDF Password Protect ➔',
         },
         pdfxxx: {
-          title: 'PDF + LOGO',
+          title: 'PDF 🏷️ LOGO',
           desc: 'Overlay your brand logo or PNG/JPG image onto your PDF document pages.',
-          btn: 'Go to PDF + LOGO ➔',
+          btn: 'Go to PDF 🏷️ LOGO ➔',
         },
         pdfxxxx: {
           title: 'PDF ➡️ PNG',
@@ -662,10 +662,10 @@ export const translations = {
     toolNames: {
       pdf2jpg: 'pdf2jpg (PDF in JPG)',
       pdf2word: 'pdf2word (PDF in Word)',
-      pdfmerge: 'pdfmerge (PDF Zusammenfügen)',
-      pdfextract: 'pdfextract (Seiten Extrahieren)',
+      pdfmerge: 'pdfmerge (PDF ➕ PDF Zusammenfügen)',
+      pdfextract: 'pdfextract (PDF ✂️ Seiten Extrahieren)',
       pdfpasswd: 'pdfpasswd (PDF Passwort)',
-      pdfxxx: 'pdfxxx (PDF + LOGO)',
+      pdfxxx: 'pdfxxx (PDF 🏷️ LOGO)',
       pdfxxxx: 'pdfxxxx (PDF ➡️ PNG)',
       pdfrotate: 'pdfrotate (PDF Drehen)',
       pdfxxxxx: 'pdfrotate (PDF Drehen)',
@@ -698,12 +698,12 @@ export const translations = {
           btn: 'Word-Konverter Öffnen ➔',
         },
         pdfmerge: {
-          title: 'PDF + PDF',
+          title: 'PDF ➕ PDF',
           desc: 'Fügen Sie mehrere PDF-Dateien zu einer zusammen. Dateien per Drag & Drop frei anordnen.',
           btn: 'PDF Zusammenfügen ➔',
         },
         pdfextract: {
-          title: 'PDF-PDF',
+          title: 'PDF ✂️ PDF',
           desc: 'Seiten vorschauen und ausgewählte Seiten in ein neues PDF-Dokument extrahieren.',
           btn: 'Seiten Extrahieren ➔',
         },
@@ -713,9 +713,9 @@ export const translations = {
           btn: 'PDF Passwortschutz Öffnen ➔',
         },
         pdfxxx: {
-          title: 'PDF + LOGO',
+          title: 'PDF 🏷️ LOGO',
           desc: 'Fügen Sie Ihr Firmenlogo oder PNG/JPG-Bild an beliebiger Stelle in Ihr PDF-Dokument ein.',
-          btn: 'Zu PDF + LOGO ➔',
+          btn: 'Zu PDF 🏷️ LOGO ➔',
         },
         pdfxxxx: {
           title: 'PDF ➡️ PNG',
@@ -915,7 +915,7 @@ export const translations = {
     },
     pdfxxx: {
       badgeTitle: 'Logo & Bild Einfügen (PNG / JPG)',
-      title: 'PDF + LOGO',
+      title: 'PDF 🏷️ LOGO',
       subtitle: 'Fügen Sie Firmenlogos, Stempel oder PNG/JPG-Bilder an beliebiger Stelle 100% lokal im Browser in Ihr PDF-Dokument ein.',
       dropText: 'Ziehen Sie die PDF-Datei hierher oder klicken Sie, um ein Logo/Bild hinzuzufügen',
       subText: 'Kostenlos ohne Dateigrößenbeschränkung.',

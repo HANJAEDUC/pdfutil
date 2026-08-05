@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import PdfMergeClient from '@/components/PdfMergeClient';
 
 export const metadata = {
-  title: 'PDF + PDF 병합 | mypdf (mypdf.co.kr)',
+  title: 'PDF ➕ PDF | mypdf (mypdf.co.kr)',
   description: '서버 업로드 없이 여러 개의 PDF 파일들을 하나로 병합합니다.',
 };
 

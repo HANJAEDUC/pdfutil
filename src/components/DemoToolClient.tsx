@@ -17,9 +17,9 @@ interface DemoToolProps {
 
 const TOOL_DETAILS_I18N: { [key: string]: { [lang: string]: { title: string; desc: string } } } = {
   pdfxxx: {
-    ko: { title: 'pdfxxx (대표로고 / PNG·JPG 삽입)', desc: 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.' },
-    en: { title: 'pdfxxx (Insert Logo / PNG & JPG)', desc: 'Overlay brand logo or PNG/JPG image onto your PDF document pages.' },
-    de: { title: 'pdfxxx (Logo / PNG & JPG Einfügen)', desc: 'Fügen Sie Ihr Firmenlogo oder PNG/JPG-Bild in Ihr PDF-Dokument ein.' },
+    ko: { title: 'pdfxxx (PDF 🏷️ LOGO 삽입)', desc: 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.' },
+    en: { title: 'pdfxxx (PDF 🏷️ LOGO Insert)', desc: 'Overlay brand logo or PNG/JPG image onto your PDF document pages.' },
+    de: { title: 'pdfxxx (PDF 🏷️ LOGO Einfügen)', desc: 'Fügen Sie Ihr Firmenlogo oder PNG/JPG-Bild in Ihr PDF-Dokument ein.' },
   },
   pdfxxxx: {
     ko: { title: 'pdfxxxx (PDF ➡️ PNG 이미지 변환)', desc: 'PDF 문서를 100% 무손실 고화질 PNG 이미지로 변환합니다.' },
