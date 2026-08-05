@@ -190,13 +190,13 @@ export default function HomePortalClient() {
           <Link href="/pdfxxx" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoGitBranchOutline />
+                <IoImagesOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxx?.desc || 'PDF 문서를 원하는 범위나 페이지 단위로 자유롭게 분할합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfxxx?.title || 'PDF 🏷️ 대표로고 삽입'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxx?.desc || 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxx?.btn || '페이지 분할하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfxxx?.btn || '대표로고 삽입하러 가기 ➔'}</span>
             </div>
           </Link>
 

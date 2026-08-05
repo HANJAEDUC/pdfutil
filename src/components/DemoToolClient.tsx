@@ -17,9 +17,9 @@ interface DemoToolProps {
 
 const TOOL_DETAILS_I18N: { [key: string]: { [lang: string]: { title: string; desc: string } } } = {
   pdfxxx: {
-    ko: { title: 'pdfxxx (페이지 분할)', desc: '하나의 PDF 문서를 여러 개로 분할합니다.' },
-    en: { title: 'pdfxxx (Split PDF)', desc: 'Split a PDF document into multiple separate files.' },
-    de: { title: 'pdfxxx (PDF Teilen)', desc: 'Teilen Sie ein PDF-Dokument in mehere Dateien.' },
+    ko: { title: 'pdfxxx (대표로고 / PNG·JPG 삽입)', desc: 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.' },
+    en: { title: 'pdfxxx (Insert Logo / PNG & JPG)', desc: 'Overlay brand logo or PNG/JPG image onto your PDF document pages.' },
+    de: { title: 'pdfxxx (Logo / PNG & JPG Einfügen)', desc: 'Fügen Sie Ihr Firmenlogo oder PNG/JPG-Bild in Ihr PDF-Dokument ein.' },
   },
   pdfxxxx: {
     ko: { title: 'pdfxxxx (페이지 삭제)', desc: 'PDF 문서에서 불필요한 페이지를 삭제합니다.' },

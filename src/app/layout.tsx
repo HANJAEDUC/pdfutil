@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.mypdf.co.kr"),
+  alternates: {
+    canonical: "/",
+  },
   title: "myPDF — 무료 PDF 변환, 병합, 추출, 암호화 유틸리티 (mypdf.co.kr)",
   description: "서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 PDF를 JPG/Word 변환, 병합, 페이지 추출 및 암호화 설정하는 무제한 무료 PDF 플랫폼",
   keywords: [
