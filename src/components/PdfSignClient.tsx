@@ -165,13 +165,21 @@ export default function PdfSignClient() {
       ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
       ctx.font = `140px ${fontFamily}`;
       ctx.fillStyle = textColor;
+      ctx.strokeStyle = textColor;
+      ctx.lineWidth = penWidth * 1.8; // Apply stroke thickness to text font
+      ctx.lineJoin = 'round';
+      ctx.miterLimit = 2;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+
+      if (penWidth > 1.5) {
+        ctx.strokeText(typedText, textCanvas.width / 2, textCanvas.height / 2);
+      }
       ctx.fillText(typedText, textCanvas.width / 2, textCanvas.height / 2);
 
       return textCanvas.toDataURL('image/png');
     }
-  }, [signMode, strokes, typedText, fontFamily, textColor]);
+  }, [signMode, strokes, typedText, fontFamily, textColor, penWidth]);
 
   // Render combined preview (PDF page + Signature overlay)
   const renderPreview = useCallback(() => {
@@ -609,50 +617,6 @@ export default function PdfSignClient() {
                     </button>
                   </div>
                 </div>
-
-                {/* Dedicated Pen Line Thickness Control Block */}
-                <div className={styles.thicknessBlock}>
-                  <div className={styles.thicknessHeader}>
-                    <span>✏️ {tSign.strokeWidthLabel || '펜 선 굵기 조절 (Pen Thickness)'}</span>
-                    <span className={styles.thicknessValBadge}>{penWidth}px</span>
-                  </div>
-
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    step="0.5"
-                    value={penWidth}
-                    onChange={(e) => setPenWidth(Number(e.target.value))}
-                    className={styles.rangeInput}
-                  />
-
-                  <div className={styles.thicknessPillsRow}>
-                    {[
-                      { label: '얇게', val: 1.5 },
-                      { label: '보통', val: 3 },
-                      { label: '굵게', val: 5 },
-                      { label: '초굵게', val: 8 },
-                    ].map((item) => (
-                      <button
-                        key={item.val}
-                        type="button"
-                        className={`${styles.thicknessPill} ${penWidth === item.val ? styles.thicknessPillActive : ''}`}
-                        onClick={() => setPenWidth(item.val)}
-                      >
-                        <span
-                          className={styles.thicknessDotInner}
-                          style={{
-                            width: `${Math.max(3, item.val * 1.5)}px`,
-                            height: `${Math.max(3, item.val * 1.5)}px`,
-                            backgroundColor: penColor,
-                          }}
-                        />
-                        <span>{item.val}px</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
             )}
 
@@ -684,6 +648,7 @@ export default function PdfSignClient() {
                   {COLOR_OPTIONS.map((c) => (
                     <button
                       key={c}
+                      type="button"
                       className={`${styles.colorDot} ${textColor === c ? styles.colorDotActive : ''}`}
                       style={{ backgroundColor: c }}
                       onClick={() => setTextColor(c)}
@@ -692,6 +657,50 @@ export default function PdfSignClient() {
                 </div>
               </div>
             )}
+
+            {/* Shared Line Thickness Control Block for both Draw & Type modes */}
+            <div className={styles.thicknessBlock} style={{ marginTop: '1.25rem' }}>
+              <div className={styles.thicknessHeader}>
+                <span>✏️ {tSign.strokeWidthLabel || '서명 선/글자 굵기 조절 (Stroke Weight)'}</span>
+                <span className={styles.thicknessValBadge}>{penWidth}px</span>
+              </div>
+
+              <input
+                type="range"
+                min="1"
+                max="10"
+                step="0.5"
+                value={penWidth}
+                onChange={(e) => setPenWidth(Number(e.target.value))}
+                className={styles.rangeInput}
+              />
+
+              <div className={styles.thicknessPillsRow}>
+                {[
+                  { label: '얇게', val: 1.5 },
+                  { label: '보통', val: 3 },
+                  { label: '굵게', val: 5 },
+                  { label: '초굵게', val: 8 },
+                ].map((item) => (
+                  <button
+                    key={item.val}
+                    type="button"
+                    className={`${styles.thicknessPill} ${penWidth === item.val ? styles.thicknessPillActive : ''}`}
+                    onClick={() => setPenWidth(item.val)}
+                  >
+                    <span
+                      className={styles.thicknessDotInner}
+                      style={{
+                        width: `${Math.max(3, item.val * 1.5)}px`,
+                        height: `${Math.max(3, item.val * 1.5)}px`,
+                        backgroundColor: signMode === 'draw' ? penColor : textColor,
+                      }}
+                    />
+                    <span>{item.val}px</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
             <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '1.5rem 0' }} />
 
