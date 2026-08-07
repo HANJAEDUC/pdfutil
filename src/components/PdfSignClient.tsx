@@ -15,6 +15,8 @@ import {
   IoChevronBackOutline,
   IoChevronForwardOutline,
   IoPencilOutline,
+  IoDocumentTextOutline,
+  IoCloseCircleOutline,
 } from 'react-icons/io5';
 
 type SignMode = 'draw' | 'type';
@@ -500,7 +502,31 @@ export default function PdfSignClient() {
 
       {/* Step 2: Editor & Signature Overlay Settings */}
       {pdfFile && !downloaded && (
-        <div className={styles.editorGrid}>
+        <div className={styles.editorContainer}>
+          {/* Top File Action Bar */}
+          <div className={styles.fileBarHeader}>
+            <div className={styles.fileInfo}>
+              <IoDocumentTextOutline size={22} color="#8ab4f8" />
+              <span className={styles.fileName}>{pdfFile.name}</span>
+              <span className={styles.fileSize}>
+                ({(pdfFile.size / (1024 * 1024)).toFixed(2)} MB, {pageCount}p)
+              </span>
+            </div>
+            <button
+              type="button"
+              className={styles.changeFileBtn}
+              onClick={() => {
+                resetAll();
+                setTimeout(() => pdfInputRef.current?.click(), 100);
+              }}
+              title={tSign.changeFileBtn || '취소하고 다른 PDF 파일 선택'}
+            >
+              <IoRefreshOutline size={16} />
+              <span>{tSign.changeFileBtn || '다른 PDF 파일 선택 (취소)'}</span>
+            </button>
+          </div>
+
+          <div className={styles.editorGrid}>
           {/* Left Panel: Signature Creation & Options */}
           <div className={styles.panelCard}>
             <div className={styles.sectionTitle}>
@@ -744,6 +770,7 @@ export default function PdfSignClient() {
             </div>
           </div>
         </div>
+      </div>
       )}
 
       {/* Step 3: Download Signed PDF Success Screen */}

@@ -362,6 +362,7 @@ export const translations = {
       nextPage: '다음 페이지',
       pageIndicator: '{current} / {total} 페이지',
       errorMsg: 'PDF에 서명을 적용하는 도중 오류가 발생했습니다.',
+      changeFileBtn: '다른 PDF 파일 선택 (취소)',
     },
   },
   en: {
@@ -725,6 +726,7 @@ export const translations = {
       nextPage: 'Next Page',
       pageIndicator: '{current} / {total} Pages',
       errorMsg: 'An error occurred while embedding signature into PDF.',
+      changeFileBtn: 'Select Different PDF File (Cancel)',
     },
   },
   de: {
@@ -1088,6 +1090,7 @@ export const translations = {
       nextPage: 'Nächste Seite',
       pageIndicator: '{current} / {total} Seiten',
       errorMsg: 'Beim Einfügen der Unterschrift ist ein Fehler aufgetreten.',
+      changeFileBtn: 'Andere PDF-Datei Wählen (Abbrechen)',
     },
   },
 };
