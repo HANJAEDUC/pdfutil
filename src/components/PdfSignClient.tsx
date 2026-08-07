@@ -129,7 +129,7 @@ export default function PdfSignClient() {
         setPageCount(pdfDoc.numPages);
 
         const page = await pdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale: 1.5 });
+        const viewport = page.getViewport({ scale: 2.0 });
 
         const bgCanvas = document.createElement('canvas');
         bgCanvas.width = viewport.width;
@@ -157,13 +157,13 @@ export default function PdfSignClient() {
     } else {
       if (!typedText.trim()) return null;
       const textCanvas = document.createElement('canvas');
-      textCanvas.width = 500;
-      textCanvas.height = 200;
+      textCanvas.width = 1200;
+      textCanvas.height = 400;
       const ctx = textCanvas.getContext('2d');
       if (!ctx) return null;
 
       ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-      ctx.font = `64px ${fontFamily}`;
+      ctx.font = `140px ${fontFamily}`;
       ctx.fillStyle = textColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -243,18 +243,38 @@ export default function PdfSignClient() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     strokes.forEach((stroke) => {
-      if (stroke.points.length < 2) return;
+      const pts = stroke.points;
+      if (pts.length === 0) return;
+
       ctx.beginPath();
       ctx.strokeStyle = stroke.color;
-      ctx.lineWidth = stroke.width;
+      ctx.fillStyle = stroke.color;
+      ctx.lineWidth = stroke.width * 3.5; // Scale stroke thickness for HiDPI buffer
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
-      ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-      for (let i = 1; i < stroke.points.length; i++) {
-        ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+      if (pts.length === 1) {
+        ctx.arc(pts[0].x, pts[0].y, (stroke.width * 3.5) / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (pts.length === 2) {
+        ctx.moveTo(pts[0].x, pts[0].y);
+        ctx.lineTo(pts[1].x, pts[1].y);
+        ctx.stroke();
+      } else {
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length - 1; i++) {
+          const xc = (pts[i].x + pts[i + 1].x) / 2;
+          const yc = (pts[i].y + pts[i + 1].y) / 2;
+          ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+        }
+        ctx.quadraticCurveTo(
+          pts[pts.length - 2].x,
+          pts[pts.length - 2].y,
+          pts[pts.length - 1].x,
+          pts[pts.length - 1].y
+        );
+        ctx.stroke();
       }
-      ctx.stroke();
     });
   }, [strokes]);
 
@@ -555,8 +575,8 @@ export default function PdfSignClient() {
               <div className={styles.drawPadWrapper}>
                 <canvas
                   ref={drawCanvasRef}
-                  width={340}
-                  height={180}
+                  width={1360}
+                  height={720}
                   className={styles.drawCanvas}
                   onMouseDown={startDrawing}
                   onMouseMove={drawMove}
