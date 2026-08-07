@@ -26,6 +26,7 @@ import {
   IoWaterOutline,
   IoTextOutline,
   IoScanOutline,
+  IoCreateOutline,
 } from 'react-icons/io5';
 
 const slides = [
@@ -266,17 +267,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 11: pdfxxxxxxxx */}
-          <Link href="/pdfxxxxxxxx" className={styles.toolCard}>
+          {/* Card 11: PDF ✍️ 서명 추가 (pdfsign) */}
+          <Link href="/pdf-sign" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoTextOutline />
+                <IoCreateOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxxxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxxx?.desc || 'PDF 파일 내부의 텍스트와 본문 문장만을 빠르게 추출합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfsign?.title || (t.home.tools as any).pdfxxxxxxxx?.title || 'PDF ✍️ 서명 추가'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfsign?.desc || (t.home.tools as any).pdfxxxxxxxx?.desc || '마우스나 터치로 직접 그리거나 텍스트를 입력하여 나만의 전자 서명을 만들고 PDF 문서에 삽입합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxxxxxx?.btn || '텍스트 추출하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdfsign?.btn || (t.home.tools as any).pdfxxxxxxxx?.btn || 'PDF 서명 추가하러 가기 ➔'}</span>
             </div>
           </Link>
 

@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdfxxxxxx',
     '/pdfxxxxxxx',
     '/pdfxxxxxxxx',
+    '/pdf-sign',
     '/pdfxxxxxxxxx',
   ];
 
