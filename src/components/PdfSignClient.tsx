@@ -69,7 +69,7 @@ export default function PdfSignClient() {
   const currentStrokeRef = useRef<DrawStroke | null>(null);
 
   // Type Signature States
-  const [typedText, setTypedText] = useState('홍길동 Signature');
+  const [typedText, setTypedText] = useState('myPDF Signature');
   const [fontFamily, setFontFamily] = useState(FONT_OPTIONS[0].family);
   const [textColor, setTextColor] = useState('#000000');
 
