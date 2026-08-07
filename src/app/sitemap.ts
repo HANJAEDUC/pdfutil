@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdfxxxxxxxx',
     '/pdf-sign',
     '/pdfxxxxxxxxx',
+    '/image-to-pdf',
   ];
 
   return routes.map((route) => ({

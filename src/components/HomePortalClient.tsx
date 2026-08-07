@@ -281,17 +281,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 12: pdfxxxxxxxxx */}
-          <Link href="/pdfxxxxxxxxx" className={styles.toolCard}>
+          {/* Card 12: JPG/PNG ➡️ PDF (img2pdf / image-to-pdf) */}
+          <Link href="/image-to-pdf" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoScanOutline />
+                <IoImagesOutline />
               </div>
-              <h3 className={styles.cardTitle}>pdfxxxxxxxxx</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxxxxxxxx?.desc || '스캔된 이미지형 PDF에서 문자를 정밀하게 OCR 글자 인식합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).img2pdf?.title || (t.home.tools as any).pdfxxxxxxxxx?.title || 'JPG/PNG ➡️ PDF'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).img2pdf?.desc || (t.home.tools as any).pdfxxxxxxxxx?.desc || '여러 장의 이미지 파일(JPG, PNG, WebP)을 원하는 순서대로 통합 결합하여 1개의 PDF 문서로 변환합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxxxxxxxx?.btn || 'OCR 인식하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).img2pdf?.btn || (t.home.tools as any).pdfxxxxxxxxx?.btn || 'PDF 결합 변환하러 가기 ➔'}</span>
             </div>
           </Link>
         </div>

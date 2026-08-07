@@ -96,7 +96,7 @@ export default function Navbar() {
     { key: 'pdfunlock', name: getToolDisplayName('pdfunlock', 'pdfunlock'), href: '/pdf-unlock', categoryKey: 'catSecurity' },
     { key: 'pdfwatermark', name: getToolDisplayName('pdfwatermark', 'pdfwatermark'), href: '/pdf-watermark', categoryKey: 'catSecurity' },
     { key: 'pdfsign', name: getToolDisplayName('pdfsign', getToolDisplayName('pdfxxxxxxxx', 'PDF ✍️ 서명 추가')), href: '/pdf-sign', categoryKey: 'catSecurity' },
-    { key: 'pdfxxxxxxxxx', name: getToolDisplayName('pdfxxxxxxxxx', 'pdfxxxxxxxxx'), href: '/pdfxxxxxxxxx', categoryKey: 'catSecurity' },
+    { key: 'img2pdf', name: getToolDisplayName('img2pdf', getToolDisplayName('pdfxxxxxxxxx', 'JPG/PNG ➡️ PDF')), href: '/image-to-pdf', categoryKey: 'catSecurity' },
   ];
 
   const filteredTools = allToolsList.filter((item) =>
