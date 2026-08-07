@@ -591,11 +591,35 @@ export default function PdfSignClient() {
                     {COLOR_OPTIONS.map((c) => (
                       <button
                         key={c}
+                        type="button"
                         className={`${styles.colorDot} ${penColor === c ? styles.colorDotActive : ''}`}
                         style={{ backgroundColor: c }}
                         onClick={() => setPenColor(c)}
                         title={c}
                       />
+                    ))}
+                  </div>
+
+                  {/* Pen Line Thickness Selector */}
+                  <div className={styles.thicknessGroup}>
+                    <span className={styles.thicknessLabel}>{tSign.strokeWidthLabel || '굵기'}:</span>
+                    {[1.5, 3, 5, 8].map((w) => (
+                      <button
+                        key={w}
+                        type="button"
+                        className={`${styles.thicknessDotBtn} ${penWidth === w ? styles.thicknessDotBtnActive : ''}`}
+                        onClick={() => setPenWidth(w)}
+                        title={`${w}px`}
+                      >
+                        <span
+                          className={styles.thicknessDotInner}
+                          style={{
+                            width: `${Math.max(3, w * 1.8)}px`,
+                            height: `${Math.max(3, w * 1.8)}px`,
+                            backgroundColor: penColor,
+                          }}
+                        />
+                      </button>
                     ))}
                   </div>
 
