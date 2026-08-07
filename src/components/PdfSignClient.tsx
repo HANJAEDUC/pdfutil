@@ -600,29 +600,6 @@ export default function PdfSignClient() {
                     ))}
                   </div>
 
-                  {/* Pen Line Thickness Selector */}
-                  <div className={styles.thicknessGroup}>
-                    <span className={styles.thicknessLabel}>{tSign.strokeWidthLabel || '굵기'}:</span>
-                    {[1.5, 3, 5, 8].map((w) => (
-                      <button
-                        key={w}
-                        type="button"
-                        className={`${styles.thicknessDotBtn} ${penWidth === w ? styles.thicknessDotBtnActive : ''}`}
-                        onClick={() => setPenWidth(w)}
-                        title={`${w}px`}
-                      >
-                        <span
-                          className={styles.thicknessDotInner}
-                          style={{
-                            width: `${Math.max(3, w * 1.8)}px`,
-                            height: `${Math.max(3, w * 1.8)}px`,
-                            backgroundColor: penColor,
-                          }}
-                        />
-                      </button>
-                    ))}
-                  </div>
-
                   <div className={styles.actionBtnGroup}>
                     <button className={styles.smallBtn} onClick={undoDrawCanvas} type="button">
                       {tSign.undoCanvas || '되돌리기'}
@@ -630,6 +607,50 @@ export default function PdfSignClient() {
                     <button className={styles.smallBtn} onClick={clearDrawCanvas} type="button">
                       {tSign.clearCanvas || '초기화'}
                     </button>
+                  </div>
+                </div>
+
+                {/* Dedicated Pen Line Thickness Control Block */}
+                <div className={styles.thicknessBlock}>
+                  <div className={styles.thicknessHeader}>
+                    <span>✏️ {tSign.strokeWidthLabel || '펜 선 굵기 조절 (Pen Thickness)'}</span>
+                    <span className={styles.thicknessValBadge}>{penWidth}px</span>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    step="0.5"
+                    value={penWidth}
+                    onChange={(e) => setPenWidth(Number(e.target.value))}
+                    className={styles.rangeInput}
+                  />
+
+                  <div className={styles.thicknessPillsRow}>
+                    {[
+                      { label: '얇게', val: 1.5 },
+                      { label: '보통', val: 3 },
+                      { label: '굵게', val: 5 },
+                      { label: '초굵게', val: 8 },
+                    ].map((item) => (
+                      <button
+                        key={item.val}
+                        type="button"
+                        className={`${styles.thicknessPill} ${penWidth === item.val ? styles.thicknessPillActive : ''}`}
+                        onClick={() => setPenWidth(item.val)}
+                      >
+                        <span
+                          className={styles.thicknessDotInner}
+                          style={{
+                            width: `${Math.max(3, item.val * 1.5)}px`,
+                            height: `${Math.max(3, item.val * 1.5)}px`,
+                            backgroundColor: penColor,
+                          }}
+                        />
+                        <span>{item.val}px</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
