@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdf-watermark',
     '/pdf-unlock',
     '/pdf-to-png',
-    '/pdfxxx',
+    '/pdf-logo',
     '/pdfxxxx',
     '/pdfxxxxx',
     '/pdfxxxxxx',

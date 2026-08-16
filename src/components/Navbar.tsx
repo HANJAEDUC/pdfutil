@@ -88,7 +88,7 @@ export default function Navbar() {
     { key: 'pdfpasswd', name: getToolDisplayName('pdfpasswd', 'pdfpasswd'), href: '/pdf-passwd', categoryKey: 'catPrimary' },
 
     // Column 2: Organize
-    { key: 'pdfxxx', name: getToolDisplayName('pdfxxx', 'pdfxxx'), href: '/pdfxxx', categoryKey: 'catOrganize' },
+    { key: 'pdflogo', name: getToolDisplayName('pdflogo', getToolDisplayName('pdfxxx', 'pdflogo (PDF 🏷️ LOGO)')), href: '/pdf-logo', categoryKey: 'catOrganize' },
     { key: 'pdfpng', name: getToolDisplayName('pdfpng', getToolDisplayName('pdfxxxx', 'PDF ➡️ PNG')), href: '/pdf-to-png', categoryKey: 'catPrimary' },
     { key: 'pdfrotate', name: getToolDisplayName('pdfrotate', 'pdfrotate'), href: '/pdf-rotate', categoryKey: 'catOrganize' },
 

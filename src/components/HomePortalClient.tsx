@@ -36,7 +36,7 @@ const slides = [
   { id: 3, titleKey: 'pdfmerge', fallbackTitle: 'PDF + PDF', imgSrc: '/hero-merge.png', link: '/pdf-merge' },
   { id: 4, titleKey: 'pdfextract', fallbackTitle: 'PDF-PDF', imgSrc: '/hero-extract.png', link: '/pdf-extract' },
   { id: 5, titleKey: 'pdfpasswd', fallbackTitle: 'PDF 🔑 PDF', imgSrc: '/hero-passwd.png', link: '/pdf-passwd' },
-  { id: 6, titleKey: 'pdfxxx', fallbackTitle: 'PDF + LOGO', imgSrc: '/hero-logo.png', link: '/pdfxxx' },
+  { id: 6, titleKey: 'pdflogo', fallbackTitle: 'PDF + LOGO', imgSrc: '/hero-logo.png', link: '/pdf-logo' },
   { id: 7, titleKey: 'pdfrotate', fallbackTitle: 'PDF 🔄 PDF', imgSrc: '/hero-rotate.png', link: '/pdf-rotate' },
   { id: 8, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
   { id: 9, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
@@ -197,17 +197,17 @@ export default function HomePortalClient() {
             </div>
           </Link>
 
-          {/* Card 6: pdfxxx */}
-          <Link href="/pdfxxx" className={styles.toolCard}>
+          {/* Card 6: PDF 🏷️ LOGO */}
+          <Link href="/pdf-logo" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
                 <IoImagesOutline />
               </div>
-              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfxxx?.title || 'PDF 🏷️ 대표로고 삽입'}</h3>
-              <p className={styles.cardDesc}>{(t.home.tools as any).pdfxxx?.desc || 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.'}</p>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdflogo?.title || (t.home.tools as any).pdfxxx?.title || 'PDF 🏷️ 대표로고 삽입'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdflogo?.desc || (t.home.tools as any).pdfxxx?.desc || 'PDF 문서 원하는 위치에 대표로고 또는 PNG/JPG 그림을 자유롭게 배치하여 추가합니다.'}</p>
             </div>
             <div className={styles.cardBtn}>
-              <span>{(t.home.tools as any).pdfxxx?.btn || '대표로고 삽입하러 가기 ➔'}</span>
+              <span>{(t.home.tools as any).pdflogo?.btn || (t.home.tools as any).pdfxxx?.btn || '대표로고 삽입하러 가기 ➔'}</span>
             </div>
           </Link>
 
