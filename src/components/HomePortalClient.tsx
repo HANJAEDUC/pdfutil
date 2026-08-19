@@ -299,7 +299,31 @@ export default function HomePortalClient() {
           <Link href="/pdf-pages" className={styles.toolCard}>
             <div>
               <div className={styles.cardIcon}>
-                <IoTextOutline />
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2.5" y="2.5" width="19" height="19" rx="5" />
+                  <text
+                    x="12"
+                    y="15.5"
+                    fontSize="9.5"
+                    fontWeight="800"
+                    fontFamily="sans-serif"
+                    textAnchor="middle"
+                    fill="currentColor"
+                    stroke="none"
+                    letterSpacing="-0.5"
+                  >
+                    123
+                  </text>
+                </svg>
               </div>
               <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfpages?.title || 'PDF 🔢 페이지 번호'}</h3>
               <p className={styles.cardDesc}>{(t.home.tools as any).pdfpages?.desc || 'PDF 문서 각 페이지에 번호(예: 1 / 5, Page 1 of 5, - 1 -)를 원하는 위치와 디자인으로 자동 추가합니다.'}</p>
