@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './ImageToPdfClient.module.css';
 import { useLanguage } from '@/lib/LanguageContext';
 import { PDFDocument } from 'pdf-lib';
@@ -15,16 +15,18 @@ import {
   IoArrowUpOutline,
   IoArrowDownOutline,
   IoOptionsOutline,
+  IoRefreshOutline,
+  IoEyeOutline,
+  IoChevronBackOutline,
+  IoChevronForwardOutline,
 } from 'react-icons/io5';
 
 interface ImageFileItem {
   id: string;
   file: File;
   previewUrl: string;
+  rotation: number;
 }
-
-type PageSizeMode = 'fit' | 'a4';
-type OrientationMode = 'auto' | 'portrait' | 'landscape';
 
 export default function ImageToPdfClient() {
   const { t } = useLanguage();
@@ -33,10 +35,9 @@ export default function ImageToPdfClient() {
   // Image Files List State
   const [images, setImages] = useState<ImageFileItem[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
 
-  // Layout & Page Options
-  const [pageSize, setPageSize] = useState<PageSizeMode>('a4');
-  const [orientation, setOrientation] = useState<OrientationMode>('auto');
+  // Layout Options
   const [margin, setMargin] = useState<number>(0); // 0pt, 10pt, 20pt
 
   // Processing & Export States
@@ -46,6 +47,71 @@ export default function ImageToPdfClient() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addFileInputRef = useRef<HTMLInputElement>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Render live PDF page preview on canvas whenever options or selected image changes
+  useEffect(() => {
+    if (images.length === 0) return;
+    const safeIndex = Math.min(selectedPageIndex, images.length - 1);
+    const item = images[safeIndex];
+    if (!item) return;
+
+    const canvas = previewCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.src = item.previewUrl;
+    img.onload = () => {
+      const origW = img.naturalWidth || img.width;
+      const origH = img.naturalHeight || img.height;
+
+      const rotation = ((item.rotation % 360) + 360) % 360;
+      const isSwap = rotation === 90 || rotation === 270;
+      const imgW = isSwap ? origH : origW;
+      const imgH = isSwap ? origW : origH;
+
+      const marginPx = margin;
+      const pageW = imgW + marginPx * 2;
+      const pageH = imgH + marginPx * 2;
+
+      canvas.width = pageW;
+      canvas.height = pageH;
+
+      // Fill background (white paper sheet)
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, pageW, pageH);
+
+      const availW = pageW - marginPx * 2;
+      const availH = pageH - marginPx * 2;
+
+      const scale = Math.min(availW / imgW, availH / imgH);
+      const drawW = imgW * scale;
+      const drawH = imgH * scale;
+
+      const drawX = (pageW - drawW) / 2;
+      const drawY = (pageH - drawH) / 2;
+
+      ctx.save();
+      ctx.translate(drawX + drawW / 2, drawY + drawH / 2);
+      ctx.rotate((rotation * Math.PI) / 180);
+      ctx.drawImage(
+        img,
+        (-origW / 2) * scale,
+        (-origH / 2) * scale,
+        origW * scale,
+        origH * scale
+      );
+      ctx.restore();
+
+      // Subtle page border
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.lineWidth = Math.max(1, pageW / 500);
+      ctx.strokeRect(0, 0, pageW, pageH);
+    };
+  }, [images, selectedPageIndex, margin]);
 
   // Handle image files selection
   const handleFilesSelect = (filesList: FileList | null) => {
@@ -58,6 +124,7 @@ export default function ImageToPdfClient() {
           id: `${file.name}-${Date.now()}-${Math.random()}`,
           file,
           previewUrl: URL.createObjectURL(file),
+          rotation: 0,
         });
       }
     });
@@ -81,13 +148,39 @@ export default function ImageToPdfClient() {
       updated[targetIndex] = temp;
       return updated;
     });
+
+    if (selectedPageIndex === index) {
+      setSelectedPageIndex(targetIndex);
+    } else if (selectedPageIndex === targetIndex) {
+      setSelectedPageIndex(index);
+    }
+  };
+
+  // Rotate single image 90 degrees
+  const rotateImage = (id: string, direction: 'cw' | 'ccw') => {
+    setImages((prev) =>
+      prev.map((img) => {
+        if (img.id !== id) return img;
+        const delta = direction === 'cw' ? 90 : 270;
+        return {
+          ...img,
+          rotation: (img.rotation + delta) % 360,
+        };
+      })
+    );
   };
 
   const deleteImage = (id: string) => {
     setImages((prev) => {
-      const target = prev.find((img) => img.id === id);
-      if (target) URL.revokeObjectURL(target.previewUrl);
-      return prev.filter((img) => img.id !== id);
+      const targetIndex = prev.findIndex((img) => img.id === id);
+      if (targetIndex !== -1) {
+        URL.revokeObjectURL(prev[targetIndex].previewUrl);
+      }
+      const updated = prev.filter((img) => img.id !== id);
+      if (selectedPageIndex >= updated.length) {
+        setSelectedPageIndex(Math.max(0, updated.length - 1));
+      }
+      return updated;
     });
   };
 
@@ -96,44 +189,70 @@ export default function ImageToPdfClient() {
     setImages([]);
     setDownloaded(false);
     setDownloadUrl(null);
+    setSelectedPageIndex(0);
   };
 
-  // Convert Images to PNG/JPG Data URL helper
-  const convertFileToEmbeddableBytes = async (
-    file: File
-  ): Promise<{ bytes: ArrayBuffer; format: 'jpg' | 'png' }> => {
-    const arrayBuffer = await file.arrayBuffer();
-    const type = file.type.toLowerCase();
-
-    if (type === 'image/jpeg' || type === 'image/jpg') {
-      return { bytes: arrayBuffer, format: 'jpg' };
-    }
-
-    if (type === 'image/png') {
-      return { bytes: arrayBuffer, format: 'png' };
-    }
-
-    // For WebP, GIF, or other image types, draw to Canvas and export PNG
+  // Convert Images to PNG/JPG Data URL helper with EXIF normalization & rotation
+  const convertFileToEmbeddableBytes = (
+    file: File,
+    rotationDegrees: number = 0
+  ): Promise<{ bytes: ArrayBuffer; format: 'jpg' | 'png'; width: number; height: number }> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       const url = URL.createObjectURL(file);
       img.src = url;
-      img.onload = async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          const dataUrl = canvas.toDataURL('image/png');
-          const pngBuffer = await fetch(dataUrl).then((res) => res.arrayBuffer());
+
+      img.onload = () => {
+        try {
+          const origW = img.naturalWidth || img.width;
+          const origH = img.naturalHeight || img.height;
+
+          const normRotation = ((rotationDegrees % 360) + 360) % 360;
+          const rad = (normRotation * Math.PI) / 180;
+          const isSwap = normRotation === 90 || normRotation === 270;
+
+          const canvasW = isSwap ? origH : origW;
+          const canvasH = isSwap ? origW : origH;
+
+          const canvas = document.createElement('canvas');
+          canvas.width = canvasW;
+          canvas.height = canvasH;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            URL.revokeObjectURL(url);
+            reject(new Error('Canvas context creation failed'));
+            return;
+          }
+
+          // Draw image centered and rotated
+          ctx.translate(canvasW / 2, canvasH / 2);
+          ctx.rotate(rad);
+          ctx.drawImage(img, -origW / 2, -origH / 2);
+
+          const isPng = file.type.toLowerCase() === 'image/png';
+          const format = isPng ? 'png' : 'jpg';
+          const mime = isPng ? 'image/png' : 'image/jpeg';
+
+          canvas.toBlob(
+            async (blob) => {
+              URL.revokeObjectURL(url);
+              if (!blob) {
+                reject(new Error('Canvas blob conversion failed'));
+                return;
+              }
+              const bytes = await blob.arrayBuffer();
+              resolve({ bytes, format, width: canvasW, height: canvasH });
+            },
+            mime,
+            0.92
+          );
+        } catch (err) {
           URL.revokeObjectURL(url);
-          resolve({ bytes: pngBuffer, format: 'png' });
-        } else {
-          URL.revokeObjectURL(url);
-          reject(new Error('Canvas context creation failed'));
+          reject(err);
         }
       };
+
       img.onerror = () => {
         URL.revokeObjectURL(url);
         reject(new Error('Failed to load image file'));
@@ -149,42 +268,21 @@ export default function ImageToPdfClient() {
     try {
       const pdfDoc = await PDFDocument.create();
 
-      // Standard A4 dimensions in points (72 DPI)
-      const A4_WIDTH = 595.28;
-      const A4_HEIGHT = 841.89;
-
       for (const item of images) {
-        const { bytes, format } = await convertFileToEmbeddableBytes(item.file);
+        const { bytes, format, width: imgWidth, height: imgHeight } =
+          await convertFileToEmbeddableBytes(item.file, item.rotation);
+
         const embeddedImage =
           format === 'jpg'
             ? await pdfDoc.embedJpg(bytes)
             : await pdfDoc.embedPng(bytes);
 
-        const imgWidth = embeddedImage.width;
-        const imgHeight = embeddedImage.height;
-
-        let pageWidth = imgWidth;
-        let pageHeight = imgHeight;
-
-        if (pageSize === 'a4') {
-          // Determine A4 orientation
-          let isLandscape = false;
-          if (orientation === 'landscape') {
-            isLandscape = true;
-          } else if (orientation === 'portrait') {
-            isLandscape = false;
-          } else {
-            // Auto: match image aspect ratio
-            isLandscape = imgWidth > imgHeight;
-          }
-
-          pageWidth = isLandscape ? A4_HEIGHT : A4_WIDTH;
-          pageHeight = isLandscape ? A4_WIDTH : A4_HEIGHT;
-        }
+        // Auto Page size matching image aspect ratio + margin
+        const pageWidth = imgWidth + margin * 2;
+        const pageHeight = imgHeight + margin * 2;
 
         const page = pdfDoc.addPage([pageWidth, pageHeight]);
 
-        // Calculate printable area taking margin into account
         const availWidth = pageWidth - margin * 2;
         const availHeight = pageHeight - margin * 2;
 
@@ -204,7 +302,7 @@ export default function ImageToPdfClient() {
       }
 
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
 
       setDownloadUrl(url);
@@ -216,6 +314,9 @@ export default function ImageToPdfClient() {
       setConverting(false);
     }
   };
+
+  const safeSelectedPage = Math.min(selectedPageIndex, Math.max(0, images.length - 1));
+  const currentPreviewItem = images[safeSelectedPage];
 
   return (
     <div className={styles.container}>
@@ -304,16 +405,36 @@ export default function ImageToPdfClient() {
 
             <div className={styles.thumbGrid}>
               {images.map((item, index) => (
-                <div key={item.id} className={styles.thumbCard}>
+                <div
+                  key={item.id}
+                  className={`${styles.thumbCard} ${safeSelectedPage === index ? styles.thumbCardActive : ''}`}
+                  onClick={() => setSelectedPageIndex(index)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <span className={styles.pageIndexBadge}>p.{index + 1}</span>
                   <div className={styles.thumbImgWrapper}>
-                    <img src={item.previewUrl} alt={item.file.name} className={styles.thumbImg} />
+                    <img
+                      src={item.previewUrl}
+                      alt={item.file.name}
+                      className={styles.thumbImg}
+                      style={{
+                        transform: `rotate(${item.rotation || 0}deg)`,
+                        transition: 'transform 0.2s ease',
+                      }}
+                    />
                   </div>
                   <div className={styles.imgInfo} title={item.file.name}>
                     {item.file.name}
                   </div>
 
-                  <div className={styles.thumbCardActions}>
+                  <div className={styles.thumbCardActions} onClick={(e) => e.stopPropagation()}>
+                    <button
+                      className={styles.actionIconBtn}
+                      onClick={() => rotateImage(item.id, 'cw')}
+                      title={tImg.rotateCw || '90° 시계방향 회전'}
+                    >
+                      <IoRefreshOutline size={14} />
+                    </button>
                     <button
                       className={styles.actionIconBtn}
                       disabled={index === 0}
@@ -341,6 +462,57 @@ export default function ImageToPdfClient() {
                 </div>
               ))}
             </div>
+
+            {/* Live Real-Time PDF Page Preview Card */}
+            {currentPreviewItem && (
+              <div className={styles.previewCard}>
+                <div className={styles.previewHeader}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <IoEyeOutline color="#8ab4f8" size={18} />
+                    <span>실시간 PDF 페이지 미리보기 (p.{safeSelectedPage + 1})</span>
+                  </div>
+                  {images.length > 1 && (
+                    <div className={styles.previewPageNav}>
+                      <button
+                        className={styles.navArrowBtn}
+                        disabled={safeSelectedPage === 0}
+                        onClick={() => setSelectedPageIndex((p) => Math.max(0, p - 1))}
+                        type="button"
+                      >
+                        <IoChevronBackOutline size={14} />
+                      </button>
+                      <span>{safeSelectedPage + 1} / {images.length}</span>
+                      <button
+                        className={styles.navArrowBtn}
+                        disabled={safeSelectedPage === images.length - 1}
+                        onClick={() => setSelectedPageIndex((p) => Math.min(images.length - 1, p + 1))}
+                        type="button"
+                      >
+                        <IoChevronForwardOutline size={14} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.previewCanvasWrapper}>
+                  <canvas ref={previewCanvasRef} className={styles.previewCanvas} />
+                </div>
+
+                <div className={styles.previewControls}>
+                  <button
+                    className={styles.rotateBtn}
+                    onClick={() => rotateImage(currentPreviewItem.id, 'cw')}
+                    type="button"
+                  >
+                    <IoRefreshOutline size={18} />
+                    <span>이미지 90° 회전</span>
+                  </button>
+                  <span className={styles.previewHint}>
+                    💡 문서 글자가 눕혀져 있다면 위의 '90° 회전' 버튼을 눌러 바로잡으세요.
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Panel: Layout Settings & Convert Button */}
@@ -349,39 +521,6 @@ export default function ImageToPdfClient() {
               <IoOptionsOutline color="#8ab4f8" size={20} />
               <span>{tImg.sectionOptions || '2. PDF 페이지 설정 및 레이아웃'}</span>
             </div>
-
-            {/* Page Size */}
-            <div className={styles.formGroup}>
-              <div className={styles.labelRow}>
-                <span>{tImg.pageSizeLabel || '페이지 크기 규격'}</span>
-              </div>
-              <select
-                value={pageSize}
-                onChange={(e) => setPageSize(e.target.value as PageSizeMode)}
-                className={styles.selectInput}
-              >
-                <option value="a4">{tImg.sizeA4 || '표준 A4 크기 (210 x 297 mm)'}</option>
-                <option value="fit">{tImg.sizeFit || '이미지 원본 비율/크기 맞춤'}</option>
-              </select>
-            </div>
-
-            {/* Orientation */}
-            {pageSize === 'a4' && (
-              <div className={styles.formGroup}>
-                <div className={styles.labelRow}>
-                  <span>{tImg.orientationLabel || '페이지 방향'}</span>
-                </div>
-                <select
-                  value={orientation}
-                  onChange={(e) => setOrientation(e.target.value as OrientationMode)}
-                  className={styles.selectInput}
-                >
-                  <option value="auto">{tImg.orientAuto || '자동 (이미지 비율에 맞춤)'}</option>
-                  <option value="portrait">{tImg.orientPortrait || '세로 (Portrait)'}</option>
-                  <option value="landscape">{tImg.orientLandscape || '가로 (Landscape)'}</option>
-                </select>
-              </div>
-            )}
 
             {/* Margins */}
             <div className={styles.formGroup}>

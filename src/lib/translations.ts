@@ -409,6 +409,8 @@ export const translations = {
       downloadBtn: '변환된 PDF 다운로드',
       newFile: '새 파일 작업',
       errorMsg: '이미지를 PDF로 변환하는 도중 오류가 발생했습니다.',
+      rotateCw: '90° 시계방향 회전',
+      rotateCcw: '90° 반시계방향 회전',
     },
   },
   en: {
@@ -819,6 +821,8 @@ export const translations = {
       downloadBtn: 'Download Converted PDF',
       newFile: 'New File',
       errorMsg: 'An error occurred while converting images to PDF.',
+      rotateCw: 'Rotate 90° CW',
+      rotateCcw: 'Rotate 90° CCW',
     },
   },
   de: {
@@ -1267,6 +1271,8 @@ export const translations = {
       downloadBtn: 'Konvertiertes PDF Herunterladen',
       newFile: 'Neue Datei',
       errorMsg: 'Beim Konvertieren der Bilder in PDF ist ein Fehler aufgetreten.',
+      rotateCw: '90° Im Uhrzeigersinn drehen',
+      rotateCcw: '90° Gegen Uhrzeigersinn drehen',
     },
   },
 };

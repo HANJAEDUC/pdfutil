@@ -207,6 +207,11 @@
   transform: translateY(-2px);
 }
 
+.thumbCardActive {
+  border-color: #4285f4 !important;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.4);
+}
+
 .pageIndexBadge {
   position: absolute;
   top: 0.6rem;
@@ -405,3 +410,98 @@
 .resetBtn:hover {
   color: #ffffff;
 }
+
+/* Live PDF Page Preview Card */
+.previewCard {
+  margin-top: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e8eaed;
+}
+
+.previewPageNav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navArrowBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.navArrowBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.previewCanvasWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #121316;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  min-height: 280px;
+}
+
+.previewCanvas {
+  max-width: 100%;
+  max-height: 380px;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.previewControls {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rotateBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  background: rgba(66, 133, 244, 0.15);
+  border: 1px solid rgba(66, 133, 244, 0.35);
+  color: #8ab4f8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rotateBtn:hover {
+  background: rgba(66, 133, 244, 0.28);
+  border-color: #4285f4;
+  color: #ffffff;
+}
+
+.previewHint {
+  font-size: 0.82rem;
+  color: #9aa0a6;
+  text-align: center;
+}
+
