@@ -294,6 +294,20 @@ export default function HomePortalClient() {
               <span>{(t.home.tools as any).img2pdf?.btn || (t.home.tools as any).pdfxxxxxxxxx?.btn || 'PDF 결합 변환하러 가기 ➔'}</span>
             </div>
           </Link>
+
+          {/* Card 13: PDF 🔢 페이지 번호 (pdfpages / pdf-pages) */}
+          <Link href="/pdf-pages" className={styles.toolCard}>
+            <div>
+              <div className={styles.cardIcon}>
+                <IoTextOutline />
+              </div>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfpages?.title || 'PDF 🔢 페이지 번호'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfpages?.desc || 'PDF 문서 각 페이지에 번호(예: 1 / 5, Page 1 of 5, - 1 -)를 원하는 위치와 디자인으로 자동 추가합니다.'}</p>
+            </div>
+            <div className={styles.cardBtn}>
+              <span>{(t.home.tools as any).pdfpages?.btn || '페이지 번호 추가하러 가기 ➔'}</span>
+            </div>
+          </Link>
         </div>
       </section>
     </div>

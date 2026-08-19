@@ -91,6 +91,7 @@ export default function Navbar() {
     { key: 'pdflogo', name: getToolDisplayName('pdflogo', getToolDisplayName('pdfxxx', 'pdflogo (PDF 🏷️ LOGO)')), href: '/pdf-logo', categoryKey: 'catOrganize' },
     { key: 'pdfpng', name: getToolDisplayName('pdfpng', getToolDisplayName('pdfxxxx', 'PDF ➡️ PNG')), href: '/pdf-to-png', categoryKey: 'catPrimary' },
     { key: 'pdfrotate', name: getToolDisplayName('pdfrotate', 'pdfrotate'), href: '/pdf-rotate', categoryKey: 'catOrganize' },
+    { key: 'pdfpages', name: getToolDisplayName('pdfpages', 'pdfpages (PDF 🔢 페이지 번호)'), href: '/pdf-pages', categoryKey: 'catOrganize' },
 
     // Column 3: Security & Utils
     { key: 'pdfunlock', name: getToolDisplayName('pdfunlock', 'pdfunlock'), href: '/pdf-unlock', categoryKey: 'catSecurity' },
