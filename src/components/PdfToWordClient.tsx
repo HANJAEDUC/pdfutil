@@ -9,6 +9,7 @@ import {
   IoDownloadOutline,
   IoRefreshOutline,
   IoCheckmarkCircleOutline,
+  IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
 
 export default function PdfToWordClient() {
@@ -100,18 +101,19 @@ export default function PdfToWordClient() {
           new Paragraph({
             children: [
               new TextRun({
-                text: `[Page ${i}]`,
+                text: `--- ${i} 페이지 ---`,
                 bold: true,
                 color: '888888',
                 size: 20,
               }),
             ],
-            spacing: { after: 120 },
+            spacing: { before: 200, after: 100 },
           })
         );
 
-        sortedYKeys.forEach((yKey) => {
-          const lineItems = lineGroups[yKey].sort((a, b) => a.transform[4] - b.transform[4]);
+        sortedYKeys.forEach((y) => {
+          const lineItems = lineGroups[y];
+          lineItems.sort((a, b) => a.transform[4] - b.transform[4]);
           const lineText = lineItems.map((item) => item.str).join(' ');
 
           if (lineText.trim()) {
@@ -120,10 +122,10 @@ export default function PdfToWordClient() {
                 children: [
                   new TextRun({
                     text: lineText,
-                    size: 24,
+                    size: 22,
                   }),
                 ],
-                spacing: { after: 180 },
+                spacing: { after: 120 },
               })
             );
           }
@@ -143,7 +145,7 @@ export default function PdfToWordClient() {
       setConvertedBlob(blob);
     } catch (err: any) {
       console.error('PDF to Word conversion failed:', err);
-      alert('PDF 파일을 Word로 변환하는 중 오류가 발생했습니다.');
+      alert('PDF Word 변환 중 오류가 발생했습니다.');
     } finally {
       setIsConverting(false);
     }
@@ -165,6 +167,7 @@ export default function PdfToWordClient() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
+        <span className={styles.badgeTitle}>{(t as any).badge}</span>
         <h1 className={styles.title}>
           {(t as any).pdf2word?.title || 'PDF ➡️ Word (DOCX)'}
         </h1>
@@ -173,9 +176,14 @@ export default function PdfToWordClient() {
         </p>
       </header>
 
+      <div className={styles.privacyBanner}>
+        <IoShieldCheckmarkOutline size={20} />
+        <span>{(t as any).privacy?.banner}</span>
+      </div>
+
       {!file && (
         <div
-          className={`${styles.dropzone} ${isDragging ? styles.dragover : ''}`}
+          className={`${styles.dropzone} ${isDragging ? styles.dropzoneActive : ''}`}
           onDragOver={(e) => {
             e.preventDefault();
             setIsDragging(true);
@@ -190,7 +198,7 @@ export default function PdfToWordClient() {
           }}
           onClick={() => fileInputRef.current?.click()}
         >
-          <IoCloudUploadOutline className={styles.dropIcon} />
+          <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
           <h2 className={styles.dropText}>
             {(t as any).pdf2word?.dropText || 'Word로 변환할 PDF 파일을 이곳에 드래그하거나 클릭하세요'}
           </h2>

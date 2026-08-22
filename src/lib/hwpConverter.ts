@@ -248,13 +248,18 @@ export async function convertHwpParsedToPdf(
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d')!;
 
-  const pageWidth = 794;
-  const pageHeight = 1123;
-  canvas.width = pageWidth * 2;
-  canvas.height = pageHeight * 2;
+  // Base A4 dimensions in points (72 DPI)
+  const a4WidthPt = 595.28;
+  const a4HeightPt = 841.89;
 
-  const marginX = 60 * 2;
-  const marginY = 60 * 2;
+  // High Resolution Scale Factor (3.5x = ~250-300 DPI for crisp vector-like text rendering)
+  const scale = 3.5;
+
+  canvas.width = Math.round(a4WidthPt * scale);   // ~2083 px
+  canvas.height = Math.round(a4HeightPt * scale); // ~2947 px
+
+  const marginX = Math.round(40 * scale);
+  const marginY = Math.round(45 * scale);
   const contentWidth = canvas.width - marginX * 2;
 
   let currentY = marginY;
@@ -267,64 +272,70 @@ export async function convertHwpParsedToPdf(
 
   renderNewPageHeader();
 
-  // Document Title
-  ctx.font = 'bold 36px sans-serif';
+  // Document Title Header
+  ctx.font = `bold ${Math.round(20 * scale)}px "Malgun Gothic", "Noto Sans KR", sans-serif`;
   ctx.fillStyle = '#111827';
 
   const title = fileName.replace(/\.(hwp|hwpx)$/i, '');
   ctx.fillText(title, marginX, currentY);
-  currentY += 60;
+  currentY += Math.round(32 * scale);
 
-  ctx.strokeStyle = '#e5e7eb';
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#d1d5db';
+  ctx.lineWidth = Math.max(1, Math.round(1.5 * scale));
   ctx.beginPath();
   ctx.moveTo(marginX, currentY);
   ctx.lineTo(canvas.width - marginX, currentY);
   ctx.stroke();
-  currentY += 40;
+  currentY += Math.round(24 * scale);
 
   const totalBlocks = parsed.textBlocks.length || 1;
+
+  const flushPageToPdf = async () => {
+    const pageImgData = canvas.toDataURL('image/png');
+    const pdfImage = await pdfDoc.embedPng(pageImgData);
+    const pdfPage = pdfDoc.addPage([a4WidthPt, a4HeightPt]);
+    pdfPage.drawImage(pdfImage, {
+      x: 0,
+      y: 0,
+      width: a4WidthPt,
+      height: a4HeightPt,
+    });
+    renderNewPageHeader();
+  };
 
   for (let idx = 0; idx < parsed.textBlocks.length; idx++) {
     if (onProgress) onProgress(idx + 1, totalBlocks);
 
     const block = parsed.textBlocks[idx];
 
-    if (currentY > canvas.height - marginY - 100) {
-      const pageImgData = canvas.toDataURL('image/jpeg', 0.95);
-      const pdfImage = await pdfDoc.embedJpg(pageImgData);
-      const pdfPage = pdfDoc.addPage([595.28, 841.89]);
-      pdfPage.drawImage(pdfImage, {
-        x: 0,
-        y: 0,
-        width: 595.28,
-        height: 841.89,
-      });
-      renderNewPageHeader();
+    if (currentY > canvas.height - marginY - Math.round(50 * scale)) {
+      await flushPageToPdf();
     }
 
     // Render PARAGRAPH
     if (block.type === 'paragraph' && block.text) {
-      ctx.font = '24px "Malgun Gothic", "Noto Sans KR", sans-serif';
+      const fontSize = Math.round(13 * scale);
+      const lineHeight = Math.round(20 * scale);
+      const paragraphSpacing = Math.round(24 * scale);
+
+      ctx.font = `${fontSize}px "Malgun Gothic", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif`;
       ctx.fillStyle = '#1f2937';
 
-      const words = block.text.split('');
+      const chars = block.text.split('');
       let currentLine = '';
 
-      for (let i = 0; i < words.length; i++) {
-        const testLine = currentLine + words[i];
+      for (let i = 0; i < chars.length; i++) {
+        const testLine = currentLine + chars[i];
         const metrics = ctx.measureText(testLine);
         if (metrics.width > contentWidth && i > 0) {
           ctx.fillText(currentLine, marginX, currentY);
-          currentLine = words[i];
-          currentY += 36;
+          currentLine = chars[i];
+          currentY += lineHeight;
 
-          if (currentY > canvas.height - marginY - 60) {
-            const pageImgData = canvas.toDataURL('image/jpeg', 0.95);
-            const pdfImage = await pdfDoc.embedJpg(pageImgData);
-            const pdfPage = pdfDoc.addPage([595.28, 841.89]);
-            pdfPage.drawImage(pdfImage, { x: 0, y: 0, width: 595.28, height: 841.89 });
-            renderNewPageHeader();
+          if (currentY > canvas.height - marginY - Math.round(35 * scale)) {
+            await flushPageToPdf();
+            ctx.font = `${fontSize}px "Malgun Gothic", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif`;
+            ctx.fillStyle = '#1f2937';
           }
         } else {
           currentLine = testLine;
@@ -333,25 +344,22 @@ export async function convertHwpParsedToPdf(
 
       if (currentLine) {
         ctx.fillText(currentLine, marginX, currentY);
-        currentY += 44;
+        currentY += paragraphSpacing;
       }
     }
     // Render TABLE
     else if (block.type === 'table' && block.tableData) {
-      currentY += 10;
+      currentY += Math.round(6 * scale);
       const rows = block.tableData.rows;
       if (rows.length > 0) {
         const colCount = Math.max(...rows.map(r => r.cells.length));
         const cellWidth = contentWidth / Math.max(1, colCount);
-        const cellHeight = 50;
+        const cellHeight = Math.round(28 * scale);
+        const fontSize = Math.round(11 * scale);
 
         for (const row of rows) {
           if (currentY + cellHeight > canvas.height - marginY) {
-            const pageImgData = canvas.toDataURL('image/jpeg', 0.95);
-            const pdfImage = await pdfDoc.embedJpg(pageImgData);
-            const pdfPage = pdfDoc.addPage([595.28, 841.89]);
-            pdfPage.drawImage(pdfImage, { x: 0, y: 0, width: 595.28, height: 841.89 });
-            renderNewPageHeader();
+            await flushPageToPdf();
           }
 
           row.cells.forEach((cell, cIdx) => {
@@ -361,23 +369,23 @@ export async function convertHwpParsedToPdf(
             ctx.fillRect(cellX, currentY, cellWidth, cellHeight);
 
             ctx.strokeStyle = '#9ca3af';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = Math.max(1, Math.round(1 * scale));
             ctx.strokeRect(cellX, currentY, cellWidth, cellHeight);
 
             ctx.fillStyle = '#111827';
-            ctx.font = '20px "Malgun Gothic", "Noto Sans KR", sans-serif';
-            const cellText = cell.text.length > 25 ? cell.text.substring(0, 24) + '…' : cell.text;
-            ctx.fillText(cellText, cellX + 12, currentY + 32);
+            ctx.font = `${fontSize}px "Malgun Gothic", "Noto Sans KR", sans-serif`;
+            const cellText = cell.text.length > 30 ? cell.text.substring(0, 29) + '…' : cell.text;
+            ctx.fillText(cellText, cellX + Math.round(6 * scale), currentY + Math.round(18 * scale));
           });
 
           currentY += cellHeight;
         }
-        currentY += 30;
+        currentY += Math.round(16 * scale);
       }
     }
     // Render IMAGE
     else if (block.type === 'image' && block.imageData?.src) {
-      currentY += 10;
+      currentY += Math.round(6 * scale);
       try {
         const img = new Image();
         img.src = block.imageData.src;
@@ -387,9 +395,9 @@ export async function convertHwpParsedToPdf(
         });
 
         const maxImgWidth = contentWidth;
-        const maxImgHeight = 400 * 2;
-        let imgW = img.width || 400;
-        let imgH = img.height || 300;
+        const maxImgHeight = Math.round(350 * scale);
+        let imgW = (img.width || 400) * scale;
+        let imgH = (img.height || 300) * scale;
 
         if (imgW > maxImgWidth) {
           imgH = (maxImgWidth / imgW) * imgH;
@@ -401,15 +409,11 @@ export async function convertHwpParsedToPdf(
         }
 
         if (currentY + imgH > canvas.height - marginY) {
-          const pageImgData = canvas.toDataURL('image/jpeg', 0.95);
-          const pdfImage = await pdfDoc.embedJpg(pageImgData);
-          const pdfPage = pdfDoc.addPage([595.28, 841.89]);
-          pdfPage.drawImage(pdfImage, { x: 0, y: 0, width: 595.28, height: 841.89 });
-          renderNewPageHeader();
+          await flushPageToPdf();
         }
 
         ctx.drawImage(img, marginX, currentY, imgW, imgH);
-        currentY += imgH + 40;
+        currentY += imgH + Math.round(20 * scale);
       } catch (err) {
         console.error('Failed to render embedded HWP image:', err);
       }
@@ -417,10 +421,15 @@ export async function convertHwpParsedToPdf(
   }
 
   // Flush final canvas page
-  const finalPageImgData = canvas.toDataURL('image/jpeg', 0.95);
-  const pdfImage = await pdfDoc.embedJpg(finalPageImgData);
-  const pdfPage = pdfDoc.addPage([595.28, 841.89]);
-  pdfPage.drawImage(pdfImage, { x: 0, y: 0, width: 595.28, height: 841.89 });
+  const finalPageImgData = canvas.toDataURL('image/png');
+  const pdfImage = await pdfDoc.embedPng(finalPageImgData);
+  const pdfPage = pdfDoc.addPage([a4WidthPt, a4HeightPt]);
+  pdfPage.drawImage(pdfImage, {
+    x: 0,
+    y: 0,
+    width: a4WidthPt,
+    height: a4HeightPt,
+  });
 
   const pdfBytes = await pdfDoc.save();
   return new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' });

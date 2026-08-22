@@ -15,6 +15,7 @@ import {
   IoRefreshOutline,
   IoCheckmarkCircleOutline,
   IoDocumentTextOutline,
+  IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
 
 export default function HwpToPdfClient() {
@@ -92,6 +93,7 @@ export default function HwpToPdfClient() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
+        <span className={styles.badgeTitle}>{t.badge}</span>
         <h1 className={styles.title}>
           {(t as any).hwp2pdf?.title || 'HWP / HWPX ➡️ PDF'}
         </h1>
@@ -101,9 +103,14 @@ export default function HwpToPdfClient() {
         </p>
       </header>
 
+      <div className={styles.privacyBanner}>
+        <IoShieldCheckmarkOutline size={20} />
+        <span>{t.privacy.banner}</span>
+      </div>
+
       {!file && (
         <div
-          className={`${styles.dropzone} ${isDragging ? styles.dragover : ''}`}
+          className={`${styles.dropzone} ${isDragging ? styles.dropzoneActive : ''}`}
           onDragOver={(e) => {
             e.preventDefault();
             setIsDragging(true);
@@ -118,15 +125,15 @@ export default function HwpToPdfClient() {
           }}
           onClick={() => fileInputRef.current?.click()}
         >
-          <IoCloudUploadOutline className={styles.dropIcon} />
-          <h2 className={styles.dropText}>
+          <IoCloudUploadOutline size={54} className={styles.uploadIcon} />
+          <div className={styles.dropText}>
             {(t as any).hwp2pdf?.dropText ||
               'PDF로 변환할 HWP 또는 HWPX 파일을 이곳에 드래그하거나 클릭하세요'}
-          </h2>
-          <p className={styles.subText}>
+          </div>
+          <div className={styles.subText}>
             {(t as any).hwp2pdf?.subText ||
               '표, 이미지, 본문 텍스트가 모두 보존되어 안전하게 내 컴퓨터에서 바로 변환됩니다.'}
-          </p>
+          </div>
           <button className={styles.selectBtn} type="button">
             {(t as any).hwp2pdf?.selectBtn || 'HWP / HWPX 파일 선택'}
           </button>
