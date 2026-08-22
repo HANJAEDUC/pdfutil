@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pdfxxxxxxxxx',
     '/image-to-pdf',
     '/pdf-pages',
+    '/hwp-to-pdf',
   ];
 
   return routes.map((route) => ({

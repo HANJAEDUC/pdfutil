@@ -40,6 +40,7 @@ const slides = [
   { id: 7, titleKey: 'pdfrotate', fallbackTitle: 'PDF 🔄 PDF', imgSrc: '/hero-rotate.png', link: '/pdf-rotate' },
   { id: 8, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
   { id: 9, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
+  { id: 10, titleKey: 'hwp2pdf', fallbackTitle: 'HWP ➡️ PDF', imgSrc: '/hero-word.png', link: '/hwp-to-pdf' },
 ];
 
 export default function HomePortalClient() {
@@ -330,6 +331,20 @@ export default function HomePortalClient() {
             </div>
             <div className={styles.cardBtn}>
               <span>{(t.home.tools as any).pdfpages?.btn || '페이지 번호 추가하러 가기 ➔'}</span>
+            </div>
+          </Link>
+
+          {/* Card 14: HWP ➡️ PDF */}
+          <Link href="/hwp-to-pdf" className={styles.toolCard}>
+            <div>
+              <div className={styles.cardIcon}>
+                <IoDocumentTextOutline />
+              </div>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).hwp2pdf?.title || 'HWP ➡️ PDF'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).hwp2pdf?.desc || '한글(HWP, HWPX) 문서 내 텍스트, 표, 이미지를 100% 브라우저 내부에서 안전하고 정밀하게 PDF로 변환합니다.'}</p>
+            </div>
+            <div className={styles.cardBtn}>
+              <span>{(t.home.tools as any).hwp2pdf?.btn || 'HWP 변환하러 가기 ➔'}</span>
             </div>
           </Link>
         </div>

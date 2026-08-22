@@ -98,6 +98,7 @@ export default function Navbar() {
     { key: 'pdfwatermark', name: getToolDisplayName('pdfwatermark', 'pdfwatermark'), href: '/pdf-watermark', categoryKey: 'catSecurity' },
     { key: 'pdfsign', name: getToolDisplayName('pdfsign', getToolDisplayName('pdfxxxxxxxx', 'PDF ✍️ 서명 추가')), href: '/pdf-sign', categoryKey: 'catSecurity' },
     { key: 'img2pdf', name: getToolDisplayName('img2pdf', getToolDisplayName('pdfxxxxxxxxx', 'JPG/PNG ➡️ PDF')), href: '/image-to-pdf', categoryKey: 'catSecurity' },
+    { key: 'hwp2pdf', name: getToolDisplayName('hwp2pdf', 'HWP ➡️ PDF'), href: '/hwp-to-pdf', categoryKey: 'catPrimary' },
   ];
 
   const filteredTools = allToolsList.filter((item) =>

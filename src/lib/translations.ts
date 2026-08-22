@@ -17,6 +17,7 @@ export const translations = {
       pdfrotate: 'pdfrotate',
       pdfwatermark: 'pdfwatermark',
       pdfpages: 'pdfpages',
+      hwp2pdf: 'hwp2pdf',
       feedback: '피드백 보내기',
     },
     toolNames: {
@@ -39,6 +40,7 @@ export const translations = {
       pdfxxxxxxxxx: 'img2pdf (JPG/PNG ➡️ PDF)',
       img2pdf: 'img2pdf (JPG/PNG ➡️ PDF)',
       pdfpages: 'pdfpages (PDF 🔢 페이지 번호)',
+      hwp2pdf: 'hwp2pdf (HWP ➡️ PDF)',
     },
     privacy: {
       banner: '개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 변환/병합/추출/암호화됩니다.',
@@ -131,6 +133,11 @@ export const translations = {
           desc: 'PDF 문서 각 페이지에 번호(예: 1 / 5, Page 1 of 5, - 1 -)를 원하는 위치와 디자인으로 자동 합성합니다.',
           btn: '페이지 번호 추가하러 가기 ➔',
         },
+        hwp2pdf: {
+          title: 'HWP ➡️ PDF',
+          desc: '한글(HWP, HWPX) 문서 내 텍스트, 표, 이미지를 100% 브라우저 내부에서 안전하고 정밀하게 PDF로 변환합니다.',
+          btn: 'HWP 변환하러 가기 ➔',
+        },
       },
       feedbackBox: {
         title: '💌 더욱 편리한 사용을 위해 소중한 피드백을 남겨주세요!',
@@ -138,6 +145,17 @@ export const translations = {
         emailBtn: '✉️ 피드백 이메일 보내기 (hanjaeduc@gmail.com)',
         copyEmailBtn: '이메일 주소 복사',
       },
+    },
+    hwp2pdf: {
+      title: 'HWP / HWPX ➡️ PDF',
+      subtitle: '서버 업로드 없이 100% 브라우저 내부에서 안전하고 빠르게 HWP 및 HWPX 한글 문서를 PDF로 변환합니다.',
+      dropText: 'PDF로 변환할 HWP 또는 HWPX 파일을 이곳에 드래그하거나 클릭하세요',
+      subText: '표, 이미지, 본문 텍스트가 모두 보존되어 안전하게 내 컴퓨터에서 바로 변환됩니다.',
+      selectBtn: 'HWP / HWPX 파일 선택',
+      convertingProgress: 'HWP 구조 분석 및 PDF 파일 생성 중...',
+      successText: '✅ PDF 문서 변환이 완료되었습니다!',
+      downloadBtn: 'PDF 파일 다운로드',
+      newFile: '새 파일',
     },
     pdf2word: {
       title: 'PDF ➡️ Word (DOCX)',
@@ -465,6 +483,7 @@ export const translations = {
       pdfrotate: 'pdfrotate',
       pdfwatermark: 'pdfwatermark',
       pdfpages: 'pdfpages',
+      hwp2pdf: 'hwp2pdf',
       feedback: 'Send Feedback',
     },
     toolNames: {
@@ -487,6 +506,7 @@ export const translations = {
       pdfxxxxxxxxx: 'img2pdf (Image to PDF)',
       img2pdf: 'img2pdf (Image to PDF)',
       pdfpages: 'pdfpages (PDF 🔢 Page Numbers)',
+      hwp2pdf: 'hwp2pdf (HWP to PDF)',
     },
     privacy: {
       banner: '100% Private: All files are processed inside your browser with zero server uploads.',
@@ -579,6 +599,11 @@ export const translations = {
           desc: 'Add customizable page numbers (e.g. 1 / 5, Page 1 of 5) to your PDF documents 100% locally inside your browser.',
           btn: 'Open Page Numbers ➔',
         },
+        hwp2pdf: {
+          title: 'HWP ➡️ PDF',
+          desc: 'Convert Korean Hangul HWP and HWPX documents to PDF 100% locally inside your browser.',
+          btn: 'Open HWP Converter ➔',
+        },
       },
       feedbackBox: {
         title: '💌 We value your feedback & feature suggestions!',
@@ -586,6 +611,17 @@ export const translations = {
         emailBtn: '✉️ Send Feedback Email (hanjaeduc@gmail.com)',
         copyEmailBtn: 'Copy Email Address',
       },
+    },
+    hwp2pdf: {
+      title: 'HWP / HWPX ➡️ PDF',
+      subtitle: 'Convert HWP and HWPX Hangul documents to PDF 100% locally inside your browser with complete privacy.',
+      dropText: 'Drag and drop your HWP or HWPX file here, or click to select',
+      subText: 'Preserves tables, images, and text content with zero server uploads.',
+      selectBtn: 'Select HWP / HWPX File',
+      convertingProgress: 'Analyzing HWP document and generating PDF...',
+      successText: '✅ PDF document converted successfully!',
+      downloadBtn: 'Download PDF File',
+      newFile: 'New File',
     },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
@@ -913,6 +949,7 @@ export const translations = {
       pdfrotate: 'pdfrotate',
       pdfwatermark: 'pdfwatermark',
       pdfpages: 'pdfpages',
+      hwp2pdf: 'hwp2pdf',
       feedback: 'Feedback Senden',
     },
     toolNames: {
@@ -935,6 +972,7 @@ export const translations = {
       pdfxxxxxxxxx: 'img2pdf (Bild in PDF)',
       img2pdf: 'img2pdf (Bild in PDF)',
       pdfpages: 'pdfpages (PDF 🔢 Seitenzahlen)',
+      hwp2pdf: 'hwp2pdf (HWP in PDF)',
     },
     privacy: {
       banner: '100% Datenschutz: Alle Dateien werden im Browser verarbeitet – ohne Server-Uploads.',
@@ -1027,6 +1065,11 @@ export const translations = {
           desc: 'Fügen Sie anpassbare Seitenzahlen (z. B. 1 / 5, Seite 1 von 5) 100% lokal im Browser in Ihre PDF-Dokumente ein.',
           btn: 'Seitenzahlen Öffnen ➔',
         },
+        hwp2pdf: {
+          title: 'HWP ➡️ PDF',
+          desc: 'Konvertieren Sie HWP- und HWPX-Dokumente lokal in Ihrem Browser sicher in PDF.',
+          btn: 'HWP Konverter Öffnen ➔',
+        },
       },
       feedbackBox: {
         title: '💌 Wir freuen uns über Ihr Feedback & Ihre Vorschläge!',
@@ -1034,6 +1077,17 @@ export const translations = {
         emailBtn: '✉️ Feedback-E-Mail senden (hanjaeduc@gmail.com)',
         copyEmailBtn: 'E-Mail-Adresse kopieren',
       },
+    },
+    hwp2pdf: {
+      title: 'HWP / HWPX ➡️ PDF',
+      subtitle: 'Konvertieren Sie HWP- und HWPX-Dokumente 100% lokal in Ihrem Browser sicher in PDF-Dateien.',
+      dropText: 'Ziehen Sie Ihre HWP- 또는 HWPX-Datei hierher oder klicken Sie zum Auswählen',
+      subText: 'Tabellen, Bilder und Text bleiben ohne Server-Upload erhalten.',
+      selectBtn: 'HWP / HWPX Datei Auswählen',
+      convertingProgress: 'HWP-Struktur wird analysiert und PDF erstellt...',
+      successText: '✅ PDF-Dokument erfolgreich konvertiert!',
+      downloadBtn: 'PDF-Datei Herunterladen',
+      newFile: 'Neue Datei',
     },
     pdf2jpg: {
       title: 'PDF ➡️ JPG',
