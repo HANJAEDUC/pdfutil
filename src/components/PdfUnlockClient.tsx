@@ -4,14 +4,10 @@ import { useState, useRef } from 'react';
 import styles from './PdfUnlockClient.module.css';
 import { useLanguage } from '@/lib/LanguageContext';
 import UnlockKeyIcon from './UnlockKeyIcon';
-import { PDFDocument } from 'pdf-lib';
 import {
   IoCloudUploadOutline,
   IoShieldCheckmarkOutline,
   IoRefreshOutline,
-  IoLockOpenOutline,
-  IoLockOpen,
-  IoKeyOutline,
   IoEyeOutline,
   IoEyeOffOutline,
   IoCheckmarkCircleOutline,
@@ -59,95 +55,38 @@ export default function PdfUnlockClient() {
     setUnlocked(false);
   };
 
-  const getPdfJsLib = (): Promise<any> => {
-    return new Promise((resolve, reject) => {
-      if (typeof window !== 'undefined' && (window as any).pdfjsLib) {
-        resolve((window as any).pdfjsLib);
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-      script.onload = () => {
-        const pdfjsLib = (window as any).pdfjsLib;
-        if (pdfjsLib) {
-          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-          resolve(pdfjsLib);
-        } else {
-          reject(new Error('PDF.js failed to initialize'));
-        }
-      };
-      script.onerror = () => reject(new Error('Failed to load PDF.js'));
-      document.head.appendChild(script);
-    });
-  };
-
   const handleUnlockPdf = async () => {
     if (!file) return;
     setUnlocking(true);
     setErrorMsg(null);
 
+    let qpdf: any = null;
     try {
+      const { createQpdfRunner } = await import('qpdf-run');
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+
+      qpdf = await createQpdfRunner({
+        workerUrl: `${origin}/qpdf/worker.js`,
+        qpdfJsUrl: `${origin}/qpdf/qpdf.js`,
+        wasmUrl: `${origin}/qpdf/qpdf.wasm`,
+        timeoutMs: 180000,
+      });
+
       const arrayBuffer = await file.arrayBuffer();
+      const inputBytes = new Uint8Array(arrayBuffer);
 
-      // Load and authenticate with PDF.js
-      const pdfjsLib = await getPdfJsLib();
-      let pdf;
-      try {
-        const loadingTask = pdfjsLib.getDocument({
-          data: new Uint8Array(arrayBuffer),
-          password: password,
-        });
-        pdf = await loadingTask.promise;
-      } catch (err) {
-        console.error('PDF decryption error:', err);
-        setErrorMsg(textDict.invalidPasswd);
-        setUnlocking(false);
-        return;
-      }
+      const args = password
+        ? ['--password=' + password, '--decrypt', '--', 'input.pdf', 'output.pdf']
+        : ['--decrypt', '--', 'input.pdf', 'output.pdf'];
 
-      // Create a new unencrypted PDF document
-      const newPdfDoc = await PDFDocument.create();
-      const numPages = pdf.numPages;
-      const scale = 2.0; // High resolution quality
+      const outputBytes = await qpdf.runOne({
+        input: inputBytes,
+        inputName: 'input.pdf',
+        outputName: 'output.pdf',
+        args,
+      });
 
-      for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
-        const viewport = page.getViewport({ scale });
-
-        const canvas = document.createElement('canvas');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const ctx = canvas.getContext('2d');
-
-        if (!ctx) {
-          throw new Error('Failed to get canvas 2d context');
-        }
-
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        await page.render({
-          canvasContext: ctx,
-          viewport: viewport,
-        }).promise;
-
-        const imgDataUrl = canvas.toDataURL('image/jpeg', 0.95);
-        const imgBytes = await fetch(imgDataUrl).then((res) => res.arrayBuffer());
-
-        const embeddedImg = await newPdfDoc.embedJpg(imgBytes);
-        const pdfPage = newPdfDoc.addPage([viewport.width / scale, viewport.height / scale]);
-
-        pdfPage.drawImage(embeddedImg, {
-          x: 0,
-          y: 0,
-          width: viewport.width / scale,
-          height: viewport.height / scale,
-        });
-      }
-
-      const pdfBytes = await newPdfDoc.save();
-      const blob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' });
+      const blob = new Blob([outputBytes as any], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
 
       // Auto Download unlocked PDF
@@ -159,10 +98,28 @@ export default function PdfUnlockClient() {
 
       setUnlocked(true);
       setTimeout(() => setUnlocked(false), 3500);
-    } catch (err) {
-      console.error(err);
-      setErrorMsg(textDict.invalidPasswd);
+    } catch (err: any) {
+      console.error('PDF decryption error:', err);
+      const msg = (err?.message || '').toLowerCase();
+      const stderrStr = Array.isArray(err?.stderr) ? err.stderr.join(' ').toLowerCase() : '';
+      if (
+        err?.exitCode === 2 ||
+        msg.includes('invalid password') ||
+        stderrStr.includes('invalid password') ||
+        stderrStr.includes('password')
+      ) {
+        setErrorMsg(textDict.invalidPasswd);
+      } else {
+        setErrorMsg(textDict.invalidPasswd);
+      }
     } finally {
+      if (qpdf) {
+        try {
+          await qpdf.destroy();
+        } catch (e) {
+          console.error('Failed to destroy qpdf runner:', e);
+        }
+      }
       setUnlocking(false);
     }
   };
