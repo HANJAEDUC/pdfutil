@@ -25,6 +25,7 @@ export default function PdfUnlockClient() {
 
   const [unlocking, setUnlocking] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -59,6 +60,10 @@ export default function PdfUnlockClient() {
     if (!file) return;
     setUnlocking(true);
     setErrorMsg(null);
+    setElapsedSeconds(0);
+    const timer = setInterval(() => {
+      setElapsedSeconds((s) => s + 1);
+    }, 1000);
 
     let qpdf: any = null;
     try {
@@ -69,7 +74,7 @@ export default function PdfUnlockClient() {
         workerUrl: `${origin}/qpdf/worker.js`,
         qpdfJsUrl: `${origin}/qpdf/qpdf.js`,
         wasmUrl: `${origin}/qpdf/qpdf.wasm`,
-        timeoutMs: 180000,
+        timeoutMs: 600000,
       });
 
       const arrayBuffer = await file.arrayBuffer();
@@ -125,8 +130,8 @@ export default function PdfUnlockClient() {
       } else if (isMemoryError) {
         setErrorMsg(
           lang === 'ko'
-            ? '문서 크기 또는 페이지 수(수천 페이지)가 너무 방대하여 브라우저 메모리 한도를 초과했습니다. (1,000페이지 이상의 초대형 문서는 데스크톱 PDF 뷰어 해제를 권장합니다.)'
-            : 'The document is too large (thousands of pages) and exceeded browser memory limits.'
+            ? '문서 크기 또는 페이지 수(수천 페이지)가 너무 방대하여 브라우저 메모리 한도를 초과했습니다.'
+            : 'The document is too large and exceeded browser memory limits.'
         );
       } else {
         setErrorMsg(
@@ -136,6 +141,7 @@ export default function PdfUnlockClient() {
         );
       }
     } finally {
+      clearInterval(timer);
       if (qpdf) {
         try {
           await qpdf.destroy();
@@ -267,7 +273,9 @@ export default function PdfUnlockClient() {
                 className={styles.unlockBtn}
               >
                 {unlocking ? (
-                  <span>{textDict.unlocking}</span>
+                  <span>
+                    ⏳ {lang === 'ko' ? `복호화 처리 중... (${elapsedSeconds}초 경과)` : `Decrypting... (${elapsedSeconds}s)`}
+                  </span>
                 ) : unlocked ? (
                   <>
                     <IoCheckmarkCircleOutline size={20} />
@@ -280,6 +288,13 @@ export default function PdfUnlockClient() {
                   </>
                 )}
               </button>
+              {unlocking && elapsedSeconds > 5 && (
+                <p style={{ marginTop: '12px', fontSize: '13px', color: '#94a3b8', textAlign: 'center', lineHeight: '1.5' }}>
+                  {lang === 'ko'
+                    ? '💡 수천 페이지 규모의 초대형 문서는 수백만 개 객체를 복호화하므로 약 3~4분이 소요될 수 있습니다. 창을 닫지 마세요.'
+                    : '💡 Massive documents (thousands of pages) may take 3-4 minutes to decrypt. Please keep this tab open.'}
+                </p>
+              )}
             </div>
           </div>
         </div>
