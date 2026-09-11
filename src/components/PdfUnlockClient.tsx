@@ -102,15 +102,38 @@ export default function PdfUnlockClient() {
       console.error('PDF decryption error:', err);
       const msg = (err?.message || '').toLowerCase();
       const stderrStr = Array.isArray(err?.stderr) ? err.stderr.join(' ').toLowerCase() : '';
-      if (
+
+      const isPasswdError =
         err?.exitCode === 2 ||
         msg.includes('invalid password') ||
         stderrStr.includes('invalid password') ||
-        stderrStr.includes('password')
-      ) {
-        setErrorMsg(textDict.invalidPasswd);
+        (stderrStr.includes('password') && !stderrStr.includes('memory') && !stderrStr.includes('oom'));
+
+      const isMemoryError =
+        msg.includes('memory') ||
+        msg.includes('oom') ||
+        stderrStr.includes('memory') ||
+        stderrStr.includes('oom') ||
+        msg.includes('aborted');
+
+      if (isPasswdError) {
+        setErrorMsg(
+          lang === 'ko'
+            ? '입력하신 비밀번호가 올바르지 않습니다. 정확한 암호를 확인 후 다시 입력해 주세요.'
+            : 'The password entered is incorrect. Please check and try again.'
+        );
+      } else if (isMemoryError) {
+        setErrorMsg(
+          lang === 'ko'
+            ? '문서 크기 또는 페이지 수(수천 페이지)가 너무 방대하여 브라우저 메모리 한도를 초과했습니다. (1,000페이지 이상의 초대형 문서는 데스크톱 PDF 뷰어 해제를 권장합니다.)'
+            : 'The document is too large (thousands of pages) and exceeded browser memory limits.'
+        );
       } else {
-        setErrorMsg(textDict.invalidPasswd);
+        setErrorMsg(
+          lang === 'ko'
+            ? (err?.message ? `암호 해제 처리 중 오류가 발생했습니다: ${err.message}` : textDict.invalidPasswd)
+            : 'An error occurred while unlocking the PDF.'
+        );
       }
     } finally {
       if (qpdf) {
