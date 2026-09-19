@@ -81,6 +81,7 @@ export default function Navbar() {
 
   const allToolsList: ToolItem[] = [
     // Column 1: Primary
+    { key: 'pdfcompress', name: getToolDisplayName('pdfcompress', 'PDF 🗜️ 용량 압축'), href: '/pdf-compress', categoryKey: 'catPrimary' },
     { key: 'pdf2jpg', name: getToolDisplayName('pdf2jpg', 'pdf2jpg'), href: '/pdf-to-jpg', categoryKey: 'catPrimary' },
     { key: 'pdf2word', name: getToolDisplayName('pdf2word', 'pdf2word'), href: '/pdf-to-word', categoryKey: 'catPrimary' },
     { key: 'pdfmerge', name: getToolDisplayName('pdfmerge', 'pdfmerge'), href: '/pdf-merge', categoryKey: 'catPrimary' },

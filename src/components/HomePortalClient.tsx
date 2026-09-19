@@ -41,6 +41,7 @@ const slides = [
   { id: 8, titleKey: 'pdfunlock', fallbackTitle: 'PDF 🔓 PDF', imgSrc: '/hero-unlock.png', link: '/pdf-unlock' },
   { id: 9, titleKey: 'pdfwatermark', fallbackTitle: 'PDF 💧 PDF', imgSrc: '/hero-watermark.png', link: '/pdf-watermark' },
   { id: 10, titleKey: 'hwp2pdf', fallbackTitle: 'HWP ➡️ PDF', imgSrc: '/hero-word.png', link: '/hwp-to-pdf' },
+  { id: 11, titleKey: 'pdfcompress', fallbackTitle: 'PDF 🗜️ 용량 압축', imgSrc: '/hero-converter.png', link: '/pdf-compress' },
 ];
 
 export default function HomePortalClient() {
@@ -345,6 +346,20 @@ export default function HomePortalClient() {
             </div>
             <div className={styles.cardBtn}>
               <span>{(t.home.tools as any).hwp2pdf?.btn || 'HWP 변환하러 가기 ➔'}</span>
+            </div>
+          </Link>
+
+          {/* Card 15: PDF 🗜️ 용량 압축 */}
+          <Link href="/pdf-compress" className={styles.toolCard}>
+            <div>
+              <div className={styles.cardIcon}>
+                <IoArchiveOutline />
+              </div>
+              <h3 className={styles.cardTitle}>{(t.home.tools as any).pdfcompress?.title || 'PDF 🗜️ 용량 압축'}</h3>
+              <p className={styles.cardDesc}>{(t.home.tools as any).pdfcompress?.desc || '대용량 PDF 문서의 이미지와 스트림을 정밀 리샘플링하여 텍스트 손상 없이 용량을 최대 80% 줄여줍니다.'}</p>
+            </div>
+            <div className={styles.cardBtn}>
+              <span>{(t.home.tools as any).pdfcompress?.btn || 'PDF 압축하러 가기 ➔'}</span>
             </div>
           </Link>
         </div>

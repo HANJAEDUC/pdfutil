@@ -41,6 +41,7 @@ export const translations = {
       img2pdf: 'img2pdf (JPG/PNG ➡️ PDF)',
       pdfpages: 'pdfpages (PDF 🔢 페이지 번호)',
       hwp2pdf: 'hwp2pdf (HWP ➡️ PDF)',
+      pdfcompress: 'pdfcompress (PDF 🗜️ 용량 압축)',
     },
     privacy: {
       banner: '개인정보 안전: 파일이 외부 서버로 전송되지 않고 컴퓨터 내에서 바로 변환/병합/추출/암호화됩니다.',
@@ -137,6 +138,11 @@ export const translations = {
           title: 'HWP ➡️ PDF',
           desc: '한글(HWP, HWPX) 문서 내 텍스트, 표, 이미지를 100% 브라우저 내부에서 안전하고 정밀하게 PDF로 변환합니다.',
           btn: 'HWP 변환하러 가기 ➔',
+        },
+        pdfcompress: {
+          title: 'PDF 🗜️ 용량 압축',
+          desc: '대용량 PDF 문서의 이미지와 스트림을 정밀 리샘플링하여 텍스트 손상 없이 용량을 최대 80% 줄여줍니다.',
+          btn: 'PDF 압축하러 가기 ➔',
         },
       },
       feedbackBox: {
@@ -507,6 +513,7 @@ export const translations = {
       img2pdf: 'img2pdf (Image to PDF)',
       pdfpages: 'pdfpages (PDF 🔢 Page Numbers)',
       hwp2pdf: 'hwp2pdf (HWP to PDF)',
+      pdfcompress: 'pdfcompress (PDF 🗜️ Compress)',
     },
     privacy: {
       banner: '100% Private: All files are processed inside your browser with zero server uploads.',
@@ -603,6 +610,11 @@ export const translations = {
           title: 'HWP ➡️ PDF',
           desc: 'Convert Korean Hangul HWP and HWPX documents to PDF 100% locally inside your browser.',
           btn: 'Open HWP Converter ➔',
+        },
+        pdfcompress: {
+          title: 'PDF 🗜️ Compress',
+          desc: 'Compress high-resolution PDF documents with 3 preset options, saving up to 80% size while preserving crisp text.',
+          btn: 'Open PDF Compress ➔',
         },
       },
       feedbackBox: {
@@ -973,6 +985,7 @@ export const translations = {
       img2pdf: 'img2pdf (Bild in PDF)',
       pdfpages: 'pdfpages (PDF 🔢 Seitenzahlen)',
       hwp2pdf: 'hwp2pdf (HWP in PDF)',
+      pdfcompress: 'pdfcompress (PDF 🗜️ Komprimieren)',
     },
     privacy: {
       banner: '100% Datenschutz: Alle Dateien werden im Browser verarbeitet – ohne Server-Uploads.',
@@ -1069,6 +1082,11 @@ export const translations = {
           title: 'HWP ➡️ PDF',
           desc: 'Konvertieren Sie HWP- und HWPX-Dokumente lokal in Ihrem Browser sicher in PDF.',
           btn: 'HWP Konverter Öffnen ➔',
+        },
+        pdfcompress: {
+          title: 'PDF 🗜️ Komprimieren',
+          desc: 'Reduzieren Sie die Dateigröße von PDF-Dokumenten mit 3 Optionen um bis zu 80% bei klarer Textqualität.',
+          btn: 'PDF Komprimieren ➔',
         },
       },
       feedbackBox: {
